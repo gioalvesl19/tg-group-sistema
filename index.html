@@ -1,38 +1,38 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TG GROUP â€” Sistema de GestÃ£o</title>
+<title>TG GROUP — Sistema de Gestão</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --sidebar-w: 252px;
   --topbar-h: 60px;
-  --bg: #f4f5f8;
-  --card: #ffffff;
-  --border: #e5e8ef;
-  --text: #111827;
-  --text-2: #6b7280;
-  --text-3: #9ca3af;
-  --sidebar-bg: #0b1120;
-  --sidebar-border: #1a2438;
-  --sidebar-text: #7f8ea3;
-  --sidebar-active-bg: #162034;
-  --primary: #16a34a;
-  --primary-dark: #15803d;
-  --blue: #2563eb;
-  --amber: #d97706;
-  --red: #dc2626;
-  --green: #059669;
-  --purple: #7c3aed;
-  --teal: #0d9488;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
-  --shadow: 0 1px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,.10);
+  --bg: #0f0f13;
+  --card: #18181f;
+  --border: #2a2a38;
+  --text: #f0f0f5;
+  --text-2: #8888aa;
+  --text-3: #555570;
+  --sidebar-bg: #0b0b0f;
+  --sidebar-border: #1e1e2a;
+  --sidebar-text: #5a5a7a;
+  --sidebar-active-bg: #1e1e2a;
+  --primary: #e8ff4a;
+  --primary-dark: #d4eb30;
+  --blue: #4af0e8;
+  --amber: #ffcc4a;
+  --red: #ff4a6b;
+  --green: #3dffa0;
+  --purple: #bf94ff;
+  --teal: #4af0e8;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.2);
+  --shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.5);
   --radius: 12px;
   --radius-sm: 8px;
 }
@@ -47,7 +47,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== SIDEBAR ====== */
 .sidebar-logo { padding: 22px 18px 18px; border-bottom: 1px solid var(--sidebar-border); display: flex; align-items: center; gap: 10px; }
-.sidebar-logo-mark { width: 36px; height: 36px; background: var(--primary); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: #fff; letter-spacing: -1px; flex-shrink: 0; }
+.sidebar-logo-mark { width: 36px; height: 36px; background: var(--primary); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: #000; letter-spacing: -1px; flex-shrink: 0; }
 .sidebar-logo-text { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: -0.3px; }
 .sidebar-logo-sub { font-size: 10px; color: #3d5069; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
 .sidebar-section { padding: 18px 14px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #2d3f55; font-weight: 700; }
@@ -58,7 +58,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
 .nav-item.active svg { opacity: 1; }
 .sidebar-user { padding: 12px 16px; border-top: 1px solid var(--sidebar-border); display: flex; align-items: center; gap: 10px; }
-.avatar { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+.avatar { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 800; font-size: 13px; flex-shrink: 0; }
 .sidebar-user-name { font-size: 13px; font-weight: 700; color: #d0daea; }
 .sidebar-user-role { font-size: 11px; color: #3d5069; }
 .logout-btn { margin-left: auto; background: none; border: none; color: #3d5069; cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; transition: color .15s; }
@@ -70,47 +70,47 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .kpi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
 .kpi-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .kpi-label { font-size: 11px; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
-.kpi-value { font-size: 24px; font-weight: 900; color: var(--text); margin: 4px 0 2px; letter-spacing: -.5px; }
+.kpi-value { font-size: 24px; font-weight: 900; color: var(--text); margin: 4px 0 2px; letter-spacing: -.5px; font-family: 'DM Mono', monospace; }
 .kpi-sub { font-size: 11.5px; color: var(--text-3); }
 
 /* ====== TABLES ====== */
 .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: .5px; border-bottom: 2px solid var(--border); background: #fafbfc; white-space: nowrap; }
-.data-table td { padding: 11px 12px; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: middle; }
-.data-table tr:hover td { background: #f9fafb; }
+.data-table th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: .5px; border-bottom: 2px solid var(--border); background: var(--card); white-space: nowrap; }
+.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: middle; }
+.data-table tr:hover td { background: rgba(255,255,255,.04); }
 .data-table tr:last-child td { border-bottom: none; }
 .table-wrap { overflow-x: auto; }
 
 /* ====== BADGES ====== */
 .badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-.badge-green { background: #d1fae5; color: #059669; }
-.badge-red { background: #fee2e2; color: #dc2626; }
-.badge-amber { background: #fef3c7; color: #d97706; }
-.badge-blue { background: #dbeafe; color: #2563eb; }
-.badge-gray { background: #f3f4f6; color: #6b7280; }
-.badge-purple { background: #f3e8ff; color: #7c3aed; }
-.badge-teal { background: #ccfbf1; color: #0d9488; }
+.badge-green { background: rgba(61,255,160,.15); color: #3dffa0; }
+.badge-red { background: rgba(255,74,107,.15); color: #ff4a6b; }
+.badge-amber { background: rgba(255,204,74,.15); color: #ffcc4a; }
+.badge-blue { background: rgba(74,240,232,.15); color: #4af0e8; }
+.badge-gray { background: rgba(255,255,255,.08); color: #8888aa; }
+.badge-purple { background: rgba(191,148,255,.15); color: #bf94ff; }
+.badge-teal { background: rgba(74,240,232,.15); color: #4af0e8; }
 
 /* ====== BUTTONS ====== */
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; }
-.btn-primary { background: var(--text); color: #fff; }
-.btn-primary:hover { background: #1e293b; }
-.btn-green { background: var(--primary); color: #fff; }
-.btn-green:hover { background: var(--primary-dark); }
-.btn-secondary { background: #f3f4f6; color: #374151; }
-.btn-secondary:hover { background: #e5e7eb; }
-.btn-danger { background: #fee2e2; color: var(--red); }
-.btn-danger:hover { background: #fecaca; }
+.btn-primary { background: var(--primary); color: #000; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-green { background: var(--green); color: #000; }
+.btn-green:hover { background: #2dd880; }
+.btn-secondary { background: rgba(255,255,255,.08); color: var(--text); }
+.btn-secondary:hover { background: rgba(255,255,255,.13); }
+.btn-danger { background: rgba(255,74,107,.12); color: var(--red); }
+.btn-danger:hover { background: rgba(255,74,107,.22); }
 .btn-sm { padding: 5px 12px; font-size: 12px; }
-.btn-icon { padding: 6px; border-radius: 7px; background: #f3f4f6; cursor: pointer; border: none; color: var(--text-2); display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
-.btn-icon:hover { background: #e5e7eb; color: var(--text); }
-.btn-icon-danger:hover { background: #fee2e2; color: var(--red); }
+.btn-icon { padding: 6px; border-radius: 7px; background: rgba(255,255,255,.07); cursor: pointer; border: none; color: var(--text-2); display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
+.btn-icon:hover { background: rgba(255,255,255,.13); color: var(--text); }
+.btn-icon-danger:hover { background: rgba(255,74,107,.15); color: var(--red); }
 
 /* ====== FORMS ====== */
-.form-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px; display: block; }
-.form-input, .form-select { width: 100%; padding: 8px 11px; border: 1.5px solid #e5e7eb; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; transition: all .15s; background: #fff; color: var(--text); }
-.form-input:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(22,163,74,.1); }
-.form-input[readonly] { background: #f9fafb; }
+.form-label { font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 4px; display: block; }
+.form-input, .form-select { width: 100%; padding: 8px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; transition: all .15s; background: var(--card); color: var(--text); }
+.form-input:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(232,255,74,.15); }
+.form-input[readonly] { background: rgba(255,255,255,.04); }
 .form-grid { display: grid; gap: 12px; }
 .form-grid-2 { grid-template-columns: 1fr 1fr; }
 .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
@@ -134,15 +134,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .drawer-footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
 /* ====== LOGIN ====== */
-#loginScreen { position: fixed; inset: 0; background: linear-gradient(135deg, #0b1120, #0f1f38, #0b1120); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-.login-card { background: #141f35; border-radius: 20px; padding: 40px; width: 380px; border: 1px solid #1f3050; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+#loginScreen { position: fixed; inset: 0; background: linear-gradient(135deg, #07070a, var(--bg), #07070a); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.login-card { background: var(--card); border-radius: 20px; padding: 40px; width: 380px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,.6); }
 .login-logo { text-align: center; margin-bottom: 32px; }
-.login-logo-mark { width: 52px; height: 52px; background: var(--primary); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+.login-logo-mark { width: 52px; height: 52px; background: var(--primary); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000; margin-bottom: 12px; }
 .login-logo-title { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: -1px; }
-.login-logo-sub { font-size: 11px; color: #3d5069; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-top: 4px; }
-.login-input { width: 100%; padding: 10px 13px; background: #0b1120; border: 1.5px solid #1f3050; border-radius: 10px; font-size: 13.5px; font-family: inherit; color: #fff; outline: none; transition: border-color .15s; }
+.login-logo-sub { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-top: 4px; }
+.login-input { width: 100%; padding: 10px 13px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; font-size: 13.5px; font-family: inherit; color: var(--text); outline: none; transition: border-color .15s; }
 .login-input:focus { border-color: var(--primary); }
-.login-input::placeholder { color: #3d5069; }
+.login-input::placeholder { color: var(--text-3); }
 .login-error { color: #f87171; font-size: 12px; text-align: center; margin-top: 10px; }
 
 /* ====== SECTION ====== */
@@ -152,51 +152,51 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== KANBAN ====== */
 .kanban-board { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; min-height: 400px; align-items: flex-start; }
-.kanban-col { background: #f8f9fb; border-radius: var(--radius); padding: 12px; min-width: 240px; width: 240px; flex-shrink: 0; border: 1px solid var(--border); }
+.kanban-col { background: rgba(255,255,255,.03); border-radius: var(--radius); padding: 12px; min-width: 240px; width: 240px; flex-shrink: 0; border: 1px solid var(--border); }
 .kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .kanban-col-title { font-size: 13px; font-weight: 800; color: var(--text); }
-.kanban-col-count { background: #e5e7eb; color: var(--text-2); font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; }
+.kanban-col-count { background: rgba(255,255,255,.08); color: var(--text-2); font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; }
 .kanban-card { background: var(--card); border-radius: 9px; padding: 12px; margin-bottom: 7px; border: 1px solid var(--border); cursor: grab; transition: all .15s; box-shadow: var(--shadow-sm); }
 .kanban-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
 .kanban-card.dragging { opacity: .4; }
-.kanban-col.drag-over { background: #eff6ff; border-color: #93c5fd; }
+.kanban-col.drag-over { background: rgba(74,240,232,.05); border-color: rgba(74,240,232,.35); }
 
 /* ====== TABS ====== */
-.tab-bar { display: flex; gap: 3px; background: #f1f3f5; border-radius: 10px; padding: 3px; }
+.tab-bar { display: flex; gap: 3px; background: rgba(255,255,255,.05); border-radius: 10px; padding: 3px; }
 .tab-btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; color: var(--text-2); background: transparent; transition: all .15s; }
 .tab-btn.active { background: var(--card); color: var(--text); box-shadow: var(--shadow-sm); }
 
 /* ====== STAGE MANAGER ====== */
-.stage-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: #f8f9fb; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 5px; cursor: grab; }
-.stage-item:hover { background: #f1f3f5; }
+.stage-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 5px; cursor: grab; }
+.stage-item:hover { background: rgba(255,255,255,.08); }
 .stage-input { flex: 1; padding: 3px 8px; border: 1px solid transparent; border-radius: 5px; font-size: 13px; font-weight: 500; background: transparent; outline: none; color: var(--text); font-family: inherit; }
-.stage-input:focus { border-color: #93c5fd; background: #fff; }
+.stage-input:focus { border-color: rgba(232,255,74,.4); background: var(--card); }
 
 /* ====== FILTER BAR ====== */
-.filter-input { padding: 7px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; background: #fff; color: var(--text); transition: all .15s; }
+.filter-input { padding: 7px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; background: var(--card); color: var(--text); transition: all .15s; }
 .filter-input:focus { border-color: var(--primary); }
 
 /* ====== HISTORY ====== */
-.history-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f3f4f6; }
+.history-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
 .history-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); flex-shrink: 0; margin-top: 5px; }
 
 /* ====== EXPANDED ROW ====== */
-.expanded-row td { background: #f9fafb !important; }
+.expanded-row td { background: rgba(255,255,255,.03) !important; }
 .detail-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; padding: 4px 0; }
-.detail-item .dl { font-weight: 700; color: #374151; font-size: 11px; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 2px; }
+.detail-item .dl { font-weight: 700; color: var(--text-2); font-size: 11px; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 2px; }
 .detail-item .dv { color: var(--text-2); font-size: 13px; }
 
 /* ====== TOAST ====== */
 #toastContainer { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-.toast { background: var(--text); color: #fff; padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: slideIn .3s ease; max-width: 320px; }
+.toast { background: #2a2a3e; color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: slideIn .3s ease; max-width: 320px; border: 1px solid var(--border); }
 .toast-error { background: var(--red); }
 .toast-success { background: var(--green); }
 .toast-info { background: var(--blue); }
 @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
 /* ====== LOADING ====== */
-#loadingOverlay { position: fixed; inset: 0; background: rgba(255,255,255,.7); z-index: 9998; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-.spinner { width: 36px; height: 36px; border: 3px solid #e5e7eb; border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite; }
+#loadingOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 9998; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ====== CHART ====== */
@@ -206,15 +206,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .hidden { display: none !important; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
-.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+::-webkit-scrollbar-thumb { background: #3a3a52; border-radius: 99px; }
+.mono { font-family: 'DM Mono', monospace; font-size: 12px; }
 .text-green { color: var(--green); }
 .text-red { color: var(--red); }
 .text-bold { font-weight: 700; }
 .mt-8 { margin-top: 8px; }
 .mt-12 { margin-top: 12px; }
-.info-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12.5px; color: #166534; }
-.warn-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12.5px; color: #92400e; }
+.info-box { background: rgba(61,255,160,.07); border: 1px solid rgba(61,255,160,.2); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12.5px; color: #3dffa0; }
+.warn-box { background: rgba(255,204,74,.07); border: 1px solid rgba(255,204,74,.2); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12.5px; color: #ffcc4a; }
 #customDateRange { display: none; gap: 8px; align-items: center; }
 #customDateRange.visible { display: flex; }
 
@@ -241,7 +241,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="login-logo">
       <div class="login-logo-mark">TG</div>
       <div class="login-logo-title">TG GROUP</div>
-      <div class="login-logo-sub">Sistema Integrado de GestÃ£o</div>
+      <div class="login-logo-sub">Sistema Integrado de Gestão</div>
     </div>
     <div style="margin-bottom:12px;">
       <label class="form-label" style="color:#6b7f99;">E-mail</label>
@@ -249,7 +249,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
     <div style="margin-bottom:22px;">
       <label class="form-label" style="color:#6b7f99;">Senha</label>
-      <input id="loginPass" class="login-input" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" onkeydown="if(event.key==='Enter')handleLogin()">
+      <input id="loginPass" class="login-input" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')handleLogin()">
     </div>
     <button class="btn btn-green" style="width:100%;justify-content:center;padding:12px;font-size:14px;border-radius:11px;" onclick="handleLogin()">Entrar</button>
     <div id="loginError" class="login-error hidden"></div>
@@ -265,7 +265,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div class="sidebar-logo-mark">TG</div>
       <div>
         <div class="sidebar-logo-text">TG GROUP</div>
-        <div class="sidebar-logo-sub">GestÃ£o</div>
+        <div class="sidebar-logo-sub">Gestão</div>
       </div>
     </div>
     <div style="flex:1;overflow-y:auto;padding-bottom:8px;">
@@ -281,18 +281,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       </div>
       <div class="nav-item" onclick="navigate('estoque')" data-perm="estoque">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg>
-        InventÃ¡rio
+        Inventário
       </div>
       <div class="nav-item" onclick="navigate('carteira')" data-perm="carteira">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
         Clientes
       </div>
-      <div class="sidebar-section">CaptaÃ§Ã£o</div>
+      <div class="sidebar-section">Captação</div>
       <div class="nav-item" onclick="navigate('pipeline')" data-perm="pipeline">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7"/></svg>
         Pipeline CRM
       </div>
-      <div class="sidebar-section">OperaÃ§Ãµes</div>
+      <div class="sidebar-section">Operações</div>
       <div class="nav-item" onclick="navigate('transporte')" data-perm="transporte">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
         Transporte
@@ -303,19 +303,19 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       </div>
       <div class="nav-item" onclick="navigate('cotacoes')" data-perm="cotacoes">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-        CotaÃ§Ãµes
+        Cotações
       </div>
       <div class="sidebar-section" id="adminSection" style="display:none;">Admin</div>
       <div class="nav-item hidden" id="configNav" onclick="navigate('config')" data-perm="config">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        UsuÃ¡rios
+        Usuários
       </div>
     </div>
     <div class="sidebar-user">
       <div class="avatar" id="sidebarAvatar">A</div>
       <div style="flex:1;min-width:0;">
-        <div class="sidebar-user-name" id="sidebarName">â€”</div>
-        <div class="sidebar-user-role" id="sidebarRole">â€”</div>
+        <div class="sidebar-user-name" id="sidebarName">—</div>
+        <div class="sidebar-user-role" id="sidebarRole">—</div>
       </div>
       <button class="logout-btn" onclick="handleLogout()" title="Sair">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
@@ -328,17 +328,17 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <!-- TOPBAR -->
     <div id="topbar">
       <div style="flex:1;font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.3px;" id="topbarTitle">Dashboard</div>
-      <input type="text" class="filter-input" style="width:190px;" placeholder="ðŸ” Buscar..." id="globalSearch" oninput="onSearchChange()">
+      <input type="text" class="filter-input" style="width:190px;" placeholder="🔍 Buscar..." id="globalSearch" oninput="onSearchChange()">
       <select class="filter-input" id="periodFilter" onchange="onPeriodChange()">
-        <option value="all">Todos os perÃ­odos</option>
-        <option value="month" selected>Este mÃªs</option>
-        <option value="last_month">MÃªs passado</option>
+        <option value="all">Todos os períodos</option>
+        <option value="month" selected>Este mês</option>
+        <option value="last_month">Mês passado</option>
         <option value="year">Este ano</option>
         <option value="custom">Personalizado</option>
       </select>
       <div id="customDateRange">
         <input type="date" class="filter-input" id="dateFrom" onchange="onFilterChange()">
-        <span style="color:var(--text-3);font-size:12px;">atÃ©</span>
+        <span style="color:var(--text-3);font-size:12px;">até</span>
         <input type="date" class="filter-input" id="dateTo" onchange="onFilterChange()">
       </div>
       <select class="filter-input" id="moedaFilter" onchange="onFilterChange()">
@@ -355,24 +355,24 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== DASHBOARD ===== -->
       <div id="view-dashboard">
         <div class="section-header">
-          <div><div class="section-title">VisÃ£o Geral</div><div class="section-sub">Painel financeiro consolidado</div></div>
+          <div><div class="section-title">Visão Geral</div><div class="section-sub">Painel financeiro consolidado</div></div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px;">
-          <div class="kpi-card"><div class="kpi-icon" style="background:#dbeafe;"><svg width="18" height="18" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">Receita</div><div class="kpi-value" id="kpiReceita">$0</div><div class="kpi-sub" id="kpiReceitaSub">â€”</div></div>
+          <div class="kpi-card"><div class="kpi-icon" style="background:#dbeafe;"><svg width="18" height="18" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">Receita</div><div class="kpi-value" id="kpiReceita">$0</div><div class="kpi-sub" id="kpiReceitaSub">—</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#d1fae5;"><svg width="18" height="18" fill="none" stroke="#059669" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">Lucro</div><div class="kpi-value" id="kpiLucro">$0</div><div class="kpi-sub" id="kpiMargem">Margem: 0%</div></div>
-          <div class="kpi-card"><div class="kpi-icon" style="background:#fef3c7;"><svg width="18" height="18" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">A Receber</div><div class="kpi-value" id="kpiReceber">$0</div><div class="kpi-sub" id="kpiReceberSub">â€”</div></div>
-          <div class="kpi-card"><div class="kpi-icon" style="background:#fee2e2;"><svg width="18" height="18" fill="none" stroke="#dc2626" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div><div class="kpi-label">InadimplÃªncia</div><div class="kpi-value" id="kpiInadim">$0</div><div class="kpi-sub" id="kpiInadimRate">0%</div></div>
+          <div class="kpi-card"><div class="kpi-icon" style="background:#fef3c7;"><svg width="18" height="18" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">A Receber</div><div class="kpi-value" id="kpiReceber">$0</div><div class="kpi-sub" id="kpiReceberSub">—</div></div>
+          <div class="kpi-card"><div class="kpi-icon" style="background:#fee2e2;"><svg width="18" height="18" fill="none" stroke="#dc2626" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div><div class="kpi-label">Inadimplência</div><div class="kpi-value" id="kpiInadim">$0</div><div class="kpi-sub" id="kpiInadimRate">0%</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#f3e8ff;"><svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg></div><div class="kpi-label">Clientes Ativos</div><div class="kpi-value" id="kpiClientes">0</div><div class="kpi-sub">Ticket: <span id="kpiTicket">$0</span></div></div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;">
-          <div class="kpi-card"><div class="kpi-label">Ticket MÃ©dio</div><div class="kpi-value" id="kpiTicketM">$0</div></div>
-          <div class="kpi-card"><div class="kpi-label">LTV Est.</div><div class="kpi-value" id="kpiLtv">$0</div><div class="kpi-sub">Ã—2.5 ticket</div></div>
-          <div class="kpi-card"><div class="kpi-label">LTV / CAC</div><div class="kpi-value" id="kpiLtvCac">0Ã—</div><div class="kpi-sub">CAC: $500</div></div>
-          <div class="kpi-card"><div class="kpi-label">Fretes (MÃªs)</div><div class="kpi-value" id="kpiFretes">0</div><div class="kpi-sub" id="kpiFretesVal">$0</div></div>
+          <div class="kpi-card"><div class="kpi-label">Ticket Médio</div><div class="kpi-value" id="kpiTicketM">$0</div></div>
+          <div class="kpi-card"><div class="kpi-label">LTV Est.</div><div class="kpi-value" id="kpiLtv">$0</div><div class="kpi-sub">×2.5 ticket</div></div>
+          <div class="kpi-card"><div class="kpi-label">LTV / CAC</div><div class="kpi-value" id="kpiLtvCac">0×</div><div class="kpi-sub">CAC: $500</div></div>
+          <div class="kpi-card"><div class="kpi-label">Fretes (Mês)</div><div class="kpi-value" id="kpiFretes">0</div><div class="kpi-sub" id="kpiFretesVal">$0</div></div>
           <div class="kpi-card"><div class="kpi-label">Biomassa (ton)</div><div class="kpi-value" id="kpiFloTon">0</div><div class="kpi-sub" id="kpiFloVal">$0</div></div>
         </div>
         <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;">
-          <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Receita por MÃªs</div><div class="chart-wrap"><canvas id="chartRevenue"></canvas></div></div>
+          <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Receita por Mês</div><div class="chart-wrap"><canvas id="chartRevenue"></canvas></div></div>
           <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Status Financeiro</div><div class="chart-wrap"><canvas id="chartStatus"></canvas></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
@@ -385,7 +385,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== VENDAS ===== -->
       <div id="view-vendas" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">Vendas & Faturas</div><div class="section-sub">Insumos AgrÃ­colas</div></div>
+          <div><div class="section-title">Vendas & Faturas</div><div class="section-sub">Insumos Agrícolas</div></div>
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Total Faturado</div><div style="font-size:18px;font-weight:900;" id="totalFaturado">$0</div></div>
             <button class="btn btn-primary" onclick="openSaleModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Venda</button>
@@ -397,7 +397,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== ESTOQUE ===== -->
       <div id="view-estoque" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">InventÃ¡rio</div><div class="section-sub">Controle de estoque</div></div>
+          <div><div class="section-title">Inventário</div><div class="section-sub">Controle de estoque</div></div>
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Valor em Estoque</div><div style="font-size:18px;font-weight:900;" id="estoqueTotal">$0</div></div>
             <button class="btn btn-primary" onclick="openEstoqueModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Adicionar</button>
@@ -409,23 +409,23 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== CARTEIRA ===== -->
       <div id="view-carteira" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">Carteira de CrÃ©dito</div><div class="section-sub">Clientes e linhas de crÃ©dito</div></div>
+          <div><div class="section-title">Carteira de Crédito</div><div class="section-sub">Clientes e linhas de crédito</div></div>
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Total Carteira</div><div style="font-size:18px;font-weight:900;" id="carteiraTotal">$0</div></div>
             <button class="btn btn-primary" onclick="openCarteiraModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Novo Cliente</button>
           </div>
         </div>
-        <div class="card"><div class="table-wrap"><table class="data-table" id="carteiraTable"><thead><tr><th>Cliente</th><th>RUC/CI</th><th>Telefone</th><th>Cidade</th><th>Vendedor</th><th>Linha Soja/Milho</th><th>Linha Trigo</th><th>Total</th><th>HÃ¡</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div class="card"><div class="table-wrap"><table class="data-table" id="carteiraTable"><thead><tr><th>Cliente</th><th>RUC/CI</th><th>Telefone</th><th>Cidade</th><th>Vendedor</th><th>Linha Soja/Milho</th><th>Linha Trigo</th><th>Total</th><th>Há</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
 
       <!-- ===== PIPELINE ===== -->
       <div id="view-pipeline" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">Pipeline CRM</div><div class="section-sub">GestÃ£o de leads e oportunidades</div></div>
+          <div><div class="section-title">Pipeline CRM</div><div class="section-sub">Gestão de leads e oportunidades</div></div>
           <div style="display:flex;align-items:center;gap:8px;">
             <input type="text" class="filter-input" placeholder="Buscar leads..." id="leadSearch" oninput="renderPipeline()">
             <select class="filter-input" id="leadOwnerFilter" onchange="renderPipeline()"><option value="">Todos</option></select>
-            <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()">âš™ Colunas</button>
+            <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()">⚙ Colunas</button>
             <button class="btn btn-primary btn-sm" onclick="openLeadModal()">+ Lead</button>
           </div>
         </div>
@@ -436,50 +436,50 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== TRANSPORTE ===== -->
       <div id="view-transporte" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">Transporte & LogÃ­stica</div><div class="section-sub">Fretes, frota e sinistros</div></div>
+          <div><div class="section-title">Transporte & Logística</div><div class="section-sub">Fretes, frota e sinistros</div></div>
           <div style="display:flex;gap:8px;">
             <button class="btn btn-primary" onclick="openFreteModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Novo Frete</button>
-            <button class="btn btn-secondary" onclick="openVeiculoModal()">+ VeÃ­culo</button>
+            <button class="btn btn-secondary" onclick="openVeiculoModal()">+ Veículo</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
           <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Fretes Ativos</div><div class="kpi-value" id="tpAtivos">0</div><div class="kpi-sub">em andamento</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">Receita Frete</div><div class="kpi-value" id="tpReceita">$0</div><div class="kpi-sub" id="tpMargem">Margem: 0%</div></div>
-          <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Frota PrÃ³pria</div><div class="kpi-value" id="tpFrota">0</div><div class="kpi-sub">veÃ­culos</div></div>
-          <div class="kpi-card" style="border-left:3px solid var(--purple);"><div class="kpi-label">Terceiros</div><div class="kpi-value" id="tpTerc">0</div><div class="kpi-sub">veÃ­culos</div></div>
+          <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Frota Própria</div><div class="kpi-value" id="tpFrota">0</div><div class="kpi-sub">veículos</div></div>
+          <div class="kpi-card" style="border-left:3px solid var(--purple);"><div class="kpi-label">Terceiros</div><div class="kpi-value" id="tpTerc">0</div><div class="kpi-sub">veículos</div></div>
         </div>
         <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn active" onclick="switchTranspTab('fretes',this)">Fretes</button><button class="tab-btn" onclick="switchTranspTab('frota',this)">Frota</button><button class="tab-btn" onclick="switchTranspTab('sinistros',this)">Sinistros</button></div></div>
         <div id="transp-fretes" class="card"><div class="table-wrap"><table class="data-table" id="fretesTable"><thead><tr><th>Data</th><th>Origem</th><th>Destino</th><th>Produto</th><th>Tipo</th><th>Motorista</th><th>Placa</th><th>Valor</th><th>Custo</th><th>Margem</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
-        <div id="transp-frota" class="card hidden"><div class="table-wrap"><table class="data-table" id="frotaTable"><thead><tr><th>Placa</th><th>Tipo</th><th>Modelo</th><th>PrÃ³prio/Terc.</th><th>Motorista</th><th>Km</th><th>PrÃ³x. Manut.</th><th>Consumo</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
-        <div id="transp-sinistros" class="card hidden"><div class="table-wrap"><table class="data-table" id="sinistrosTable"><thead><tr><th>Data</th><th>Tipo</th><th>DescriÃ§Ã£o</th><th>PrejuÃ­zo</th><th>Seguro</th><th>Recuperado</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div id="transp-frota" class="card hidden"><div class="table-wrap"><table class="data-table" id="frotaTable"><thead><tr><th>Placa</th><th>Tipo</th><th>Modelo</th><th>Próprio/Terc.</th><th>Motorista</th><th>Km</th><th>Próx. Manut.</th><th>Consumo</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div id="transp-sinistros" class="card hidden"><div class="table-wrap"><table class="data-table" id="sinistrosTable"><thead><tr><th>Data</th><th>Tipo</th><th>Descrição</th><th>Prejuízo</th><th>Seguro</th><th>Recuperado</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
 
       <!-- ===== FLORESTAL ===== -->
       <div id="view-florestal" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">Florestal â€” Biomassa</div><div class="section-sub">Compra de Ã¡reas, operaÃ§Ã£o e venda de biomassa</div></div>
+          <div><div class="section-title">Florestal — Biomassa</div><div class="section-sub">Compra de áreas, operação e venda de biomassa</div></div>
           <div style="display:flex;gap:8px;">
-            <button class="btn btn-primary" onclick="openAreaModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Ãrea</button>
+            <button class="btn btn-primary" onclick="openAreaModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Área</button>
             <button class="btn btn-secondary" onclick="openVendaFloModal()">+ Venda Biomassa</button>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
-          <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">Ãreas Ativas</div><div class="kpi-value" id="floAreas">0</div><div class="kpi-sub" id="floHa">0 ha</div></div>
-          <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Ton. DisponÃ­vel</div><div class="kpi-value" id="floTonDisp">0</div><div class="kpi-sub">toneladas</div></div>
+          <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">Áreas Ativas</div><div class="kpi-value" id="floAreas">0</div><div class="kpi-sub" id="floHa">0 ha</div></div>
+          <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Ton. Disponível</div><div class="kpi-value" id="floTonDisp">0</div><div class="kpi-sub">toneladas</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Receita Biomassa</div><div class="kpi-value" id="floReceita">$0</div><div class="kpi-sub" id="floMargem">Margem: 0%</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--red);"><div class="kpi-label">Custo Operacional</div><div class="kpi-value" id="floCusto">$0</div><div class="kpi-sub">corte + transporte</div></div>
         </div>
-        <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn active" onclick="switchFloTab('areas',this)">Ãreas</button><button class="tab-btn" onclick="switchFloTab('vendas',this)">Vendas</button><button class="tab-btn" onclick="switchFloTab('operacoes',this)">OperaÃ§Ãµes</button></div></div>
-        <div id="flo-areas" class="card"><div class="table-wrap"><table class="data-table" id="areasTable"><thead><tr><th>ProprietÃ¡rio/Ãrea</th><th>LocalizaÃ§Ã£o</th><th>HÃ¡</th><th>NegociaÃ§Ã£o</th><th>Valor Compra</th><th>Est. Ton.</th><th>ExtraÃ­do</th><th>Custo Op.</th><th>EspÃ©cie</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
-        <div id="flo-vendas" class="card hidden"><div class="table-wrap"><table class="data-table" id="vendasFloTable"><thead><tr><th>Data</th><th>Cliente</th><th>Ãrea</th><th>Toneladas</th><th>PreÃ§o/Ton</th><th>Total</th><th>Frete</th><th>Margem</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
-        <div id="flo-operacoes" class="card hidden"><div class="table-wrap"><table class="data-table" id="operacoesTable"><thead><tr><th>Data</th><th>Ãrea</th><th>Tipo</th><th>DescriÃ§Ã£o</th><th>Custo</th><th>ResponsÃ¡vel</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn active" onclick="switchFloTab('areas',this)">Áreas</button><button class="tab-btn" onclick="switchFloTab('vendas',this)">Vendas</button><button class="tab-btn" onclick="switchFloTab('operacoes',this)">Operações</button></div></div>
+        <div id="flo-areas" class="card"><div class="table-wrap"><table class="data-table" id="areasTable"><thead><tr><th>Proprietário/Área</th><th>Localização</th><th>Há</th><th>Negociação</th><th>Valor Compra</th><th>Est. Ton.</th><th>Extraído</th><th>Custo Op.</th><th>Espécie</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div id="flo-vendas" class="card hidden"><div class="table-wrap"><table class="data-table" id="vendasFloTable"><thead><tr><th>Data</th><th>Cliente</th><th>Área</th><th>Toneladas</th><th>Preço/Ton</th><th>Total</th><th>Frete</th><th>Margem</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div id="flo-operacoes" class="card hidden"><div class="table-wrap"><table class="data-table" id="operacoesTable"><thead><tr><th>Data</th><th>Área</th><th>Tipo</th><th>Descrição</th><th>Custo</th><th>Responsável</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
 
-      <!-- ===== COTAÃ‡Ã•ES ===== -->
+      <!-- ===== COTAÇÕES ===== -->
       <div id="view-cotacoes" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">CotaÃ§Ãµes de Frete</div><div class="section-sub">CotaÃ§Ãµes por origem/destino</div></div>
-          <button class="btn btn-primary" onclick="openCotacaoModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova CotaÃ§Ã£o</button>
+          <div><div class="section-title">Cotações de Frete</div><div class="section-sub">Cotações por origem/destino</div></div>
+          <button class="btn btn-primary" onclick="openCotacaoModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Cotação</button>
         </div>
         <div class="card"><div class="table-wrap"><table class="data-table" id="cotacoesTable"><thead><tr><th>Data</th><th>Origem</th><th>Destino</th><th>Produto</th><th>Peso (ton)</th><th>Valor/Ton</th><th>Total</th><th>Cliente</th><th>Tipo</th><th>Validade</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
@@ -487,13 +487,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <!-- ===== CONFIG ===== -->
       <div id="view-config" class="hidden">
         <div class="section-header">
-          <div><div class="section-title">UsuÃ¡rios</div><div class="section-sub">Perfis e permissÃµes de acesso</div></div>
-          <button class="btn btn-primary" onclick="openUserModal()">+ Novo UsuÃ¡rio</button>
+          <div><div class="section-title">Usuários</div><div class="section-sub">Perfis e permissões de acesso</div></div>
+          <button class="btn btn-primary" onclick="openUserModal()">+ Novo Usuário</button>
         </div>
         <div class="info-box" style="margin-bottom:14px;">
-          â„¹ï¸ Novos usuÃ¡rios sÃ£o criados via <strong>Edge Function</strong> que deve ser implantada no seu projeto Supabase. Consulte o README para instruÃ§Ãµes.
+          ℹ️ Novos usuários são criados via <strong>Edge Function</strong> que deve ser implantada no seu projeto Supabase. Consulte o README para instruções.
         </div>
-        <div class="card"><div class="table-wrap"><table class="data-table" id="usersTable"><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>PermissÃµes</th><th>Ativo</th><th></th></tr></thead><tbody></tbody></table></div></div>
+        <div class="card"><div class="table-wrap"><table class="data-table" id="usersTable"><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Permissões</th><th>Ativo</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
 
     </div><!-- /content -->
@@ -505,13 +505,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- SALE MODAL -->
 <div id="saleModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="saleModalTitle">Nova Venda / Fatura</div><button onclick="closeSaleModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title" id="saleModalTitle">Nova Venda / Fatura</div><button onclick="closeSaleModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-4" style="margin-bottom:12px;">
         <div><label class="form-label">Data *</label><input type="date" class="form-input" id="saleDate"></div>
-        <div><label class="form-label">CondiÃ§Ã£o</label><select class="form-select" id="saleCond"><option value="CREDITO">CRÃ‰DITO</option><option value="AVISTA">Ã€ VISTA</option></select></div>
-        <div><label class="form-label">Fatura NÂ°</label><input type="text" class="form-input" id="saleFactura" placeholder="F-001"></div>
-        <div><label class="form-label">Pedido NÂ°</label><input type="text" class="form-input" id="salePedido" placeholder="P-001"></div>
+        <div><label class="form-label">Condição</label><select class="form-select" id="saleCond"><option value="CREDITO">CRÉDITO</option><option value="AVISTA">À VISTA</option></select></div>
+        <div><label class="form-label">Fatura N°</label><input type="text" class="form-input" id="saleFactura" placeholder="F-001"></div>
+        <div><label class="form-label">Pedido N°</label><input type="text" class="form-input" id="salePedido" placeholder="P-001"></div>
       </div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;">
         <div><label class="form-label">Cliente *</label><select class="form-select" id="saleCliente"><option value="">Selecionar...</option></select></div>
@@ -526,8 +526,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <div><label class="form-label">Quantidade</label><input type="number" class="form-input" id="saleCant" placeholder="0" oninput="calcSaleTotal()"></div>
       </div>
       <div class="form-grid form-grid-4" style="margin-bottom:12px;">
-        <div><label class="form-label">PreÃ§o Unit.</label><input type="number" class="form-input" id="salePrecioUni" placeholder="0.00" oninput="calcSaleTotal()"></div>
-        <div><label class="form-label">PreÃ§o Custo</label><input type="number" class="form-input" id="salePrecioCosto" placeholder="0.00"></div>
+        <div><label class="form-label">Preço Unit.</label><input type="number" class="form-input" id="salePrecioUni" placeholder="0.00" oninput="calcSaleTotal()"></div>
+        <div><label class="form-label">Preço Custo</label><input type="number" class="form-input" id="salePrecioCosto" placeholder="0.00"></div>
         <div><label class="form-label">Valor Total</label><input type="number" class="form-input" id="saleValor" readonly></div>
         <div><label class="form-label">Moeda</label><select class="form-select" id="saleMoeda"><option value="USD">USD</option><option value="Gs">Guaranis</option></select></div>
       </div>
@@ -537,11 +537,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       </div>
       <div class="form-grid form-grid-4" style="margin-bottom:12px;">
         <div><label class="form-label">Saldo</label><input type="number" class="form-input" id="saleSaldo" placeholder="0.00"></div>
-        <div><label class="form-label">Recibo NÂ°</label><input type="text" class="form-input" id="saleRecibo"></div>
-        <div><label class="form-label">RemisiÃ³n NÂ°</label><input type="text" class="form-input" id="saleRemision"></div>
-        <div><label class="form-label">NC NÂ°</label><input type="text" class="form-input" id="saleNc"></div>
+        <div><label class="form-label">Recibo N°</label><input type="text" class="form-input" id="saleRecibo"></div>
+        <div><label class="form-label">Remisión N°</label><input type="text" class="form-input" id="saleRemision"></div>
+        <div><label class="form-label">NC N°</label><input type="text" class="form-input" id="saleNc"></div>
       </div>
-      <div><label class="form-label">OBS</label><textarea class="form-input" id="saleObs" rows="2" placeholder="ObservaÃ§Ãµes..."></textarea></div>
+      <div><label class="form-label">OBS</label><textarea class="form-input" id="saleObs" rows="2" placeholder="Observações..."></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeSaleModal()">Cancelar</button><button class="btn btn-primary" onclick="saveSale()" id="saveSaleBtn">Salvar</button></div>
   </div>
@@ -550,10 +550,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- ESTOQUE MODAL -->
 <div id="estoqueModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="estoqueModalTitle">Adicionar Item</div><button onclick="closeEstoqueModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title" id="estoqueModalTitle">Adicionar Item</div><button onclick="closeEstoqueModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Produto *</label><input type="text" class="form-input" id="estDesc" placeholder="Nome do produto"></div><div><label class="form-label">Subcategoria</label><select class="form-select" id="estSubcat"><option>REVENTA</option><option>QUIMICO</option><option>BIOLOGICO</option><option>NUTRICIONAL</option><option>ADJUVANTE</option><option>CORRETIVO</option><option>OLEO</option><option>SEMILLA</option><option>LINHA TG</option></select></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Marca</label><input type="text" class="form-input" id="estMarca"></div><div><label class="form-label">Unidade</label><select class="form-select" id="estUnidade"><option>UN</option><option>KG</option><option>L</option><option>SC</option><option>CX</option><option>TON</option></select></div><div><label class="form-label">Local</label><input type="text" class="form-input" id="estLocal" placeholder="DepÃ³sito A"></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Marca</label><input type="text" class="form-input" id="estMarca"></div><div><label class="form-label">Unidade</label><select class="form-select" id="estUnidade"><option>UN</option><option>KG</option><option>L</option><option>SC</option><option>CX</option><option>TON</option></select></div><div><label class="form-label">Local</label><input type="text" class="form-input" id="estLocal" placeholder="Depósito A"></div></div>
       <div class="form-grid form-grid-4" style="margin-bottom:12px;"><div><label class="form-label">Estoque *</label><input type="number" class="form-input" id="estStock" placeholder="0" oninput="calcEstTotal()"></div><div><label class="form-label">Valor Unit.</label><input type="number" class="form-input" id="estValorUnit" placeholder="0.00" oninput="calcEstTotal()"></div><div><label class="form-label">Valor Total</label><input type="number" class="form-input" id="estValorTotal" readonly></div><div><label class="form-label">Moeda</label><select class="form-select" id="estMoeda"><option value="USD">USD</option><option value="Gs">Guaranis</option></select></div></div>
       <div><label class="form-label">Data Snapshot</label><input type="date" class="form-input" id="estSnapshot"></div>
     </div>
@@ -564,12 +564,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- CARTEIRA MODAL -->
 <div id="carteiraModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="carteiraModalTitle">Adicionar Cliente</div><button onclick="closeCarteiraModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title" id="carteiraModalTitle">Adicionar Cliente</div><button onclick="closeCarteiraModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
-      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Cliente *</label><input type="text" class="form-input" id="cliNome" placeholder="RazÃ£o Social"></div><div><label class="form-label">RUC/CI</label><input type="text" class="form-input" id="cliRuc"></div></div>
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Cliente *</label><input type="text" class="form-input" id="cliNome" placeholder="Razão Social"></div><div><label class="form-label">RUC/CI</label><input type="text" class="form-input" id="cliRuc"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Telefone/WhatsApp</label><input type="text" class="form-input" id="cliTel" placeholder="+595..."></div><div><label class="form-label">Cidade</label><input type="text" class="form-input" id="cliCidade"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Linha Safrinha Soja/Milho</label><input type="number" class="form-input" id="cliLinhaSoja" placeholder="0.00"></div><div><label class="form-label">Linha Trigo</label><input type="number" class="form-input" id="cliLinhaTrigo" placeholder="0.00"></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Hectares</label><input type="number" class="form-input" id="cliHas" placeholder="0"></div><div><label class="form-label">Vendedor</label><select class="form-select" id="cliVendedor"><option value="">Selecionar...</option></select></div><div><label class="form-label">Status</label><select class="form-select" id="cliStatus"><option value="Ativo">Ativo</option><option value="Bloqueado">Bloqueado</option><option value="Em AnÃ¡lise">Em AnÃ¡lise</option></select></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Hectares</label><input type="number" class="form-input" id="cliHas" placeholder="0"></div><div><label class="form-label">Vendedor</label><select class="form-select" id="cliVendedor"><option value="">Selecionar...</option></select></div><div><label class="form-label">Status</label><select class="form-select" id="cliStatus"><option value="Ativo">Ativo</option><option value="Bloqueado">Bloqueado</option><option value="Em Análise">Em Análise</option></select></div></div>
       <div><label class="form-label">OBS</label><textarea class="form-input" id="cliObs" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeCarteiraModal()">Cancelar</button><button class="btn btn-primary" onclick="saveCarteira()">Salvar</button></div>
@@ -579,11 +579,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- LEAD MODAL -->
 <div id="leadModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div class="modal-title">Novo Lead</div><button onclick="closeLeadModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Lead</div><button onclick="closeLeadModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Nome *</label><input type="text" class="form-input" id="leadTitle"></div><div><label class="form-label">RUC/CI</label><input type="text" class="form-input" id="leadRuc"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Telefone *</label><input type="text" class="form-input" id="leadPhone"></div><div><label class="form-label">Cidade</label><input type="text" class="form-input" id="leadCity"></div></div>
-      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Origem</label><select class="form-select" id="leadSource"><option>Campo</option><option>IndicaÃ§Ã£o</option><option>WhatsApp</option><option>Instagram</option><option>Evento</option><option>Outro</option></select></div><div><label class="form-label">ResponsÃ¡vel *</label><select class="form-select" id="leadOwner"><option value="">Selecionar...</option></select></div></div>
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Origem</label><select class="form-select" id="leadSource"><option>Campo</option><option>Indicação</option><option>WhatsApp</option><option>Instagram</option><option>Evento</option><option>Outro</option></select></div><div><label class="form-label">Responsável *</label><select class="form-select" id="leadOwner"><option value="">Selecionar...</option></select></div></div>
       <div><label class="form-label">OBS</label><textarea class="form-input" id="leadObs" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeLeadModal()">Cancelar</button><button class="btn btn-primary" onclick="saveLead()">Criar Lead</button></div>
@@ -593,7 +593,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- STAGES MODAL -->
 <div id="stagesModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div><div class="modal-title" id="stagesTitle">Configurar Colunas</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Arraste para reordenar Â· Clique para editar</div></div><button onclick="closeManageStages()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div><div class="modal-title" id="stagesTitle">Configurar Colunas</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Arraste para reordenar · Clique para editar</div></div><button onclick="closeManageStages()" class="btn-icon">✕</button></div>
     <div class="modal-body" id="stagesList" style="max-height:360px;overflow-y:auto;"></div>
     <div class="modal-footer" style="justify-content:space-between;"><button class="btn btn-secondary" onclick="addStage()">+ Coluna</button><div style="display:flex;gap:8px;"><button class="btn btn-secondary" onclick="resetStages()">Restaurar</button><button class="btn btn-primary" onclick="saveStages()">Salvar</button></div></div>
   </div>
@@ -602,7 +602,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- LEAD DRAWER -->
 <div id="leadDrawerOverlay" class="drawer-overlay hidden" onclick="closeLeadDrawer()"></div>
 <div id="leadDrawer" class="drawer hidden">
-  <div class="drawer-header"><div><div style="font-size:16px;font-weight:800;" id="drawerName">â€”</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;" id="drawerStage">â€”</div></div><button onclick="closeLeadDrawer()" class="btn-icon">âœ•</button></div>
+  <div class="drawer-header"><div><div style="font-size:16px;font-weight:800;" id="drawerName">—</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;" id="drawerStage">—</div></div><button onclick="closeLeadDrawer()" class="btn-icon">✕</button></div>
   <div class="drawer-body"><div id="drawerContent"></div></div>
   <div class="drawer-footer">
     <button class="btn btn-danger btn-sm" id="drawerLostBtn" onclick="markLeadLost()">Perdido</button>
@@ -613,12 +613,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- FRETE MODAL -->
 <div id="freteModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="freteModalTitle">Novo Frete</div><button onclick="closeFreteModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title" id="freteModalTitle">Novo Frete</div><button onclick="closeFreteModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Data *</label><input type="date" class="form-input" id="freteData"></div><div><label class="form-label">Origem *</label><input type="text" class="form-input" id="freteOrigem" placeholder="Cidade/Dep."></div><div><label class="form-label">Destino *</label><input type="text" class="form-input" id="freteDestino" placeholder="Cidade/Dep."></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Produto</label><input type="text" class="form-input" id="freteProduto" placeholder="Soja, Milho..."></div><div><label class="form-label">Peso (ton)</label><input type="number" class="form-input" id="fretePeso" placeholder="0"></div><div><label class="form-label">Tipo</label><select class="form-select" id="freteTipo"><option value="proprio">PrÃ³prio</option><option value="terceiro">Terceiro</option></select></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Produto</label><input type="text" class="form-input" id="freteProduto" placeholder="Soja, Milho..."></div><div><label class="form-label">Peso (ton)</label><input type="number" class="form-input" id="fretePeso" placeholder="0"></div><div><label class="form-label">Tipo</label><select class="form-select" id="freteTipo"><option value="proprio">Próprio</option><option value="terceiro">Terceiro</option></select></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Motorista</label><input type="text" class="form-input" id="freteMotorista"></div><div><label class="form-label">Placa</label><input type="text" class="form-input" id="fretePlaca"></div><div><label class="form-label">Cliente</label><input type="text" class="form-input" id="freteCliente"></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Valor Cobrado</label><input type="number" class="form-input" id="freteValor" placeholder="0.00"></div><div><label class="form-label">Custo Pago</label><input type="number" class="form-input" id="freteCusto" placeholder="0.00"></div><div><label class="form-label">Status</label><select class="form-select" id="freteStatus"><option>Em Carga</option><option>Em TrÃ¢nsito</option><option>Entregue</option><option>Cancelado</option></select></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Valor Cobrado</label><input type="number" class="form-input" id="freteValor" placeholder="0.00"></div><div><label class="form-label">Custo Pago</label><input type="number" class="form-input" id="freteCusto" placeholder="0.00"></div><div><label class="form-label">Status</label><select class="form-select" id="freteStatus"><option>Em Carga</option><option>Em Trânsito</option><option>Entregue</option><option>Cancelado</option></select></div></div>
       <div><label class="form-label">OBS</label><textarea class="form-input" id="freteObs" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeFreteModal()">Cancelar</button><button class="btn btn-primary" onclick="saveFrete()">Salvar</button></div>
@@ -628,11 +628,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- VEICULO MODAL -->
 <div id="veiculoModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Novo VeÃ­culo</div><button onclick="closeVeiculoModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Veículo</div><button onclick="closeVeiculoModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Placa *</label><input type="text" class="form-input" id="veicPlaca"></div><div><label class="form-label">Tipo</label><select class="form-select" id="veicTipo"><option>Carreta</option><option>Truck</option><option>Bitrem</option><option>Toco</option><option>Outro</option></select></div><div><label class="form-label">Modelo</label><input type="text" class="form-input" id="veicModelo"></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">PrÃ³prio/Terceiro</label><select class="form-select" id="veicPropTerc"><option value="proprio">PrÃ³prio</option><option value="terceiro">Terceiro</option></select></div><div><label class="form-label">Motorista</label><input type="text" class="form-input" id="veicMotorista"></div><div><label class="form-label">Km Atual</label><input type="number" class="form-input" id="veicKm" placeholder="0"></div></div>
-      <div class="form-grid form-grid-2"><div><label class="form-label">PrÃ³x. ManutenÃ§Ã£o</label><input type="date" class="form-input" id="veicManut"></div><div><label class="form-label">Consumo (L/km)</label><input type="number" class="form-input" id="veicConsumo" placeholder="0.00" step="0.01"></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Próprio/Terceiro</label><select class="form-select" id="veicPropTerc"><option value="proprio">Próprio</option><option value="terceiro">Terceiro</option></select></div><div><label class="form-label">Motorista</label><input type="text" class="form-input" id="veicMotorista"></div><div><label class="form-label">Km Atual</label><input type="number" class="form-input" id="veicKm" placeholder="0"></div></div>
+      <div class="form-grid form-grid-2"><div><label class="form-label">Próx. Manutenção</label><input type="date" class="form-input" id="veicManut"></div><div><label class="form-label">Consumo (L/km)</label><input type="number" class="form-input" id="veicConsumo" placeholder="0.00" step="0.01"></div></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeVeiculoModal()">Cancelar</button><button class="btn btn-primary" onclick="saveVeiculo()">Salvar</button></div>
   </div>
@@ -641,11 +641,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- AREA FLORESTAL MODAL -->
 <div id="areaModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="areaModalTitle">Nova Ãrea Florestal</div><button onclick="closeAreaModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title" id="areaModalTitle">Nova Área Florestal</div><button onclick="closeAreaModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
-      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">ProprietÃ¡rio/Ãrea *</label><input type="text" class="form-input" id="areaNome"></div><div><label class="form-label">LocalizaÃ§Ã£o</label><input type="text" class="form-input" id="areaLocal"></div></div>
-      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Hectares</label><input type="number" class="form-input" id="areaHa" placeholder="0"></div><div><label class="form-label">Tipo NegociaÃ§Ã£o</label><select class="form-select" id="areaTipoNeg"><option>Compra Dinheiro</option><option>Troca CalcÃ¡rio</option><option>Troca Insumos</option><option>Cheque</option><option>Misto</option><option>Consignado</option></select></div><div><label class="form-label">Valor Compra (USD)</label><input type="number" class="form-input" id="areaValor" placeholder="0.00"></div></div>
-      <div class="form-grid form-grid-4" style="margin-bottom:12px;"><div><label class="form-label">Est. Toneladas</label><input type="number" class="form-input" id="areaTon" placeholder="0"></div><div><label class="form-label">Ton. ExtraÃ­das</label><input type="number" class="form-input" id="areaTonExt" placeholder="0"></div><div><label class="form-label">EspÃ©cie</label><select class="form-select" id="areaEspecie"><option>Eucalipto</option><option>Pinus</option><option>Misto</option></select></div><div><label class="form-label">Status</label><select class="form-select" id="areaStatus"><option>Em NegociaÃ§Ã£o</option><option>Comprada</option><option>Em Corte</option><option>Esgotada</option></select></div></div>
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Proprietário/Área *</label><input type="text" class="form-input" id="areaNome"></div><div><label class="form-label">Localização</label><input type="text" class="form-input" id="areaLocal"></div></div>
+      <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Hectares</label><input type="number" class="form-input" id="areaHa" placeholder="0"></div><div><label class="form-label">Tipo Negociação</label><select class="form-select" id="areaTipoNeg"><option>Compra Dinheiro</option><option>Troca Calcário</option><option>Troca Insumos</option><option>Cheque</option><option>Misto</option><option>Consignado</option></select></div><div><label class="form-label">Valor Compra (USD)</label><input type="number" class="form-input" id="areaValor" placeholder="0.00"></div></div>
+      <div class="form-grid form-grid-4" style="margin-bottom:12px;"><div><label class="form-label">Est. Toneladas</label><input type="number" class="form-input" id="areaTon" placeholder="0"></div><div><label class="form-label">Ton. Extraídas</label><input type="number" class="form-input" id="areaTonExt" placeholder="0"></div><div><label class="form-label">Espécie</label><select class="form-select" id="areaEspecie"><option>Eucalipto</option><option>Pinus</option><option>Misto</option></select></div><div><label class="form-label">Status</label><select class="form-select" id="areaStatus"><option>Em Negociação</option><option>Comprada</option><option>Em Corte</option><option>Esgotada</option></select></div></div>
       <div><label class="form-label">OBS</label><textarea class="form-input" id="areaObs" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeAreaModal()">Cancelar</button><button class="btn btn-primary" onclick="saveArea()">Salvar</button></div>
@@ -655,11 +655,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- VENDA BIOMASSA MODAL -->
 <div id="vendaFloModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Venda de Biomassa</div><button onclick="closeVendaFloModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title">Venda de Biomassa</div><button onclick="closeVendaFloModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Data *</label><input type="date" class="form-input" id="vfData"></div><div><label class="form-label">Cliente *</label><input type="text" class="form-input" id="vfCliente"></div></div>
-      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Ãrea Origem</label><select class="form-select" id="vfArea"><option value="">Selecionar...</option></select></div><div><label class="form-label">Toneladas *</label><input type="number" class="form-input" id="vfTon" placeholder="0"></div></div>
-      <div class="form-grid form-grid-3"><div><label class="form-label">PreÃ§o/Ton (USD)</label><input type="number" class="form-input" id="vfPreco" placeholder="0.00"></div><div><label class="form-label">Custo Frete</label><input type="number" class="form-input" id="vfFrete" placeholder="0.00"></div><div><label class="form-label">Status</label><select class="form-select" id="vfStatus"><option>Pendente</option><option>Entregue</option><option>Pago</option></select></div></div>
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Área Origem</label><select class="form-select" id="vfArea"><option value="">Selecionar...</option></select></div><div><label class="form-label">Toneladas *</label><input type="number" class="form-input" id="vfTon" placeholder="0"></div></div>
+      <div class="form-grid form-grid-3"><div><label class="form-label">Preço/Ton (USD)</label><input type="number" class="form-input" id="vfPreco" placeholder="0.00"></div><div><label class="form-label">Custo Frete</label><input type="number" class="form-input" id="vfFrete" placeholder="0.00"></div><div><label class="form-label">Status</label><select class="form-select" id="vfStatus"><option>Pendente</option><option>Entregue</option><option>Pago</option></select></div></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeVendaFloModal()">Cancelar</button><button class="btn btn-primary" onclick="saveVendaFlo()">Salvar</button></div>
   </div>
@@ -668,11 +668,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- COTACAO MODAL -->
 <div id="cotacaoModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title">Nova CotaÃ§Ã£o de Frete</div><button onclick="closeCotacaoModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title">Nova Cotação de Frete</div><button onclick="closeCotacaoModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Data</label><input type="date" class="form-input" id="cotData"></div><div><label class="form-label">Origem *</label><input type="text" class="form-input" id="cotOrigem"></div><div><label class="form-label">Destino *</label><input type="text" class="form-input" id="cotDestino"></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Produto</label><input type="text" class="form-input" id="cotProduto" placeholder="Soja, Milho..."></div><div><label class="form-label">Peso (ton)</label><input type="number" class="form-input" id="cotPeso" placeholder="0"></div><div><label class="form-label">Valor/Ton</label><input type="number" class="form-input" id="cotValorTon" placeholder="0.00"></div></div>
-      <div class="form-grid form-grid-4"><div><label class="form-label">Cliente</label><input type="text" class="form-input" id="cotCliente"></div><div><label class="form-label">Tipo</label><select class="form-select" id="cotTipo"><option>PrÃ³prio</option><option>Terceiro</option><option>Ambos</option></select></div><div><label class="form-label">Validade</label><input type="date" class="form-input" id="cotValidade"></div><div><label class="form-label">Status</label><select class="form-select" id="cotStatus"><option>Pendente</option><option>Aprovada</option><option>Recusada</option><option>Expirada</option></select></div></div>
+      <div class="form-grid form-grid-4"><div><label class="form-label">Cliente</label><input type="text" class="form-input" id="cotCliente"></div><div><label class="form-label">Tipo</label><select class="form-select" id="cotTipo"><option>Próprio</option><option>Terceiro</option><option>Ambos</option></select></div><div><label class="form-label">Validade</label><input type="date" class="form-input" id="cotValidade"></div><div><label class="form-label">Status</label><select class="form-select" id="cotStatus"><option>Pendente</option><option>Aprovada</option><option>Recusada</option><option>Expirada</option></select></div></div>
       <div style="margin-top:12px;"><label class="form-label">OBS</label><textarea class="form-input" id="cotObs" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeCotacaoModal()">Cancelar</button><button class="btn btn-primary" onclick="saveCotacao()">Salvar</button></div>
@@ -682,25 +682,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- USER MODAL -->
 <div id="userModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div class="modal-title">Novo UsuÃ¡rio</div><button onclick="closeUserModal()" class="btn-icon">âœ•</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Usuário</div><button onclick="closeUserModal()" class="btn-icon">✕</button></div>
     <div class="modal-body">
-      <div class="warn-box" style="margin-bottom:14px;">âš ï¸ Requer Edge Function <code>admin-create-user</code> implantada no Supabase.</div>
+      <div class="warn-box" style="margin-bottom:14px;">⚠️ Requer Edge Function <code>admin-create-user</code> implantada no Supabase.</div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Nome *</label><input type="text" class="form-input" id="newUserName"></div><div><label class="form-label">E-mail *</label><input type="email" class="form-input" id="newUserEmail"></div></div>
-      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Senha *</label><input type="password" class="form-input" id="newUserPass"></div><div><label class="form-label">Perfil</label><select class="form-select" id="newUserRole"><option value="admin">Administrador</option><option value="financeiro">Financeiro</option><option value="comercial" selected>Comercial</option><option value="logistica">LogÃ­stica</option><option value="florestal">Florestal</option><option value="estoque">Estoque</option><option value="viewer">Visualizador</option></select></div></div>
-      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">PermissÃµes:</div>
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Senha *</label><input type="password" class="form-input" id="newUserPass"></div><div><label class="form-label">Perfil</label><select class="form-select" id="newUserRole"><option value="admin">Administrador</option><option value="financeiro">Financeiro</option><option value="comercial" selected>Comercial</option><option value="logistica">Logística</option><option value="florestal">Florestal</option><option value="estoque">Estoque</option><option value="viewer">Visualizador</option></select></div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Permissões:</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_dashboard" checked> Dashboard</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_vendas" checked> Vendas</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_estoque" checked> InventÃ¡rio</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_estoque" checked> Inventário</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_carteira" checked> Clientes</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_pipeline" checked> Pipeline</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_transporte"> Transporte</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_florestal"> Florestal</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_cotacoes"> CotaÃ§Ãµes</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_config"> UsuÃ¡rios</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_cotacoes"> Cotações</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_config"> Usuários</label>
       </div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeUserModal()">Cancelar</button><button class="btn btn-primary" onclick="saveUser()">Criar UsuÃ¡rio</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeUserModal()">Cancelar</button><button class="btn btn-primary" onclick="saveUser()">Criar Usuário</button></div>
   </div>
 </div>
 
@@ -728,9 +728,9 @@ let areasCache = [], vendasFloCache = [], operacoesCache = [];
 let cotacoesCache = [], profilesCache = [];
 
 const DEFAULT_STAGES = {
-  insumos:    [{title:'ProspecÃ§Ã£o'},{title:'Contato'},{title:'Proposta'},{title:'NegociaÃ§Ã£o'},{title:'Fechamento'}],
+  insumos:    [{title:'Prospecção'},{title:'Contato'},{title:'Proposta'},{title:'Negociação'},{title:'Fechamento'}],
   transporte: [{title:'Identificado'},{title:'Qualificado'},{title:'Proposta'},{title:'Fechamento'}],
-  florestal:  [{title:'ProspecÃ§Ã£o'},{title:'Visita TÃ©cnica'},{title:'Proposta'},{title:'Fechamento'}]
+  florestal:  [{title:'Prospecção'},{title:'Visita Técnica'},{title:'Proposta'},{title:'Fechamento'}]
 };
 
 // =====================================================================
@@ -761,9 +761,9 @@ function emptyRow(cols, msg='Sem dados') {
 function badgeForStatus(s) {
   return ({
     'PAGO':'badge-green','A VENCER':'badge-amber','VENCIDO':'badge-red',
-    'Ativo':'badge-green','Bloqueado':'badge-red','Em AnÃ¡lise':'badge-amber',
-    'Em Carga':'badge-blue','Em TrÃ¢nsito':'badge-amber','Entregue':'badge-green','Cancelado':'badge-red',
-    'Comprada':'badge-green','Em Corte':'badge-blue','Em NegociaÃ§Ã£o':'badge-amber','Esgotada':'badge-gray',
+    'Ativo':'badge-green','Bloqueado':'badge-red','Em Análise':'badge-amber',
+    'Em Carga':'badge-blue','Em Trânsito':'badge-amber','Entregue':'badge-green','Cancelado':'badge-red',
+    'Comprada':'badge-green','Em Corte':'badge-blue','Em Negociação':'badge-amber','Esgotada':'badge-gray',
     'Pago':'badge-green','Pendente':'badge-amber',
     'Aprovada':'badge-green','Recusada':'badge-red','Expirada':'badge-gray',
     'Aberto':'badge-red','Resolvido':'badge-green','ativo':'badge-green','perdido':'badge-red','convertido':'badge-blue'
@@ -803,7 +803,7 @@ async function onLogin(user) {
   qs('loginScreen').classList.add('hidden');
   qs('app').classList.remove('hidden');
   qs('sidebarName').textContent = currentProfile.name;
-  const roleLabels = {admin:'Administrador',comercial:'Comercial',financeiro:'Financeiro',logistica:'LogÃ­stica',florestal:'Florestal',estoque:'Estoque',viewer:'Visualizador'};
+  const roleLabels = {admin:'Administrador',comercial:'Comercial',financeiro:'Financeiro',logistica:'Logística',florestal:'Florestal',estoque:'Estoque',viewer:'Visualizador'};
   qs('sidebarRole').textContent = roleLabels[currentProfile.role] || currentProfile.role;
   qs('sidebarAvatar').textContent = currentProfile.name.charAt(0).toUpperCase();
   applyPermissions();
@@ -836,7 +836,7 @@ async function navigate(view) {
   document.querySelectorAll('.nav-item').forEach(el=>{
     if(el.getAttribute('onclick')?.includes(`'${view}'`)) el.classList.add('active');
   });
-  const titles = {dashboard:'Dashboard',vendas:'Vendas & Faturas',estoque:'InventÃ¡rio',carteira:'Clientes',pipeline:'Pipeline CRM',transporte:'Transporte & LogÃ­stica',florestal:'Florestal â€” Biomassa',cotacoes:'CotaÃ§Ãµes de Frete',config:'UsuÃ¡rios'};
+  const titles = {dashboard:'Dashboard',vendas:'Vendas & Faturas',estoque:'Inventário',carteira:'Clientes',pipeline:'Pipeline CRM',transporte:'Transporte & Logística',florestal:'Florestal — Biomassa',cotacoes:'Cotações de Frete',config:'Usuários'};
   qs('topbarTitle').textContent = titles[view]||view;
   if (view==='dashboard')    await updateDashboard();
   else if (view==='vendas')   renderSalesTable();
@@ -985,12 +985,12 @@ async function updateDashboard() {
   qs('kpiReceber').textContent=fmt(saldo);
   qs('kpiReceberSub').textContent=`${filtered.filter(s=>s.status!=='PAGO').length} em aberto`;
   qs('kpiInadim').textContent=fmt(vencidos);
-  qs('kpiInadimRate').textContent=receita>0?`${(vencidos/receita*100).toFixed(1)}%`:'â€”';
+  qs('kpiInadimRate').textContent=receita>0?`${(vencidos/receita*100).toFixed(1)}%`:'—';
   qs('kpiClientes').textContent=clientes.size;
   qs('kpiTicket').textContent=fmt(ticket);
   qs('kpiTicketM').textContent=fmt(ticket);
   qs('kpiLtv').textContent=fmt(ltv);
-  qs('kpiLtvCac').textContent=ltvCac.toFixed(1)+'Ã—';
+  qs('kpiLtvCac').textContent=ltvCac.toFixed(1)+'×';
 
   const fretesVal=fretesCache.reduce((a,f)=>a+(f.valor||0),0);
   qs('kpiFretes').textContent=fretesCache.length;
@@ -1016,7 +1016,7 @@ function renderTopClients(filtered) {
   const sorted=Object.entries(map).sort((a,b)=>b[1].saldo-a[1].saldo).slice(0,10);
   qs('topClientsTable').querySelector('tbody').innerHTML = sorted.length
     ? sorted.map(([n,d])=>`<tr><td style="font-weight:700;">${n}</td><td>${fmt(d.receita)}</td><td>${fmt(d.saldo)}</td><td><span class="badge ${badgeForStatus(d.status)}">${d.status}</span></td></tr>`).join('')
-    : emptyRow(4,'Sem dados no perÃ­odo');
+    : emptyRow(4,'Sem dados no período');
 }
 function renderCharts(filtered) {
   const byMonth={};
@@ -1074,34 +1074,34 @@ function renderSalesTable() {
     const sb2=badgeForStatus(s.status);
     return `<tr style="cursor:pointer;" onclick="toggleSaleRow('${s.id}',this)">
       <td><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="ico-${s.id}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></td>
-      <td>${s.fecha||'â€”'}</td>
-      <td class="mono">${s.factura_no||'â€”'}</td>
-      <td class="mono">${s.pedido_no||'â€”'}</td>
-      <td><span class="badge ${s.condicion==='CREDITO'?'badge-blue':'badge-gray'}">${s.condicion||'â€”'}</span></td>
-      <td>${s.vendedor||'â€”'}</td>
-      <td style="font-weight:700;">${s.cliente||'â€”'}</td>
-      <td>${s.producto||'â€”'}</td>
-      <td>${s.cant||'â€”'}</td>
+      <td>${s.fecha||'—'}</td>
+      <td class="mono">${s.factura_no||'—'}</td>
+      <td class="mono">${s.pedido_no||'—'}</td>
+      <td><span class="badge ${s.condicion==='CREDITO'?'badge-blue':'badge-gray'}">${s.condicion||'—'}</span></td>
+      <td>${s.vendedor||'—'}</td>
+      <td style="font-weight:700;">${s.cliente||'—'}</td>
+      <td>${s.producto||'—'}</td>
+      <td>${s.cant||'—'}</td>
       <td>$${(s.precio_uni||0).toFixed(2)}</td>
-      <td>${s.vto||'â€”'}</td>
+      <td>${s.vto||'—'}</td>
       <td style="font-weight:700;">$${(s.valor||0).toFixed(2)} <small style="color:var(--text-3);">${s.moeda}</small></td>
       <td style="color:${(s.saldo||0)>0?'var(--red)':'var(--green)'};">$${(s.saldo||0).toFixed(2)}</td>
       <td><span class="badge ${sb2}">${s.status}</span></td>
       <td style="white-space:nowrap;">
-        <button class="btn-icon btn-sm" onclick="event.stopPropagation();editSale('${s.id}')" title="Editar">âœï¸</button>
-        <button class="btn-icon btn-sm" style="color:var(--red);" onclick="event.stopPropagation();deleteSale('${s.id}')" title="Excluir">ðŸ—‘</button>
+        <button class="btn-icon btn-sm" onclick="event.stopPropagation();editSale('${s.id}')" title="Editar">✏️</button>
+        <button class="btn-icon btn-sm" style="color:var(--red);" onclick="event.stopPropagation();deleteSale('${s.id}')" title="Excluir">🗑</button>
       </td>
     </tr>
     <tr id="exp-${s.id}" class="hidden">
       <td colspan="15" style="background:#f9fafb;padding:10px 14px;">
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Registro</div><div style="font-size:13px;">${s.registro_no||'â€”'}</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">RemisiÃ³n</div><div style="font-size:13px;">${s.remision_no||'â€”'}</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">NC NÂ°</div><div style="font-size:13px;">${s.nc_no||'â€”'}</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Recibo</div><div style="font-size:13px;">${s.recibo_no||'â€”'}</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Registro</div><div style="font-size:13px;">${s.registro_no||'—'}</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Remisión</div><div style="font-size:13px;">${s.remision_no||'—'}</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">NC N°</div><div style="font-size:13px;">${s.nc_no||'—'}</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Recibo</div><div style="font-size:13px;">${s.recibo_no||'—'}</div></div>
           <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Custo Unit.</div><div style="font-size:13px;">$${(s.precio_costo||0).toFixed(2)}</div></div>
-          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Margem</div><div style="font-size:13px;">${s.precio_uni&&s.precio_costo?((s.precio_uni-s.precio_costo)/s.precio_uni*100).toFixed(1)+'%':'â€”'}</div></div>
-          <div style="grid-column:span 2;"><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">OBS</div><div style="font-size:13px;">${s.obs||'â€”'}</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">Margem</div><div style="font-size:13px;">${s.precio_uni&&s.precio_costo?((s.precio_uni-s.precio_costo)/s.precio_uni*100).toFixed(1)+'%':'—'}</div></div>
+          <div style="grid-column:span 2;"><div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;margin-bottom:2px;">OBS</div><div style="font-size:13px;">${s.obs||'—'}</div></div>
         </div>
       </td>
     </tr>`;
@@ -1138,7 +1138,7 @@ function closeSaleModal(){qs('saleModal').classList.add('hidden');currentSaleId=
 function editSale(id){openSaleModal(id);}
 async function saveSale() {
   const fecha=qs('saleDate').value, cliente=qs('saleCliente').value;
-  if(!fecha||!cliente){toast('Preencha os campos obrigatÃ³rios','error');return;}
+  if(!fecha||!cliente){toast('Preencha os campos obrigatórios','error');return;}
   const selProd=qs('saleProduct'); const idx=parseInt(selProd.value);
   const prodName=(!isNaN(idx)&&inventoryCache[idx])?inventoryCache[idx].descripcion:(selProd.options[selProd.selectedIndex]?.text?.split(' (')[0]||'');
   const valor=parseFloat(qs('saleValor').value)||0;
@@ -1170,14 +1170,14 @@ async function deleteSale(id) {
   const {error}=await sb.from('sales').delete().eq('id',id);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Venda excluÃ­da!'); await fetchSales(); renderSalesTable();
+  toast('Venda excluída!'); await fetchSales(); renderSalesTable();
 }
 function autoFillSaleProduct() {
   const idx=parseInt(qs('saleProduct').value);
   if(isNaN(idx)){qs('stockInfo').textContent='';return;}
   const item=inventoryCache[idx]; if(!item) return;
   qs('salePrecioUni').value=item.valor_unit||'';
-  qs('stockInfo').textContent=`DisponÃ­vel: ${item.stock} ${item.unidade}`;
+  qs('stockInfo').textContent=`Disponível: ${item.stock} ${item.unidade}`;
   calcSaleTotal();
 }
 function calcSaleTotal() {
@@ -1198,14 +1198,14 @@ function renderEstoqueTable() {
   tbody.innerHTML=inventoryCache.map(item=>`
     <tr>
       <td style="font-weight:700;">${item.descripcion}</td>
-      <td><span class="badge badge-blue">${item.subcategoria||'â€”'}</span></td>
-      <td>${item.marca||'â€”'}</td><td>${item.unidade||'â€”'}</td><td>${item.local||'â€”'}</td>
+      <td><span class="badge badge-blue">${item.subcategoria||'—'}</span></td>
+      <td>${item.marca||'—'}</td><td>${item.unidade||'—'}</td><td>${item.local||'—'}</td>
       <td style="font-weight:700;">${item.stock||0}</td>
       <td>$${(item.valor_unit||0).toFixed(2)}</td>
       <td style="font-weight:700;">$${((item.stock||0)*(item.valor_unit||0)).toFixed(2)}</td>
       <td><span class="badge ${item.moeda==='Gs'?'badge-amber':'badge-blue'}">${item.moeda||'USD'}</span></td>
-      <td>${item.snapshot_date||'â€”'}</td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')">ðŸ—‘</button></td>
+      <td>${item.snapshot_date||'—'}</td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')">🗑</button></td>
     </tr>`).join('');
 }
 function openEstoqueModal() {
@@ -1232,7 +1232,7 @@ async function deleteEstoque(id) {
   const {error}=await sb.from('inventory').delete().eq('id',id);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Item excluÃ­do!'); await fetchInventory(); renderEstoqueTable(); refreshProductDropdown();
+  toast('Item excluído!'); await fetchInventory(); renderEstoqueTable(); refreshProductDropdown();
 }
 
 // =====================================================================
@@ -1247,13 +1247,13 @@ function renderCarteiraTable() {
     const lt=(c.linha_soja_milho||0)+(c.linha_trigo||0);
     return `<tr>
       <td style="font-weight:700;">${c.cliente}</td>
-      <td>${c.ruc_ci||'â€”'}</td><td>${c.telefone||'â€”'}</td><td>${c.cidade||'â€”'}</td><td>${c.vendedor||'â€”'}</td>
+      <td>${c.ruc_ci||'—'}</td><td>${c.telefone||'—'}</td><td>${c.cidade||'—'}</td><td>${c.vendedor||'—'}</td>
       <td>$${(c.linha_soja_milho||0).toFixed(2)}</td>
       <td>$${(c.linha_trigo||0).toFixed(2)}</td>
       <td style="font-weight:700;">$${lt.toFixed(2)}</td>
-      <td>${c.cant_has||'â€”'} ha</td>
+      <td>${c.cant_has||'—'} ha</td>
       <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'Ativo'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')">ðŸ—‘</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
@@ -1279,7 +1279,7 @@ async function deleteCarteira(id) {
   const {error}=await sb.from('customers').delete().eq('id',id);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Cliente excluÃ­do!'); await fetchCustomers(); renderCarteiraTable(); refreshClientDropdown();
+  toast('Cliente excluído!'); await fetchCustomers(); renderCarteiraTable(); refreshClientDropdown();
 }
 
 // =====================================================================
@@ -1302,7 +1302,7 @@ async function renderPipeline() {
 
   const board=qs('kanbanBoard'); board.innerHTML='';
   if(!currentPipelineStages.length){
-    board.innerHTML='<div style="padding:40px;color:var(--text-3);text-align:center;font-size:14px;">Nenhuma coluna configurada. Clique em "âš™ Colunas" para criar estÃ¡gios.</div>';
+    board.innerHTML='<div style="padding:40px;color:var(--text-3);text-align:center;font-size:14px;">Nenhuma coluna configurada. Clique em "⚙ Colunas" para criar estágios.</div>';
     return;
   }
   currentPipelineStages.forEach(stage=>{
@@ -1315,7 +1315,7 @@ async function renderPipeline() {
     leads.forEach(lead=>{
       const card=document.createElement('div');
       card.className='kanban-card'; card.draggable=true; card.dataset.leadId=lead.id;
-      card.innerHTML=`<div style="font-weight:700;font-size:13px;margin-bottom:3px;">${lead.title}</div><div style="font-size:11px;color:var(--text-2);margin-bottom:7px;">${lead.phone||'â€”'} Â· ${lead.city||'â€”'}</div><div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge-blue" style="font-size:10px;">${lead.source||'Campo'}</span><span style="font-size:11px;color:var(--text-3);">${lead.owner||'â€”'}</span></div>`;
+      card.innerHTML=`<div style="font-weight:700;font-size:13px;margin-bottom:3px;">${lead.title}</div><div style="font-size:11px;color:var(--text-2);margin-bottom:7px;">${lead.phone||'—'} · ${lead.city||'—'}</div><div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge-blue" style="font-size:10px;">${lead.source||'Campo'}</span><span style="font-size:11px;color:var(--text-3);">${lead.owner||'—'}</span></div>`;
       card.addEventListener('dragstart',e=>{draggingLeadId=lead.id;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
       card.addEventListener('dragend',()=>card.classList.remove('dragging'));
       card.addEventListener('click',()=>openLeadDrawer(lead.id));
@@ -1368,26 +1368,26 @@ function openLeadDrawer(leadId) {
   const allStages=[...(pipelineStagesCache.insumos||[]),...(pipelineStagesCache.transporte||[]),...(pipelineStagesCache.florestal||[])];
   const stage=allStages.find(s=>s.id===lead.stage_id);
   qs('drawerName').textContent=lead.title;
-  qs('drawerStage').textContent=`${lead.division.toUpperCase()} â†’ ${stage?.title||'â€”'}`;
+  qs('drawerStage').textContent=`${lead.division.toUpperCase()} → ${stage?.title||'—'}`;
   const stageMap={}; allStages.forEach(s=>stageMap[s.id]=s.title);
   const hist=pipelineHistoryCache.filter(h=>h.lead_id===leadId);
-  const labels={create:'Lead criado',move_stage:'Movido de estÃ¡gio',convert:'Convertido em cliente',mark_lost:'Marcado como perdido'};
+  const labels={create:'Lead criado',move_stage:'Movido de estágio',convert:'Convertido em cliente',mark_lost:'Marcado como perdido'};
   qs('drawerContent').innerHTML=`
     <div style="margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">InformaÃ§Ãµes</div>
+      <div style="font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Informações</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
-        <div><span style="color:var(--text-2);">Telefone:</span> ${lead.phone||'â€”'}</div>
-        <div><span style="color:var(--text-2);">Cidade:</span> ${lead.city||'â€”'}</div>
-        <div><span style="color:var(--text-2);">Origem:</span> ${lead.source||'â€”'}</div>
-        <div><span style="color:var(--text-2);">ResponsÃ¡vel:</span> ${lead.owner||'â€”'}</div>
-        <div><span style="color:var(--text-2);">RUC/CI:</span> ${lead.ruc_ci||'â€”'}</div>
+        <div><span style="color:var(--text-2);">Telefone:</span> ${lead.phone||'—'}</div>
+        <div><span style="color:var(--text-2);">Cidade:</span> ${lead.city||'—'}</div>
+        <div><span style="color:var(--text-2);">Origem:</span> ${lead.source||'—'}</div>
+        <div><span style="color:var(--text-2);">Responsável:</span> ${lead.owner||'—'}</div>
+        <div><span style="color:var(--text-2);">RUC/CI:</span> ${lead.ruc_ci||'—'}</div>
         <div><span style="color:var(--text-2);">Status:</span> <span class="badge ${badgeForStatus(lead.status)}">${lead.status}</span></div>
       </div>
       ${lead.obs?`<div style="margin-top:8px;font-size:13px;"><span style="font-weight:600;">OBS:</span> ${lead.obs}</div>`:''}
     </div>
     <div>
-      <div style="font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">HistÃ³rico</div>
-      ${hist.length?hist.map(h=>`<div class="history-item"><div class="history-dot"></div><div><div style="font-size:12px;font-weight:600;">${labels[h.action]||h.action}</div><div style="font-size:11px;color:var(--text-3);">${h.from_stage_id?stageMap[h.from_stage_id]+' â†’ '+stageMap[h.to_stage_id]:''} Â· ${new Date(h.created_at).toLocaleDateString('pt-BR')}</div></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-3);">Sem histÃ³rico</div>'}
+      <div style="font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Histórico</div>
+      ${hist.length?hist.map(h=>`<div class="history-item"><div class="history-dot"></div><div><div style="font-size:12px;font-weight:600;">${labels[h.action]||h.action}</div><div style="font-size:11px;color:var(--text-3);">${h.from_stage_id?stageMap[h.from_stage_id]+' → '+stageMap[h.to_stage_id]:''} · ${new Date(h.created_at).toLocaleDateString('pt-BR')}</div></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-3);">Sem histórico</div>'}
     </div>`;
   const isAtivo=lead.status==='ativo';
   qs('drawerLostBtn').classList.toggle('hidden',!isAtivo);
@@ -1424,7 +1424,7 @@ async function convertLead() {
 function openManageStages() {
   const stages=pipelineStagesCache[currentPipelineDiv]||[];
   editingStages=stages.map(s=>({...s}));
-  qs('stagesTitle').textContent=`Colunas â€” ${currentPipelineDiv.charAt(0).toUpperCase()+currentPipelineDiv.slice(1)}`;
+  qs('stagesTitle').textContent=`Colunas — ${currentPipelineDiv.charAt(0).toUpperCase()+currentPipelineDiv.slice(1)}`;
   renderStagesList(); qs('stagesModal').classList.remove('hidden');
 }
 function closeManageStages(){qs('stagesModal').classList.add('hidden');editingStages=[];}
@@ -1433,7 +1433,7 @@ function renderStagesList() {
   if(!editingStages.length){c.innerHTML='<div style="text-align:center;color:var(--text-3);padding:24px;font-size:13px;">Nenhuma coluna. Clique em "+ Coluna".</div>';return;}
   editingStages.forEach((s,i)=>{
     const el=document.createElement('div'); el.className='stage-item'; el.draggable=true;
-    el.innerHTML=`<span style="color:var(--text-3);cursor:grab;font-size:16px;">â ¿</span><input class="stage-input" type="text" value="${s.title||''}" placeholder="Nome da coluna" oninput="editingStages[${i}].title=this.value"><button onclick="removeStage(${i})" class="btn-icon" style="color:var(--red);">âœ•</button>`;
+    el.innerHTML=`<span style="color:var(--text-3);cursor:grab;font-size:16px;">⠿</span><input class="stage-input" type="text" value="${s.title||''}" placeholder="Nome da coluna" oninput="editingStages[${i}].title=this.value"><button onclick="removeStage(${i})" class="btn-icon" style="color:var(--red);">✕</button>`;
     el.addEventListener('dragstart',e=>{draggingStageIdx=i;el.style.opacity='.4';e.dataTransfer.effectAllowed='move';});
     el.addEventListener('dragend',()=>{el.style.opacity='';draggingStageIdx=null;document.querySelectorAll('.stage-item').forEach(x=>x.style.borderTop='');});
     el.addEventListener('dragover',e=>{e.preventDefault();document.querySelectorAll('.stage-item').forEach(x=>x.style.borderTop='');el.style.borderTop='2px solid var(--primary)';});
@@ -1451,7 +1451,7 @@ function renderStagesList() {
 function addStage(){editingStages.push({title:'',position:editingStages.length,division:currentPipelineDiv});renderStagesList();setTimeout(()=>{const inputs=qs('stagesList').querySelectorAll('.stage-input');inputs[inputs.length-1]?.focus();},50);}
 function removeStage(i){editingStages.splice(i,1);editingStages.forEach((s,idx)=>s.position=idx);renderStagesList();}
 async function saveStages() {
-  if(editingStages.some(s=>!s.title?.trim())){toast('Todas as colunas precisam ter tÃ­tulo','error');return;}
+  if(editingStages.some(s=>!s.title?.trim())){toast('Todas as colunas precisam ter título','error');return;}
   editingStages.forEach((s,i)=>{s.position=i;s.division=currentPipelineDiv;});
   loading(true);
   const existing=pipelineStagesCache[currentPipelineDiv]||[];
@@ -1466,7 +1466,7 @@ async function saveStages() {
   loading(false); closeManageStages(); await fetchPipelineData(); await renderPipeline(); toast('Colunas salvas!');
 }
 async function resetStages(){
-  if(!confirm('Restaurar colunas padrÃ£o?')) return;
+  if(!confirm('Restaurar colunas padrão?')) return;
   editingStages=DEFAULT_STAGES[currentPipelineDiv].map((s,i)=>({title:s.title,position:i,division:currentPipelineDiv}));
   renderStagesList();
 }
@@ -1481,7 +1481,7 @@ function switchTranspTab(tab,btn) {
   ['fretes','frota','sinistros'].forEach(t=>qs(`transp-${t}`)?.classList.toggle('hidden',t!==tab));
 }
 function renderTransporte() {
-  const ativos=fretesCache.filter(f=>['Em Carga','Em TrÃ¢nsito'].includes(f.status)).length;
+  const ativos=fretesCache.filter(f=>['Em Carga','Em Trânsito'].includes(f.status)).length;
   const receita=fretesCache.reduce((a,f)=>a+(f.valor||0),0);
   const custo=fretesCache.reduce((a,f)=>a+(f.custo||0),0);
   const margem=receita>0?((receita-custo)/receita*100):0;
@@ -1495,14 +1495,14 @@ function renderFretesTable() {
   const tbody=qs('fretesTable')?.querySelector('tbody'); if(!tbody) return;
   if(!fretesCache.length){tbody.innerHTML=emptyRow(12);return;}
   tbody.innerHTML=fretesCache.map(f=>{
-    const m=f.valor>0?`${(((f.valor||0)-(f.custo||0))/(f.valor||1)*100).toFixed(1)}%`:'â€”';
+    const m=f.valor>0?`${(((f.valor||0)-(f.custo||0))/(f.valor||1)*100).toFixed(1)}%`:'—';
     return `<tr>
-      <td>${f.data||'â€”'}</td><td>${f.origem||'â€”'}</td><td>${f.destino||'â€”'}</td><td>${f.produto||'â€”'}</td>
-      <td><span class="badge ${f.tipo==='proprio'?'badge-blue':'badge-purple'}">${f.tipo||'â€”'}</span></td>
-      <td>${f.motorista||'â€”'}</td><td class="mono">${f.placa||'â€”'}</td>
+      <td>${f.data||'—'}</td><td>${f.origem||'—'}</td><td>${f.destino||'—'}</td><td>${f.produto||'—'}</td>
+      <td><span class="badge ${f.tipo==='proprio'?'badge-blue':'badge-purple'}">${f.tipo||'—'}</span></td>
+      <td>${f.motorista||'—'}</td><td class="mono">${f.placa||'—'}</td>
       <td>$${(f.valor||0).toFixed(2)}</td><td>$${(f.custo||0).toFixed(2)}</td><td>${m}</td>
-      <td><span class="badge ${badgeForStatus(f.status)}">${f.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')">ðŸ—‘</button></td>
+      <td><span class="badge ${badgeForStatus(f.status)}">${f.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
@@ -1511,12 +1511,12 @@ function renderFrotaTable() {
   if(!veiculosCache.length){tbody.innerHTML=emptyRow(10);return;}
   tbody.innerHTML=veiculosCache.map(v=>`
     <tr>
-      <td class="mono" style="font-weight:700;">${v.placa}</td><td>${v.tipo||'â€”'}</td><td>${v.modelo||'â€”'}</td>
-      <td><span class="badge ${v.prop_terc==='proprio'?'badge-blue':'badge-purple'}">${v.prop_terc||'â€”'}</span></td>
-      <td>${v.motorista||'â€”'}</td><td>${v.km_atual||0} km</td>
-      <td>${v.prox_manutencao||'â€”'}</td><td>${v.consumo||'â€”'} L/km</td>
+      <td class="mono" style="font-weight:700;">${v.placa}</td><td>${v.tipo||'—'}</td><td>${v.modelo||'—'}</td>
+      <td><span class="badge ${v.prop_terc==='proprio'?'badge-blue':'badge-purple'}">${v.prop_terc||'—'}</span></td>
+      <td>${v.motorista||'—'}</td><td>${v.km_atual||0} km</td>
+      <td>${v.prox_manutencao||'—'}</td><td>${v.consumo||'—'} L/km</td>
       <td><span class="badge ${badgeForStatus(v.status)}">${v.status||'Ativo'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVeiculo('${v.id}')">ðŸ—‘</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVeiculo('${v.id}')">🗑</button></td>
     </tr>`).join('');
 }
 function renderSinistrosTable() {
@@ -1524,11 +1524,11 @@ function renderSinistrosTable() {
   if(!sinistrosCache.length){tbody.innerHTML=emptyRow(8);return;}
   tbody.innerHTML=sinistrosCache.map(s=>`
     <tr>
-      <td>${s.data||'â€”'}</td><td>${s.tipo||'â€”'}</td><td>${s.descricao||'â€”'}</td>
-      <td>$${(s.valor_prejuizo||0).toFixed(2)}</td><td>${s.seguro||'â€”'}</td>
+      <td>${s.data||'—'}</td><td>${s.tipo||'—'}</td><td>${s.descricao||'—'}</td>
+      <td>$${(s.valor_prejuizo||0).toFixed(2)}</td><td>${s.seguro||'—'}</td>
       <td>$${(s.valor_recuperado||0).toFixed(2)}</td>
-      <td><span class="badge ${badgeForStatus(s.status)}">${s.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteSinistro('${s.id}')">ðŸ—‘</button></td>
+      <td><span class="badge ${badgeForStatus(s.status)}">${s.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteSinistro('${s.id}')">🗑</button></td>
     </tr>`).join('');
 }
 function openFreteModal(){
@@ -1552,7 +1552,7 @@ async function saveFrete() {
 async function deleteFrete(id){
   if(!confirm('Excluir este frete?')) return;
   loading(true); await sb.from('fretes').delete().eq('id',id); loading(false);
-  toast('Frete excluÃ­do!'); await fetchTransporteData(); renderTransporte();
+  toast('Frete excluído!'); await fetchTransporteData(); renderTransporte();
 }
 function openVeiculoModal(){
   ['veicPlaca','veicModelo','veicMotorista','veicManut'].forEach(i=>qs(i).value='');
@@ -1568,17 +1568,17 @@ async function saveVeiculo() {
   const {error}=await sb.from('veiculos').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('VeÃ­culo adicionado!'); closeVeiculoModal(); await fetchTransporteData(); renderTransporte();
+  toast('Veículo adicionado!'); closeVeiculoModal(); await fetchTransporteData(); renderTransporte();
 }
 async function deleteVeiculo(id){
-  if(!confirm('Excluir este veÃ­culo?')) return;
+  if(!confirm('Excluir este veículo?')) return;
   loading(true); await sb.from('veiculos').delete().eq('id',id); loading(false);
-  toast('VeÃ­culo excluÃ­do!'); await fetchTransporteData(); renderTransporte();
+  toast('Veículo excluído!'); await fetchTransporteData(); renderTransporte();
 }
 async function deleteSinistro(id){
   if(!confirm('Excluir este sinistro?')) return;
   loading(true); await sb.from('sinistros').delete().eq('id',id); loading(false);
-  toast('Sinistro excluÃ­do!'); await fetchTransporteData(); renderTransporte();
+  toast('Sinistro excluído!'); await fetchTransporteData(); renderTransporte();
 }
 
 // =====================================================================
@@ -1607,15 +1607,15 @@ function renderAreasTable() {
   if(!areasCache.length){tbody.innerHTML=emptyRow(11);return;}
   tbody.innerHTML=areasCache.map(a=>`
     <tr>
-      <td style="font-weight:700;">${a.nome}</td><td>${a.localizacao||'â€”'}</td>
+      <td style="font-weight:700;">${a.nome}</td><td>${a.localizacao||'—'}</td>
       <td>${a.hectares||0} ha</td>
-      <td><span class="badge badge-teal">${a.tipo_negociacao||'â€”'}</span></td>
+      <td><span class="badge badge-teal">${a.tipo_negociacao||'—'}</span></td>
       <td>$${(a.valor_compra||0).toFixed(2)}</td>
       <td>${a.est_toneladas||0} t</td><td>${a.ton_extraidas||0} t</td>
       <td>$${(a.custo_op||0).toFixed(2)}</td>
-      <td>${a.especie||'â€”'}</td>
-      <td><span class="badge ${badgeForStatus(a.status)}">${a.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')">ðŸ—‘</button></td>
+      <td>${a.especie||'—'}</td>
+      <td><span class="badge ${badgeForStatus(a.status)}">${a.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')">🗑</button></td>
     </tr>`).join('');
 }
 function renderVendasFloTable() {
@@ -1624,15 +1624,15 @@ function renderVendasFloTable() {
   tbody.innerHTML=vendasFloCache.map(v=>{
     const total=(v.ton||0)*(v.preco||0);
     const custo=v.custo_frete||0;
-    const m=total>0?`${((total-custo)/total*100).toFixed(1)}%`:'â€”';
-    const areaName=areasCache.find(a=>a.id===v.area_id)?.nome||'â€”';
+    const m=total>0?`${((total-custo)/total*100).toFixed(1)}%`:'—';
+    const areaName=areasCache.find(a=>a.id===v.area_id)?.nome||'—';
     return `<tr>
-      <td>${v.data||'â€”'}</td><td style="font-weight:700;">${v.cliente||'â€”'}</td><td>${areaName}</td>
+      <td>${v.data||'—'}</td><td style="font-weight:700;">${v.cliente||'—'}</td><td>${areaName}</td>
       <td>${v.ton||0} t</td><td>$${(v.preco||0).toFixed(2)}</td>
       <td style="font-weight:700;">$${total.toFixed(2)}</td>
       <td>$${custo.toFixed(2)}</td><td>${m}</td>
-      <td><span class="badge ${badgeForStatus(v.status)}">${v.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVendaFlo('${v.id}')">ðŸ—‘</button></td>
+      <td><span class="badge ${badgeForStatus(v.status)}">${v.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVendaFlo('${v.id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
@@ -1640,36 +1640,36 @@ function renderOperacoesTable() {
   const tbody=qs('operacoesTable')?.querySelector('tbody'); if(!tbody) return;
   if(!operacoesCache.length){tbody.innerHTML=emptyRow(8);return;}
   tbody.innerHTML=operacoesCache.map(o=>{
-    const areaName=areasCache.find(a=>a.id===o.area_id)?.nome||'â€”';
+    const areaName=areasCache.find(a=>a.id===o.area_id)?.nome||'—';
     return `<tr>
-      <td>${o.data||'â€”'}</td><td>${areaName}</td><td>${o.tipo||'â€”'}</td>
-      <td>${o.descricao||'â€”'}</td><td>$${(o.custo||0).toFixed(2)}</td>
-      <td>${o.responsavel||'â€”'}</td>
-      <td><span class="badge ${badgeForStatus(o.status)}">${o.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteOperacao('${o.id}')">ðŸ—‘</button></td>
+      <td>${o.data||'—'}</td><td>${areaName}</td><td>${o.tipo||'—'}</td>
+      <td>${o.descricao||'—'}</td><td>$${(o.custo||0).toFixed(2)}</td>
+      <td>${o.responsavel||'—'}</td>
+      <td><span class="badge ${badgeForStatus(o.status)}">${o.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteOperacao('${o.id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
 function openAreaModal(){
   ['areaNome','areaLocal','areaHa','areaValor','areaTon','areaTonExt','areaObs'].forEach(i=>qs(i).value='');
-  currentAreaId=null; qs('areaModalTitle').textContent='Nova Ãrea Florestal';
+  currentAreaId=null; qs('areaModalTitle').textContent='Nova Área Florestal';
   qs('areaModal').classList.remove('hidden');
 }
 function closeAreaModal(){qs('areaModal').classList.add('hidden');currentAreaId=null;}
 async function saveArea() {
   const nome=qs('areaNome').value.trim();
-  if(!nome){toast('Informe o nome da Ã¡rea','error');return;}
+  if(!nome){toast('Informe o nome da área','error');return;}
   const payload={nome,localizacao:qs('areaLocal').value,hectares:parseFloat(qs('areaHa').value)||0,tipo_negociacao:qs('areaTipoNeg').value,valor_compra:parseFloat(qs('areaValor').value)||0,est_toneladas:parseFloat(qs('areaTon').value)||0,ton_extraidas:parseFloat(qs('areaTonExt').value)||0,especie:qs('areaEspecie').value,status:qs('areaStatus').value,obs:qs('areaObs').value,custo_op:0,created_by:currentUser.id};
   loading(true);
   const {error}=await sb.from('areas_florestais').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Ãrea adicionada!'); closeAreaModal(); await fetchFlorestData(); renderFlorestal(); refreshAreaDropdown();
+  toast('Área adicionada!'); closeAreaModal(); await fetchFlorestData(); renderFlorestal(); refreshAreaDropdown();
 }
 async function deleteArea(id){
-  if(!confirm('Excluir esta Ã¡rea?')) return;
+  if(!confirm('Excluir esta área?')) return;
   loading(true); await sb.from('areas_florestais').delete().eq('id',id); loading(false);
-  toast('Ãrea excluÃ­da!'); await fetchFlorestData(); renderFlorestal(); refreshAreaDropdown();
+  toast('Área excluída!'); await fetchFlorestData(); renderFlorestal(); refreshAreaDropdown();
 }
 function openVendaFloModal(){
   ['vfCliente','vfTon','vfPreco','vfFrete'].forEach(i=>qs(i).value='');
@@ -1690,32 +1690,32 @@ async function saveVendaFlo() {
 async function deleteVendaFlo(id){
   if(!confirm('Excluir esta venda?')) return;
   loading(true); await sb.from('vendas_florestais').delete().eq('id',id); loading(false);
-  toast('Venda excluÃ­da!'); await fetchFlorestData(); renderFlorestal();
+  toast('Venda excluída!'); await fetchFlorestData(); renderFlorestal();
 }
 async function deleteOperacao(id){
-  if(!confirm('Excluir esta operaÃ§Ã£o?')) return;
+  if(!confirm('Excluir esta operação?')) return;
   loading(true); await sb.from('operacoes_florestais').delete().eq('id',id); loading(false);
-  toast('OperaÃ§Ã£o excluÃ­da!'); await fetchFlorestData(); renderFlorestal();
+  toast('Operação excluída!'); await fetchFlorestData(); renderFlorestal();
 }
 
 // =====================================================================
-//  COTAÃ‡Ã•ES
+//  COTAÇÕES
 // =====================================================================
 function renderCotacoesTable() {
   const tbody=qs('cotacoesTable')?.querySelector('tbody'); if(!tbody) return;
-  if(!cotacoesCache.length){tbody.innerHTML=emptyRow(12,'Nenhuma cotaÃ§Ã£o registrada');return;}
+  if(!cotacoesCache.length){tbody.innerHTML=emptyRow(12,'Nenhuma cotação registrada');return;}
   tbody.innerHTML=cotacoesCache.map(c=>{
     const total=(c.peso||0)*(c.valor_ton||0);
     return `<tr>
-      <td>${c.data||'â€”'}</td><td>${c.origem||'â€”'}</td><td>${c.destino||'â€”'}</td>
-      <td>${c.produto||'â€”'}</td><td>${c.peso||0} t</td>
+      <td>${c.data||'—'}</td><td>${c.origem||'—'}</td><td>${c.destino||'—'}</td>
+      <td>${c.produto||'—'}</td><td>${c.peso||0} t</td>
       <td>$${(c.valor_ton||0).toFixed(2)}</td>
       <td style="font-weight:700;">$${total.toFixed(2)}</td>
-      <td>${c.cliente||'â€”'}</td>
-      <td><span class="badge badge-gray">${c.tipo||'â€”'}</span></td>
-      <td>${c.validade||'â€”'}</td>
-      <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'â€”'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')">ðŸ—‘</button></td>
+      <td>${c.cliente||'—'}</td>
+      <td><span class="badge badge-gray">${c.tipo||'—'}</span></td>
+      <td>${c.validade||'—'}</td>
+      <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'—'}</span></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
@@ -1734,38 +1734,38 @@ async function saveCotacao() {
   const {error}=await sb.from('cotacoes').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('CotaÃ§Ã£o registrada!'); closeCotacaoModal(); await fetchCotacoes(); renderCotacoesTable();
+  toast('Cotação registrada!'); closeCotacaoModal(); await fetchCotacoes(); renderCotacoesTable();
 }
 async function deleteCotacao(id){
-  if(!confirm('Excluir esta cotaÃ§Ã£o?')) return;
+  if(!confirm('Excluir esta cotação?')) return;
   loading(true); await sb.from('cotacoes').delete().eq('id',id); loading(false);
-  toast('CotaÃ§Ã£o excluÃ­da!'); await fetchCotacoes(); renderCotacoesTable();
+  toast('Cotação excluída!'); await fetchCotacoes(); renderCotacoesTable();
 }
 
 // =====================================================================
-//  CONFIG â€” USUÃRIOS
+//  CONFIG — USUÁRIOS
 // =====================================================================
 async function renderUsersTable() {
   const {data}=await sb.from('profiles').select('id,name,role,permissions,active');
   profilesCache=data||[];
-  // Get emails from auth â€” we need them for display, fetch via profiles join
+  // Get emails from auth — we need them for display, fetch via profiles join
   const tbody=qs('usersTable')?.querySelector('tbody'); if(!tbody) return;
-  if(!profilesCache.length){tbody.innerHTML=emptyRow(6,'Nenhum usuÃ¡rio');return;}
+  if(!profilesCache.length){tbody.innerHTML=emptyRow(6,'Nenhum usuário');return;}
   tbody.innerHTML=profilesCache.map(u=>`
     <tr>
       <td style="font-weight:700;">${u.name}</td>
-      <td class="mono" style="font-size:12px;">â€”</td>
+      <td class="mono" style="font-size:12px;">—</td>
       <td><span class="badge badge-blue">${u.role}</span></td>
       <td style="font-size:11px;color:var(--text-2);max-width:220px;overflow:hidden;text-overflow:ellipsis;">${(u.permissions||[]).join(', ')}</td>
       <td><span class="badge ${u.active?'badge-green':'badge-red'}">${u.active?'Ativo':'Inativo'}</span></td>
-      <td>${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" style="color:var(--red);" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'ðŸš«':'âœ…'}</button>`:'â€”'}</td>
+      <td>${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" style="color:var(--red);" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'🚫':'✅'}</button>`:'—'}</td>
     </tr>`).join('');
 }
 async function toggleUserActive(id,active) {
-  if(!confirm(active?'Desativar este usuÃ¡rio?':'Ativar este usuÃ¡rio?')) return;
+  if(!confirm(active?'Desativar este usuário?':'Ativar este usuário?')) return;
   loading(true);
   await sb.from('profiles').update({active:!active}).eq('id',id);
-  loading(false); toast(active?'UsuÃ¡rio desativado':'UsuÃ¡rio ativado'); await renderUsersTable();
+  loading(false); toast(active?'Usuário desativado':'Usuário ativado'); await renderUsersTable();
 }
 function openUserModal(){
   ['newUserName','newUserEmail','newUserPass'].forEach(i=>qs(i).value='');
@@ -1789,8 +1789,8 @@ async function saveUser() {
       body:JSON.stringify({email,password:pass,name,role,permissions})
     });
     const json=await res.json();
-    if(!res.ok) throw new Error(json.error||'Erro ao criar usuÃ¡rio');
-    toast('UsuÃ¡rio criado!'); closeUserModal(); await renderUsersTable();
+    if(!res.ok) throw new Error(json.error||'Erro ao criar usuário');
+    toast('Usuário criado!'); closeUserModal(); await renderUsersTable();
   } catch(err) { toast(err.message,'error'); }
   loading(false);
 }
@@ -1812,4 +1812,3 @@ document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
-
