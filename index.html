@@ -536,9 +536,6 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <div><div class="section-title">Usuários</div><div class="section-sub">Perfis e permissões de acesso</div></div>
           <button class="btn btn-primary" onclick="openUserModal()">+ Novo Usuário</button>
         </div>
-        <div class="info-box" style="margin-bottom:14px;">
-          ℹ Novos usuários são criados via <strong>Edge Function</strong> que deve ser implantada no seu projeto Supabase. Consulte o README para instruções.
-        </div>
         <div class="card"><div class="table-wrap"><table class="data-table" id="usersTable"><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Permissões</th><th>Ativo</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
 
@@ -763,7 +760,7 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 let currentUser = null, currentProfile = null;
 let currentView = 'dashboard', currentPipelineDiv = 'insumos', currentLeadId = null;
 let draggingLeadId = null, draggingStageIdx = null, editingStages = [];
-let currentSaleId = null, currentFreteId = null, currentAreaId = null;
+let currentSaleId = null, currentFreteId = null, currentAreaId = null, currentEstoqueId = null, currentCarteiraId = null, currentCotacaoId = null, currentEditUserId = null;
 const charts = {};
 
 let salesCache = [], inventoryCache = [], customersCache = [];
@@ -1250,26 +1247,26 @@ function renderEstoqueTable() {
       <td style="font-weight:700;">$${((item.stock||0)*(item.valor_unit||0)).toFixed(2)}</td>
       <td><span class="badge ${item.moeda==='Gs'?'badge-amber':'badge-blue'}">${item.moeda||'USD'}</span></td>
       <td>${item.snapshot_date||'—'}</td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
+      <td style="display:flex;gap:4px;"><button class="btn-icon btn-sm" onclick="editEstoque('${item.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
-function openEstoqueModal() {
+function openEstoqueModal() { currentEstoqueId=null; if(qs('estoqueModalTitle'))qs('estoqueModalTitle').textContent='Adicionar Item';
   ['estDesc','estMarca','estLocal'].forEach(i=>qs(i).value='');
   ['estStock','estValorUnit','estValorTotal'].forEach(i=>qs(i).value='');
   qs('estSnapshot').value=today();
   qs('estoqueModal').classList.remove('hidden');
 }
-function closeEstoqueModal(){qs('estoqueModal').classList.add('hidden');}
+function closeEstoqueModal(){qs('estoqueModal').classList.add('hidden');currentEstoqueId=null;if(qs('estoqueModalTitle'))qs('estoqueModalTitle').textContent='Adicionar Item';}
 function calcEstTotal(){const s=parseFloat(qs('estStock').value)||0,u=parseFloat(qs('estValorUnit').value)||0;qs('estValorTotal').value=(s*u).toFixed(2);}
 async function saveEstoque() {
   const descripcion=qs('estDesc').value.trim();
   if(!descripcion){toast('Informe o nome do produto','error');return;}
   const payload={descripcion,subcategoria:qs('estSubcat').value,marca:qs('estMarca').value,unidade:qs('estUnidade').value,local:qs('estLocal').value,stock:parseFloat(qs('estStock').value)||0,valor_unit:parseFloat(qs('estValorUnit').value)||0,moeda:qs('estMoeda').value,snapshot_date:qs('estSnapshot').value||today(),created_by:currentUser.id};
   loading(true);
-  const {error}=await sb.from('inventory').insert(payload);
+  const {error}=currentEstoqueId?await sb.from('inventory').update(payload).eq('id',currentEstoqueId):await sb.from('inventory').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Item adicionado!'); closeEstoqueModal(); await fetchInventory(); renderEstoqueTable(); refreshProductDropdown();
+  toast(currentEstoqueId?'Item atualizado!':'Item adicionado!'); closeEstoqueModal(); await fetchInventory(); renderEstoqueTable(); refreshProductDropdown();
 }
 async function deleteEstoque(id) {
   if(!confirm('Excluir este item?')) return;
@@ -1298,25 +1295,25 @@ function renderCarteiraTable() {
       <td style="font-weight:700;">$${lt.toFixed(2)}</td>
       <td>${c.cant_has||'—'} ha</td>
       <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'Ativo'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
+      <td style="display:flex;gap:4px;"><button class="btn-icon btn-sm" onclick="editCarteira('${c.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
-function openCarteiraModal() {
+function openCarteiraModal() { currentCarteiraId=null;
   ['cliNome','cliRuc','cliTel','cliCidade','cliLinhaSoja','cliLinhaTrigo','cliHas','cliObs'].forEach(i=>qs(i).value='');
   refreshVendedorDropdown('cliVendedor');
   qs('carteiraModal').classList.remove('hidden');
 }
-function closeCarteiraModal(){qs('carteiraModal').classList.add('hidden');}
+function closeCarteiraModal(){qs('carteiraModal').classList.add('hidden');currentCarteiraId=null;}
 async function saveCarteira() {
   const cliente=qs('cliNome').value.trim();
   if(!cliente){toast('Informe o nome do cliente','error');return;}
   const payload={cliente,ruc_ci:qs('cliRuc').value,telefone:qs('cliTel').value,cidade:qs('cliCidade').value,vendedor:qs('cliVendedor').value,linha_soja_milho:parseFloat(qs('cliLinhaSoja').value)||0,linha_trigo:parseFloat(qs('cliLinhaTrigo').value)||0,cant_has:parseFloat(qs('cliHas').value)||0,status:qs('cliStatus').value,obs:qs('cliObs').value,created_by:currentUser.id};
   loading(true);
-  const {error}=await sb.from('customers').insert(payload);
+  const {error}=currentCarteiraId?await sb.from('customers').update(payload).eq('id',currentCarteiraId):await sb.from('customers').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Cliente adicionado!'); closeCarteiraModal(); await fetchCustomers(); renderCarteiraTable(); refreshClientDropdown();
+  toast(currentCarteiraId?'Cliente atualizado!':'Cliente adicionado!'); closeCarteiraModal(); await fetchCustomers(); renderCarteiraTable(); refreshClientDropdown();
 }
 async function deleteCarteira(id) {
   if(!confirm('Excluir este cliente?')) return;
@@ -1547,7 +1544,7 @@ function renderFretesTable() {
       <td>${f.motorista||'—'}</td><td class="mono">${f.placa||'—'}</td>
       <td>$${(f.valor||0).toFixed(2)}</td><td>$${(f.custo||0).toFixed(2)}</td><td>${m}</td>
       <td><span class="badge ${badgeForStatus(f.status)}">${f.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
+      <td style="display:flex;gap:4px;"><button class="btn-icon btn-sm" onclick="editFrete('${f.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1589,10 +1586,10 @@ async function saveFrete() {
   if(!origem||!destino){toast('Preencha origem e destino','error');return;}
   const payload={data:qs('freteData').value,origem,destino,produto:qs('freteProduto').value,peso:parseFloat(qs('fretePeso').value)||0,tipo:qs('freteTipo').value,motorista:qs('freteMotorista').value,placa:qs('fretePlaca').value,valor:parseFloat(qs('freteValor').value)||0,custo:parseFloat(qs('freteCusto').value)||0,cliente:qs('freteCliente').value,status:qs('freteStatus').value,obs:qs('freteObs').value,created_by:currentUser.id};
   loading(true);
-  const {error}=await sb.from('fretes').insert(payload);
+  const {error}=currentFreteId?await sb.from('fretes').update(payload).eq('id',currentFreteId):await sb.from('fretes').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
-  toast('Frete registrado!'); closeFreteModal(); await fetchTransporteData(); renderTransporte();
+  toast(currentFreteId?'Frete atualizado!':'Frete registrado!'); closeFreteModal(); await fetchTransporteData(); renderTransporte();
 }
 async function deleteFrete(id){
   if(!confirm('Excluir este frete?')) return;
@@ -1660,7 +1657,7 @@ function renderAreasTable() {
       <td>$${(a.custo_op||0).toFixed(2)}</td>
       <td>${a.especie||'—'}</td>
       <td><span class="badge ${badgeForStatus(a.status)}">${a.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
+      <td style="display:flex;gap:4px;"><button class="btn-icon btn-sm" onclick="editArea('${a.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
 function renderVendasFloTable() {
@@ -1706,7 +1703,7 @@ async function saveArea() {
   if(!nome){toast('Informe o nome da área','error');return;}
   const payload={nome,localizacao:qs('areaLocal').value,hectares:parseFloat(qs('areaHa').value)||0,tipo_negociacao:qs('areaTipoNeg').value,valor_compra:parseFloat(qs('areaValor').value)||0,est_toneladas:parseFloat(qs('areaTon').value)||0,ton_extraidas:parseFloat(qs('areaTonExt').value)||0,especie:qs('areaEspecie').value,status:qs('areaStatus').value,obs:qs('areaObs').value,custo_op:0,created_by:currentUser.id};
   loading(true);
-  const {error}=await sb.from('areas_florestais').insert(payload);
+  const {error}=currentAreaId?await sb.from('areas_florestais').update(payload).eq('id',currentAreaId):await sb.from('areas_florestais').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
   toast('Área adicionada!'); closeAreaModal(); await fetchFlorestData(); renderFlorestal(); refreshAreaDropdown();
@@ -1760,23 +1757,23 @@ function renderCotacoesTable() {
       <td><span class="badge badge-gray">${c.tipo||'—'}</span></td>
       <td>${c.validade||'—'}</td>
       <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
+      <td style="display:flex;gap:4px;"><button class="btn-icon btn-sm" onclick="editCotacao('${c.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
-function openCotacaoModal(){
+function openCotacaoModal(){ currentCotacaoId=null;
   ['cotOrigem','cotDestino','cotProduto','cotCliente','cotObs'].forEach(i=>qs(i).value='');
   ['cotPeso','cotValorTon'].forEach(i=>qs(i).value='');
   qs('cotData').value=today(); qs('cotValidade').value='';
   qs('cotacaoModal').classList.remove('hidden');
 }
-function closeCotacaoModal(){qs('cotacaoModal').classList.add('hidden');}
+function closeCotacaoModal(){qs('cotacaoModal').classList.add('hidden');currentCotacaoId=null;}
 async function saveCotacao() {
   const origem=qs('cotOrigem').value.trim(),destino=qs('cotDestino').value.trim();
   if(!origem||!destino){toast('Preencha origem e destino','error');return;}
   const payload={data:qs('cotData').value,origem,destino,produto:qs('cotProduto').value,peso:parseFloat(qs('cotPeso').value)||0,valor_ton:parseFloat(qs('cotValorTon').value)||0,cliente:qs('cotCliente').value,tipo:qs('cotTipo').value,validade:qs('cotValidade').value||null,status:qs('cotStatus').value,obs:qs('cotObs').value,created_by:currentUser.id};
   loading(true);
-  const {error}=await sb.from('cotacoes').insert(payload);
+  const {error}=currentCotacaoId?await sb.from('cotacoes').update(payload).eq('id',currentCotacaoId):await sb.from('cotacoes').insert(payload);
   loading(false);
   if(error){toast(error.message,'error');return;}
   toast('Cotação registrada!'); closeCotacaoModal(); await fetchCotacoes(); renderCotacoesTable();
@@ -1803,7 +1800,7 @@ async function renderUsersTable() {
       <td><span class="badge badge-blue">${u.role}</span></td>
       <td style="font-size:11px;color:var(--text-2);max-width:220px;overflow:hidden;text-overflow:ellipsis;">${(u.permissions||[]).join(', ')}</td>
       <td><span class="badge ${u.active?'badge-green':'badge-red'}">${u.active?'Ativo':'Inativo'}</span></td>
-      <td>${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" style="color:var(--red);" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"/></svg>'}</button>`:'—'}</td>
+      <td style="display:flex;gap:4px;align-items:center;">${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" onclick="openEditUserModal('${u.id}')" title="Editar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="btn-icon btn-sm" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"/></svg>'}</button><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteUserProfile('${u.id}')" title="Excluir"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`:'â€”'}</td>
     </tr>`).join('');
 }
 async function toggleUserActive(id,active) {
@@ -1854,6 +1851,159 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+// â”€â”€ Admin CRUD Functions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function editEstoque(id) {
+  const item = inventoryCache.find(i => i.id === id); if (!item) return;
+  currentEstoqueId = id;
+  if (qs('estoqueModalTitle')) qs('estoqueModalTitle').textContent = 'Editar Item';
+  qs('estDesc').value = item.descripcion || '';
+  if (qs('estSubcat')) qs('estSubcat').value = item.subcategoria || 'REVENTA';
+  qs('estMarca').value = item.marca || '';
+  if (qs('estUnidade')) qs('estUnidade').value = item.unidade || 'UN';
+  qs('estLocal').value = item.local || '';
+  qs('estStock').value = item.stock ?? 0;
+  qs('estValorUnit').value = item.valor_unit ?? 0;
+  if (qs('estMoeda')) qs('estMoeda').value = item.moeda || 'USD';
+  qs('estSnapshot').value = item.snapshot_date || today();
+  if (typeof calcEstTotal === 'function') calcEstTotal();
+  qs('estoqueModal').classList.remove('hidden');
+}
+function editCarteira(id) {
+  const c = customersCache.find(x => x.id === id); if (!c) return;
+  currentCarteiraId = id;
+  qs('cliNome').value = c.cliente || '';
+  qs('cliRuc').value = c.ruc_ci || '';
+  qs('cliTel').value = c.telefone || '';
+  qs('cliCidade').value = c.cidade || '';
+  qs('cliLinhaSoja').value = c.linha_soja_milho ?? 0;
+  qs('cliLinhaTrigo').value = c.linha_trigo ?? 0;
+  qs('cliHas').value = c.cant_has ?? 0;
+  qs('cliObs').value = c.obs || '';
+  if (qs('cliStatus')) qs('cliStatus').value = c.status || 'Ativo';
+  refreshVendedorDropdown('cliVendedor');
+  setTimeout(() => { if (qs('cliVendedor')) qs('cliVendedor').value = c.vendedor || ''; }, 50);
+  qs('carteiraModal').classList.remove('hidden');
+}
+function editFrete(id) {
+  const f = fretesCache.find(x => x.id === id); if (!f) return;
+  currentFreteId = id;
+  if (qs('freteModalTitle')) qs('freteModalTitle').textContent = 'Editar Frete';
+  qs('freteData').value = f.data || today();
+  qs('freteOrigem').value = f.origem || '';
+  qs('freteDestino').value = f.destino || '';
+  qs('freteProduto').value = f.produto || '';
+  qs('freteMotorista').value = f.motorista || '';
+  qs('fretePlaca').value = f.placa || '';
+  qs('freteCliente').value = f.cliente || '';
+  qs('freteObs').value = f.obs || '';
+  qs('fretePeso').value = f.peso ?? 0;
+  qs('freteValor').value = f.valor ?? 0;
+  qs('freteCusto').value = f.custo ?? 0;
+  if (qs('freteTipo')) qs('freteTipo').value = f.tipo || 'proprio';
+  if (qs('freteStatus')) qs('freteStatus').value = f.status || 'Em Carga';
+  qs('freteModal').classList.remove('hidden');
+}
+function editArea(id) {
+  const a = areasCache.find(x => x.id === id); if (!a) return;
+  currentAreaId = id;
+  if (qs('areaModalTitle')) qs('areaModalTitle').textContent = 'Editar Ãrea';
+  qs('areaNome').value = a.nome || '';
+  qs('areaLocal').value = a.localizacao || '';
+  qs('areaHa').value = a.hectares ?? 0;
+  qs('areaValor').value = a.valor_compra ?? 0;
+  qs('areaTon').value = a.est_toneladas ?? 0;
+  qs('areaTonExt').value = a.ton_extraidas ?? 0;
+  qs('areaObs').value = a.obs || '';
+  if (qs('areaTipoNeg')) qs('areaTipoNeg').value = a.tipo_negociacao || 'Compra Dinheiro';
+  if (qs('areaEspecie')) qs('areaEspecie').value = a.especie || 'Eucalipto';
+  if (qs('areaStatus')) qs('areaStatus').value = a.status || 'Em NegociaÃ§Ã£o';
+  qs('areaModal').classList.remove('hidden');
+}
+function editCotacao(id) {
+  const c = cotacoesCache.find(x => x.id === id); if (!c) return;
+  currentCotacaoId = id;
+  qs('cotData').value = c.data || today();
+  qs('cotOrigem').value = c.origem || '';
+  qs('cotDestino').value = c.destino || '';
+  qs('cotProduto').value = c.produto || '';
+  qs('cotPeso').value = c.peso ?? 0;
+  qs('cotValorTon').value = c.valor_ton ?? 0;
+  qs('cotCliente').value = c.cliente || '';
+  qs('cotValidade').value = c.validade || '';
+  qs('cotObs').value = c.obs || '';
+  if (qs('cotTipo')) qs('cotTipo').value = c.tipo || 'PrÃ³prio';
+  if (qs('cotStatus')) qs('cotStatus').value = c.status || 'Pendente';
+  qs('cotacaoModal').classList.remove('hidden');
+}
+function openEditUserModal(id) {
+  const u = profilesCache.find(x => x.id === id); if (!u) return;
+  currentEditUserId = id;
+  qs('editUserName').value = u.name || '';
+  qs('editUserRole').value = u.role || 'vendedor';
+  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config'];
+  const perms = u.permissions || [];
+  permKeys.forEach(p => { const el = qs('eup_' + p); if (el) el.checked = perms.includes(p); });
+  qs('editUserModal').classList.remove('hidden');
+}
+function closeEditUserModal() { qs('editUserModal').classList.add('hidden'); currentEditUserId = null; }
+async function saveEditUser() {
+  const name = qs('editUserName').value.trim();
+  const role = qs('editUserRole').value;
+  if (!name) { toast('Informe o nome', 'error'); return; }
+  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config'];
+  const permissions = permKeys.filter(p => qs('eup_' + p)?.checked);
+  loading(true);
+  const { error } = await sb.from('profiles').update({ name, role, permissions, updated_at: new Date().toISOString() }).eq('id', currentEditUserId);
+  loading(false);
+  if (error) { toast(error.message, 'error'); return; }
+  toast('UsuÃ¡rio atualizado!'); closeEditUserModal(); await renderUsersTable();
+}
+async function deleteUserProfile(id) {
+  if (!confirm('Excluir este usuÃ¡rio permanentemente? Esta aÃ§Ã£o nÃ£o pode ser desfeita.')) return;
+  loading(true);
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const res = await fetch(SUPABASE_URL + '/functions/v1/admin-delete-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session?.access_token },
+      body: JSON.stringify({ userId: id })
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Erro ao excluir usuÃ¡rio');
+    toast('UsuÃ¡rio excluÃ­do!'); await renderUsersTable();
+  } catch(err) { toast(err.message, 'error'); }
+  loading(false);
+}
 </script>
+<div id="editUserModal" class="modal-overlay hidden">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">Editar UsuÃ¡rio</div>
+      <button onclick="closeEditUserModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid form-grid-2" style="margin-bottom:12px;">
+        <div><label class="form-label">Nome *</label><input type="text" class="form-input" id="editUserName"></div>
+        <div><label class="form-label">Papel</label><select class="form-select" id="editUserRole"><option value="admin">Admin</option><option value="gerente">Gerente</option><option value="vendedor">Vendedor</option></select></div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">PermissÃµes:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_dashboard"> Dashboard</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_vendas"> Vendas</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_estoque"> InventÃ¡rio</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_carteira"> Clientes</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_pipeline"> Pipeline</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_transporte"> Transporte</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_florestal"> Florestal</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_cotacoes"> CotaÃ§Ãµes</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_config"> Config</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeEditUserModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEditUser()">Salvar</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
