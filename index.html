@@ -13,10 +13,10 @@
 :root {
   --sidebar-w: 260px; --topbar-h: 60px;
   /* â”€â”€ Backgrounds â”€â”€ */
-  --bg: #0F1115; --bg-primary: #0F1115; --bg-secondary: #16181D;
-  --bg-glass: rgba(36,38,46,0.55); --bg-glass-strong: rgba(36,38,46,0.75);
-  --bg-sidebar: rgba(22,24,29,0.85);
-  --card: rgba(36,38,46,0.55);
+  --bg: #0C0C10; --bg-primary: #0C0C10; --bg-secondary: #16181D;
+  --bg-glass: rgba(34,34,40,0.70); --bg-glass-strong: rgba(26,26,32,0.90);
+  --bg-sidebar: rgba(16,16,20,0.96);
+  --card: rgba(34,34,40,0.70);
   /* â”€â”€ Borders â”€â”€ */
   --border: rgba(255,255,255,0.08); --border-primary: rgba(255,255,255,0.08);
   --border-secondary: rgba(255,255,255,0.05); --border-subtle: rgba(255,255,255,0.05);
@@ -25,7 +25,7 @@
   --text-2: rgba(255,255,255,0.65); --text-secondary: rgba(255,255,255,0.65);
   --text-3: rgba(255,255,255,0.40); --text-muted: rgba(255,255,255,0.40);
   /* â”€â”€ Sidebar â”€â”€ */
-  --sidebar-bg: rgba(22,24,29,0.85); --sidebar-border: rgba(255,255,255,0.05);
+  --sidebar-bg: rgba(16,16,20,0.96); --sidebar-border: rgba(255,255,255,0.05);
   --sidebar-text: rgba(255,255,255,0.45); --sidebar-active-bg: rgba(255,255,255,0.08);
   /* â”€â”€ Brand (TG GROUP gold) â”€â”€ */
   --primary: #c9921a; --primary-dark: #a07012; --primary-light: #e8c347;
@@ -58,9 +58,9 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
 /* ====== LAYOUT ====== */
 #app { display: flex; min-height: 100vh; }
-#sidebar { width: var(--sidebar-w); background: rgba(22,24,29,0.85); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 100; overflow-y: auto; border-right: 1px solid rgba(255,255,255,0.05); }
+#sidebar { width: var(--sidebar-w); background: rgba(16,16,20,0.96); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 100; overflow-y: auto; border-right: 1px solid rgba(255,255,255,0.05); }
 #main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-#topbar { background: rgba(22,24,29,0.85); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 24px; height: var(--topbar-h); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 50; }
+#topbar { background: rgba(16,16,20,0.96); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 24px; height: var(--topbar-h); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 50; }
 #content { padding: 24px; flex: 1; }
 
 /* ====== SIDEBAR ====== */
@@ -83,9 +83,9 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .logout-btn:hover { color: rgba(255,255,255,.7); }
 
 /* ====== CARDS ====== */
-.card { background: rgba(36,38,46,0.55); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-radius: var(--radius); padding: 20px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); }
-.kpi-card { background: rgba(36,38,46,0.55); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-radius: var(--radius); padding: 18px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); transition: all .2s; }
-.kpi-card:hover { background: rgba(36,38,46,0.75); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: 0 20px 60px rgba(0,0,0,0.60), inset 0 1px 0 rgba(255,255,255,0.10); transform: translateY(-2px); border-color: rgba(124,58,237,0.30); }
+.card { background: rgba(34,34,40,0.70); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-radius: var(--radius); padding: 20px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); }
+.kpi-card { background: rgba(34,34,40,0.70); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-radius: var(--radius); padding: 18px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); transition: all .2s; }
+.kpi-card:hover { background: rgba(26,26,32,0.90); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: 0 20px 60px rgba(0,0,0,0.60), inset 0 1px 0 rgba(255,255,255,0.10); transform: translateY(-2px); border-color: rgba(124,58,237,0.30); }
 .kpi-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .kpi-label { font-size: 11px; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
 .kpi-value { font-size: 24px; font-weight: 900; color: var(--text); margin: 4px 0 2px; letter-spacing: -.5px; font-family: 'DM Mono', monospace; }
@@ -106,7 +106,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .badge-amber { background: rgba(255,204,74,.15); color: #ffcc4a; }
 .badge-blue { background: rgba(74,240,232,.15); color: #4af0e8; }
 .badge-gray { background: rgba(255,255,255,.08); color: #8888aa; }
-.badge-purple { background: rgba(191,148,255,.15); color: #bf94ff; }
+.badge-purple { background: rgba(255,255,255,.07); color: rgba(255,255,255,.72); }
 .badge-teal { background: rgba(74,240,232,.15); color: #4af0e8; }
 
 /* ====== BUTTONS ====== */
@@ -127,7 +127,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 /* ====== FORMS ====== */
 .form-label { font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 4px; display: block; }
 .form-input, .form-select { width: 100%; padding: 8px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; transition: all .15s; background: var(--card); color: var(--text); }
-.form-input:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(201,146,26,.2); }
+.form-input:focus, .form-select:focus { border-color: rgba(255,255,255,0.25); box-shadow: 0 0 0 3px rgba(255,255,255,0.05); }
 .form-input[readonly] { background: rgba(255,255,255,.04); }
 .form-grid { display: grid; gap: 12px; }
 .form-grid-2 { grid-template-columns: 1fr 1fr; }
@@ -136,7 +136,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
 /* ====== MODAL ====== */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(3px); }
-.modal { background: rgba(36,38,46,0.75); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); border-radius: 20px; width: 100%; max-width: 680px; max-height: 92vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.60); border: 1px solid rgba(255,255,255,0.10); }
+.modal { background: rgba(26,26,32,0.90); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); border-radius: 20px; width: 100%; max-width: 680px; max-height: 92vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.60); border: 1px solid rgba(255,255,255,0.10); }
 .modal-sm { max-width: 500px; }
 .modal-lg { max-width: 820px; }
 .modal-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
@@ -146,16 +146,16 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
 /* ====== DRAWER ====== */
 .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 900; }
-.drawer { position: fixed; right: 0; top: 0; height: 100vh; width: 440px; background: rgba(36,38,46,0.75); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); z-index: 901; box-shadow: -8px 0 40px rgba(0,0,0,0.50); border-left: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; }
+.drawer { position: fixed; right: 0; top: 0; height: 100vh; width: 440px; background: rgba(26,26,32,0.90); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); z-index: 901; box-shadow: -8px 0 40px rgba(0,0,0,0.50); border-left: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; }
 .drawer-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .drawer-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
 .drawer-footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
 /* ====== LOGIN ====== */
-#loginScreen { position: fixed; inset: 0; background: radial-gradient(ellipse at 40% 55%, #130f1e 0%, #0a0810 50%, #060509 100%); z-index: 9999; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+#loginScreen { position: fixed; inset: 0; background: #0A0A0E; z-index: 9999; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .login-bg-glow { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(70px); }
-.login-bg-glow-1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(124,58,237,0.24) 0%, transparent 65%); top: 38%; left: 42%; transform: translate(-50%,-50%); }
-.login-bg-glow-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(6,182,212,0.16) 0%, transparent 60%); bottom: 8%; right: 6%; }
+.login-bg-glow-1 { width: 800px; height: 800px; background: radial-gradient(circle, rgba(255,255,255,0.025) 0%, transparent 60%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.login-bg-glow-2 { display: none; }
 .login-card { background: rgba(255,255,255,.052); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,.11); border-radius: 28px; padding: 44px 40px 40px; width: 400px; box-shadow: 0 24px 64px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1); }
 .login-logo { text-align: center; margin-bottom: 36px; }
 .login-logo-svg { width: 140px; height: 68px; display: block; margin: 0 auto 14px; object-fit: contain; }
@@ -164,7 +164,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .login-field-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.13); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5); z-index: 1; }
 .login-pill-input { width: 100%; padding: 13px 18px 13px 56px; border-radius: 30px; border: 1px solid rgba(255,255,255,.11); background: rgba(255,255,255,.09); color: rgba(255,255,255,.9); font-size: 14px; font-family: inherit; outline: none; transition: all .2s; }
 .login-pill-input::placeholder { color: rgba(255,255,255,.3); }
-.login-pill-input:focus { background: rgba(255,255,255,.13); border-color: rgba(201,146,26,.55); box-shadow: 0 0 0 3px rgba(201,146,26,.12); }
+.login-pill-input:focus { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,0.28); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
 .login-btn-submit { width: 100%; padding: 14px; border-radius: 30px; border: none; background: rgba(255,255,255,.88); color: #111; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 10px; font-family: inherit; letter-spacing: .4px; }
 .login-btn-submit:hover { background: #ffffff; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(0,0,0,.45); }
 .login-error { color: rgba(232,74,107,.9); font-size: 12.5px; text-align: center; margin-top: 12px; }
@@ -180,7 +180,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .kanban-col-title { font-size: 13px; font-weight: 800; color: var(--text); }
 .kanban-col-count { background: rgba(255,255,255,.08); color: var(--text-2); font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; }
-.kanban-card { background: rgba(36,38,46,0.60); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-radius: 12px; padding: 12px; margin-bottom: 7px; border: 1px solid rgba(255,255,255,0.07); cursor: grab; transition: all .15s; box-shadow: 0 4px 12px rgba(0,0,0,0.35); }
+.kanban-card { background: rgba(34,34,40,0.74); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-radius: 12px; padding: 12px; margin-bottom: 7px; border: 1px solid rgba(255,255,255,0.07); cursor: grab; transition: all .15s; box-shadow: 0 4px 12px rgba(0,0,0,0.35); }
 .kanban-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
 .kanban-card.dragging { opacity: .4; }
 .kanban-col.drag-over { background: rgba(201,146,26,.06); border-color: rgba(201,146,26,.4); }
@@ -194,7 +194,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .stage-item { display: flex; align-items: center; gap: 8px; padding: 9px 11px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 5px; cursor: grab; }
 .stage-item:hover { background: rgba(255,255,255,.08); }
 .stage-input { flex: 1; padding: 3px 8px; border: 1px solid transparent; border-radius: 5px; font-size: 13px; font-weight: 500; background: transparent; outline: none; color: var(--text); font-family: inherit; }
-.stage-input:focus { border-color: rgba(201,146,26,.45); background: var(--card); }
+.stage-input:focus { border-color: rgba(255,255,255,0.20); background: var(--card); }
 
 /* ====== FILTER BAR ====== */
 .filter-input { padding: 7px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; background: var(--card); color: var(--text); transition: all .15s; }
@@ -212,7 +212,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
 /* ====== TOAST ====== */
 #toastContainer { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-.toast { background: rgba(36,38,46,0.90); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.45); animation: slideIn .3s ease; max-width: 320px; border: 1px solid rgba(255,255,255,0.10); }
+.toast { background: rgba(26,26,32,0.94); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.45); animation: slideIn .3s ease; max-width: 320px; border: 1px solid rgba(255,255,255,0.10); }
 .toast-error { background: var(--red); }
 .toast-success { background: var(--green); color: #000; }
 .toast-info { background: var(--blue); }
@@ -249,7 +249,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .empty-state span { font-size: 12.5px; }
 /* â”€â”€ Fierce Glass Utilities â”€â”€ */
 .glass {
-  background: rgba(36,38,46,0.55);
+  background: rgba(34,34,40,0.70);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid rgba(255,255,255,0.08);
@@ -257,7 +257,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
   border-radius: 16px;
 }
 .glass-strong {
-  background: rgba(36,38,46,0.75);
+  background: rgba(26,26,32,0.90);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(255,255,255,0.10);
@@ -374,7 +374,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
     <!-- TOPBAR -->
     <div id="topbar">
       <div style="flex:1;font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.3px;" id="topbarTitle">Dashboard</div>
-      <input type="text" class="filter-input" style="width:190px;" placeholder="🔍 Buscar..." id="globalSearch" oninput="onSearchChange()">
+      <input type="text" class="filter-input" style="width:190px;" placeholder="Buscar..." id="globalSearch" autocomplete="off" oninput="onSearchChange()">
       <select class="filter-input" id="periodFilter" onchange="onPeriodChange()">
         <option value="all">Todos os períodos</option>
         <option value="month" selected>Este mês</option>
@@ -471,7 +471,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <div style="display:flex;align-items:center;gap:8px;">
             <input type="text" class="filter-input" placeholder="Buscar leads..." id="leadSearch" oninput="renderPipeline()">
             <select class="filter-input" id="leadOwnerFilter" onchange="renderPipeline()"><option value="">Todos</option></select>
-            <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()">⚙ Colunas</button>
+            <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.66a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Colunas</button>
             <button class="btn btn-primary btn-sm" onclick="openLeadModal()">+ Lead</button>
           </div>
         </div>
@@ -537,7 +537,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <button class="btn btn-primary" onclick="openUserModal()">+ Novo Usuário</button>
         </div>
         <div class="info-box" style="margin-bottom:14px;">
-          ℹ️ Novos usuários são criados via <strong>Edge Function</strong> que deve ser implantada no seu projeto Supabase. Consulte o README para instruções.
+          ℹ Novos usuários são criados via <strong>Edge Function</strong> que deve ser implantada no seu projeto Supabase. Consulte o README para instruções.
         </div>
         <div class="card"><div class="table-wrap"><table class="data-table" id="usersTable"><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Permissões</th><th>Ativo</th><th></th></tr></thead><tbody></tbody></table></div></div>
       </div>
@@ -551,7 +551,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- SALE MODAL -->
 <div id="saleModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="saleModalTitle">Nova Venda / Fatura</div><button onclick="closeSaleModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="saleModalTitle">Nova Venda / Fatura</div><button onclick="closeSaleModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-4" style="margin-bottom:12px;">
         <div><label class="form-label">Data *</label><input type="date" class="form-input" id="saleDate"></div>
@@ -596,7 +596,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- ESTOQUE MODAL -->
 <div id="estoqueModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="estoqueModalTitle">Adicionar Item</div><button onclick="closeEstoqueModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="estoqueModalTitle">Adicionar Item</div><button onclick="closeEstoqueModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Produto *</label><input type="text" class="form-input" id="estDesc" placeholder="Nome do produto"></div><div><label class="form-label">Subcategoria</label><select class="form-select" id="estSubcat"><option>REVENTA</option><option>QUIMICO</option><option>BIOLOGICO</option><option>NUTRICIONAL</option><option>ADJUVANTE</option><option>CORRETIVO</option><option>OLEO</option><option>SEMILLA</option><option>LINHA TG</option></select></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Marca</label><input type="text" class="form-input" id="estMarca"></div><div><label class="form-label">Unidade</label><select class="form-select" id="estUnidade"><option>UN</option><option>KG</option><option>L</option><option>SC</option><option>CX</option><option>TON</option></select></div><div><label class="form-label">Local</label><input type="text" class="form-input" id="estLocal" placeholder="Depósito A"></div></div>
@@ -610,7 +610,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- CARTEIRA MODAL -->
 <div id="carteiraModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="carteiraModalTitle">Adicionar Cliente</div><button onclick="closeCarteiraModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="carteiraModalTitle">Adicionar Cliente</div><button onclick="closeCarteiraModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Cliente *</label><input type="text" class="form-input" id="cliNome" placeholder="Razão Social"></div><div><label class="form-label">RUC/CI</label><input type="text" class="form-input" id="cliRuc"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Telefone/WhatsApp</label><input type="text" class="form-input" id="cliTel" placeholder="+595..."></div><div><label class="form-label">Cidade</label><input type="text" class="form-input" id="cliCidade"></div></div>
@@ -625,7 +625,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- LEAD MODAL -->
 <div id="leadModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div class="modal-title">Novo Lead</div><button onclick="closeLeadModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Lead</div><button onclick="closeLeadModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Nome *</label><input type="text" class="form-input" id="leadTitle"></div><div><label class="form-label">RUC/CI</label><input type="text" class="form-input" id="leadRuc"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Telefone *</label><input type="text" class="form-input" id="leadPhone"></div><div><label class="form-label">Cidade</label><input type="text" class="form-input" id="leadCity"></div></div>
@@ -639,7 +639,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- STAGES MODAL -->
 <div id="stagesModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div><div class="modal-title" id="stagesTitle">Configurar Colunas</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Arraste para reordenar · Clique para editar</div></div><button onclick="closeManageStages()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div><div class="modal-title" id="stagesTitle">Configurar Colunas</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;">Arraste para reordenar · Clique para editar</div></div><button onclick="closeManageStages()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body" id="stagesList" style="max-height:360px;overflow-y:auto;"></div>
     <div class="modal-footer" style="justify-content:space-between;"><button class="btn btn-secondary" onclick="addStage()">+ Coluna</button><div style="display:flex;gap:8px;"><button class="btn btn-secondary" onclick="resetStages()">Restaurar</button><button class="btn btn-primary" onclick="saveStages()">Salvar</button></div></div>
   </div>
@@ -648,7 +648,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- LEAD DRAWER -->
 <div id="leadDrawerOverlay" class="drawer-overlay hidden" onclick="closeLeadDrawer()"></div>
 <div id="leadDrawer" class="drawer hidden">
-  <div class="drawer-header"><div><div style="font-size:16px;font-weight:800;" id="drawerName">—</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;" id="drawerStage">—</div></div><button onclick="closeLeadDrawer()" class="btn-icon">✕</button></div>
+  <div class="drawer-header"><div><div style="font-size:16px;font-weight:800;" id="drawerName">—</div><div style="font-size:12px;color:var(--text-2);margin-top:2px;" id="drawerStage">—</div></div><button onclick="closeLeadDrawer()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="drawer-body"><div id="drawerContent"></div></div>
   <div class="drawer-footer">
     <button class="btn btn-danger btn-sm" id="drawerLostBtn" onclick="markLeadLost()">Perdido</button>
@@ -659,7 +659,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- FRETE MODAL -->
 <div id="freteModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="freteModalTitle">Novo Frete</div><button onclick="closeFreteModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="freteModalTitle">Novo Frete</div><button onclick="closeFreteModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Data *</label><input type="date" class="form-input" id="freteData"></div><div><label class="form-label">Origem *</label><input type="text" class="form-input" id="freteOrigem" placeholder="Cidade/Dep."></div><div><label class="form-label">Destino *</label><input type="text" class="form-input" id="freteDestino" placeholder="Cidade/Dep."></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Produto</label><input type="text" class="form-input" id="freteProduto" placeholder="Soja, Milho..."></div><div><label class="form-label">Peso (ton)</label><input type="number" class="form-input" id="fretePeso" placeholder="0"></div><div><label class="form-label">Tipo</label><select class="form-select" id="freteTipo"><option value="proprio">Próprio</option><option value="terceiro">Terceiro</option></select></div></div>
@@ -674,7 +674,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- VEICULO MODAL -->
 <div id="veiculoModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Novo Veículo</div><button onclick="closeVeiculoModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Veículo</div><button onclick="closeVeiculoModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Placa *</label><input type="text" class="form-input" id="veicPlaca"></div><div><label class="form-label">Tipo</label><select class="form-select" id="veicTipo"><option>Carreta</option><option>Truck</option><option>Bitrem</option><option>Toco</option><option>Outro</option></select></div><div><label class="form-label">Modelo</label><input type="text" class="form-input" id="veicModelo"></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Próprio/Terceiro</label><select class="form-select" id="veicPropTerc"><option value="proprio">Próprio</option><option value="terceiro">Terceiro</option></select></div><div><label class="form-label">Motorista</label><input type="text" class="form-input" id="veicMotorista"></div><div><label class="form-label">Km Atual</label><input type="number" class="form-input" id="veicKm" placeholder="0"></div></div>
@@ -687,7 +687,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- AREA FLORESTAL MODAL -->
 <div id="areaModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title" id="areaModalTitle">Nova Área Florestal</div><button onclick="closeAreaModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="areaModalTitle">Nova Área Florestal</div><button onclick="closeAreaModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Proprietário/Área *</label><input type="text" class="form-input" id="areaNome"></div><div><label class="form-label">Localização</label><input type="text" class="form-input" id="areaLocal"></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Hectares</label><input type="number" class="form-input" id="areaHa" placeholder="0"></div><div><label class="form-label">Tipo Negociação</label><select class="form-select" id="areaTipoNeg"><option>Compra Dinheiro</option><option>Troca Calcário</option><option>Troca Insumos</option><option>Cheque</option><option>Misto</option><option>Consignado</option></select></div><div><label class="form-label">Valor Compra (USD)</label><input type="number" class="form-input" id="areaValor" placeholder="0.00"></div></div>
@@ -701,7 +701,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- VENDA BIOMASSA MODAL -->
 <div id="vendaFloModal" class="modal-overlay hidden">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Venda de Biomassa</div><button onclick="closeVendaFloModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Venda de Biomassa</div><button onclick="closeVendaFloModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Data *</label><input type="date" class="form-input" id="vfData"></div><div><label class="form-label">Cliente *</label><input type="text" class="form-input" id="vfCliente"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Área Origem</label><select class="form-select" id="vfArea"><option value="">Selecionar...</option></select></div><div><label class="form-label">Toneladas *</label><input type="number" class="form-input" id="vfTon" placeholder="0"></div></div>
@@ -714,7 +714,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- COTACAO MODAL -->
 <div id="cotacaoModal" class="modal-overlay hidden">
   <div class="modal modal-lg">
-    <div class="modal-header"><div class="modal-title">Nova Cotação de Frete</div><button onclick="closeCotacaoModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Nova Cotação de Frete</div><button onclick="closeCotacaoModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Data</label><input type="date" class="form-input" id="cotData"></div><div><label class="form-label">Origem *</label><input type="text" class="form-input" id="cotOrigem"></div><div><label class="form-label">Destino *</label><input type="text" class="form-input" id="cotDestino"></div></div>
       <div class="form-grid form-grid-3" style="margin-bottom:12px;"><div><label class="form-label">Produto</label><input type="text" class="form-input" id="cotProduto" placeholder="Soja, Milho..."></div><div><label class="form-label">Peso (ton)</label><input type="number" class="form-input" id="cotPeso" placeholder="0"></div><div><label class="form-label">Valor/Ton</label><input type="number" class="form-input" id="cotValorTon" placeholder="0.00"></div></div>
@@ -728,9 +728,9 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 <!-- USER MODAL -->
 <div id="userModal" class="modal-overlay hidden">
   <div class="modal modal-sm">
-    <div class="modal-header"><div class="modal-title">Novo Usuário</div><button onclick="closeUserModal()" class="btn-icon">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Novo Usuário</div><button onclick="closeUserModal()" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <div class="warn-box" style="margin-bottom:14px;">⚠️ Requer Edge Function <code>admin-create-user</code> implantada no Supabase.</div>
+      <div class="warn-box" style="margin-bottom:14px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Requer Edge Function <code>admin-create-user</code> implantada no Supabase.</div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Nome *</label><input type="text" class="form-input" id="newUserName"></div><div><label class="form-label">E-mail *</label><input type="email" class="form-input" id="newUserEmail"></div></div>
       <div class="form-grid form-grid-2" style="margin-bottom:12px;"><div><label class="form-label">Senha *</label><input type="password" class="form-input" id="newUserPass"></div><div><label class="form-label">Perfil</label><select class="form-select" id="newUserRole"><option value="admin">Administrador</option><option value="financeiro">Financeiro</option><option value="comercial" selected>Comercial</option><option value="logistica">Logística</option><option value="florestal">Florestal</option><option value="estoque">Estoque</option><option value="viewer">Visualizador</option></select></div></div>
       <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Permissões:</div>
@@ -1134,8 +1134,8 @@ function renderSalesTable() {
       <td style="color:${(s.saldo||0)>0?'var(--red)':'var(--green)'};">$${(s.saldo||0).toFixed(2)}</td>
       <td><span class="badge ${sb2}">${s.status}</span></td>
       <td style="white-space:nowrap;">
-        <button class="btn-icon btn-sm" onclick="event.stopPropagation();editSale('${s.id}')" title="Editar">✏️</button>
-        <button class="btn-icon btn-sm" style="color:var(--red);" onclick="event.stopPropagation();deleteSale('${s.id}')" title="Excluir">🗑</button>
+        <button class="btn-icon btn-sm" onclick="event.stopPropagation();editSale('${s.id}')" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="btn-icon btn-sm" style="color:var(--red);" onclick="event.stopPropagation();deleteSale('${s.id}')" title="Excluir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
       </td>
     </tr>
     <tr id="exp-${s.id}" class="hidden">
@@ -1251,7 +1251,7 @@ function renderEstoqueTable() {
       <td style="font-weight:700;">$${((item.stock||0)*(item.valor_unit||0)).toFixed(2)}</td>
       <td><span class="badge ${item.moeda==='Gs'?'badge-amber':'badge-blue'}">${item.moeda||'USD'}</span></td>
       <td>${item.snapshot_date||'—'}</td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteEstoque('${item.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
 function openEstoqueModal() {
@@ -1299,7 +1299,7 @@ function renderCarteiraTable() {
       <td style="font-weight:700;">$${lt.toFixed(2)}</td>
       <td>${c.cant_has||'—'} ha</td>
       <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'Ativo'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCarteira('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1348,7 +1348,7 @@ async function renderPipeline() {
 
   const board=qs('kanbanBoard'); board.innerHTML='';
   if(!currentPipelineStages.length){
-    board.innerHTML='<div style="padding:40px;color:var(--text-3);text-align:center;font-size:14px;">Nenhuma coluna configurada. Clique em "⚙ Colunas" para criar estágios.</div>';
+    board.innerHTML='<div style="padding:40px;color:var(--text-3);text-align:center;font-size:14px;">Nenhuma coluna configurada. Clique em "<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.66a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Colunas" para criar estágios.</div>';
     return;
   }
   currentPipelineStages.forEach(stage=>{
@@ -1414,7 +1414,7 @@ function openLeadDrawer(leadId) {
   const allStages=[...(pipelineStagesCache.insumos||[]),...(pipelineStagesCache.transporte||[]),...(pipelineStagesCache.florestal||[])];
   const stage=allStages.find(s=>s.id===lead.stage_id);
   qs('drawerName').textContent=lead.title;
-  qs('drawerStage').textContent=`${lead.division.toUpperCase()} → ${stage?.title||'—'}`;
+  qs('drawerStage').textContent=`${lead.division.toUpperCase()} &rarr; ${stage?.title||'—'}`;
   const stageMap={}; allStages.forEach(s=>stageMap[s.id]=s.title);
   const hist=pipelineHistoryCache.filter(h=>h.lead_id===leadId);
   const labels={create:'Lead criado',move_stage:'Movido de estágio',convert:'Convertido em cliente',mark_lost:'Marcado como perdido'};
@@ -1433,7 +1433,7 @@ function openLeadDrawer(leadId) {
     </div>
     <div>
       <div style="font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Histórico</div>
-      ${hist.length?hist.map(h=>`<div class="history-item"><div class="history-dot"></div><div><div style="font-size:12px;font-weight:600;">${labels[h.action]||h.action}</div><div style="font-size:11px;color:var(--text-3);">${h.from_stage_id?stageMap[h.from_stage_id]+' → '+stageMap[h.to_stage_id]:''} · ${new Date(h.created_at).toLocaleDateString('pt-BR')}</div></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-3);">Sem histórico</div>'}
+      ${hist.length?hist.map(h=>`<div class="history-item"><div class="history-dot"></div><div><div style="font-size:12px;font-weight:600;">${labels[h.action]||h.action}</div><div style="font-size:11px;color:var(--text-3);">${h.from_stage_id?stageMap[h.from_stage_id]+' &rarr; '+stageMap[h.to_stage_id]:''} · ${new Date(h.created_at).toLocaleDateString('pt-BR')}</div></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-3);">Sem histórico</div>'}
     </div>`;
   const isAtivo=lead.status==='ativo';
   qs('drawerLostBtn').classList.toggle('hidden',!isAtivo);
@@ -1479,7 +1479,7 @@ function renderStagesList() {
   if(!editingStages.length){c.innerHTML='<div style="text-align:center;color:var(--text-3);padding:24px;font-size:13px;">Nenhuma coluna. Clique em "+ Coluna".</div>';return;}
   editingStages.forEach((s,i)=>{
     const el=document.createElement('div'); el.className='stage-item'; el.draggable=true;
-    el.innerHTML=`<span style="color:var(--text-3);cursor:grab;font-size:16px;">⠿</span><input class="stage-input" type="text" value="${s.title||''}" placeholder="Nome da coluna" oninput="editingStages[${i}].title=this.value"><button onclick="removeStage(${i})" class="btn-icon" style="color:var(--red);">✕</button>`;
+    el.innerHTML=`<span style="color:var(--text-3);cursor:grab;font-size:16px;">⠿</span><input class="stage-input" type="text" value="${s.title||''}" placeholder="Nome da coluna" oninput="editingStages[${i}].title=this.value"><button onclick="removeStage(${i})" class="btn-icon" style="color:var(--red);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`;
     el.addEventListener('dragstart',e=>{draggingStageIdx=i;el.style.opacity='.4';e.dataTransfer.effectAllowed='move';});
     el.addEventListener('dragend',()=>{el.style.opacity='';draggingStageIdx=null;document.querySelectorAll('.stage-item').forEach(x=>x.style.borderTop='');});
     el.addEventListener('dragover',e=>{e.preventDefault();document.querySelectorAll('.stage-item').forEach(x=>x.style.borderTop='');el.style.borderTop='2px solid var(--primary)';});
@@ -1548,7 +1548,7 @@ function renderFretesTable() {
       <td>${f.motorista||'—'}</td><td class="mono">${f.placa||'—'}</td>
       <td>$${(f.valor||0).toFixed(2)}</td><td>$${(f.custo||0).toFixed(2)}</td><td>${m}</td>
       <td><span class="badge ${badgeForStatus(f.status)}">${f.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteFrete('${f.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1562,7 +1562,7 @@ function renderFrotaTable() {
       <td>${v.motorista||'—'}</td><td>${v.km_atual||0} km</td>
       <td>${v.prox_manutencao||'—'}</td><td>${v.consumo||'—'} L/km</td>
       <td><span class="badge ${badgeForStatus(v.status)}">${v.status||'Ativo'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVeiculo('${v.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVeiculo('${v.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
 function renderSinistrosTable() {
@@ -1574,7 +1574,7 @@ function renderSinistrosTable() {
       <td>$${(s.valor_prejuizo||0).toFixed(2)}</td><td>${s.seguro||'—'}</td>
       <td>$${(s.valor_recuperado||0).toFixed(2)}</td>
       <td><span class="badge ${badgeForStatus(s.status)}">${s.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteSinistro('${s.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteSinistro('${s.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
 function openFreteModal(){
@@ -1661,7 +1661,7 @@ function renderAreasTable() {
       <td>$${(a.custo_op||0).toFixed(2)}</td>
       <td>${a.especie||'—'}</td>
       <td><span class="badge ${badgeForStatus(a.status)}">${a.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteArea('${a.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`).join('');
 }
 function renderVendasFloTable() {
@@ -1678,7 +1678,7 @@ function renderVendasFloTable() {
       <td style="font-weight:700;">$${total.toFixed(2)}</td>
       <td>$${custo.toFixed(2)}</td><td>${m}</td>
       <td><span class="badge ${badgeForStatus(v.status)}">${v.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVendaFlo('${v.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteVendaFlo('${v.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1692,7 +1692,7 @@ function renderOperacoesTable() {
       <td>${o.descricao||'—'}</td><td>$${(o.custo||0).toFixed(2)}</td>
       <td>${o.responsavel||'—'}</td>
       <td><span class="badge ${badgeForStatus(o.status)}">${o.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteOperacao('${o.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteOperacao('${o.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1761,7 +1761,7 @@ function renderCotacoesTable() {
       <td><span class="badge badge-gray">${c.tipo||'—'}</span></td>
       <td>${c.validade||'—'}</td>
       <td><span class="badge ${badgeForStatus(c.status)}">${c.status||'—'}</span></td>
-      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')">🗑</button></td>
+      <td><button class="btn-icon btn-sm" style="color:var(--red);" onclick="deleteCotacao('${c.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td>
     </tr>`;
   }).join('');
 }
@@ -1804,7 +1804,7 @@ async function renderUsersTable() {
       <td><span class="badge badge-blue">${u.role}</span></td>
       <td style="font-size:11px;color:var(--text-2);max-width:220px;overflow:hidden;text-overflow:ellipsis;">${(u.permissions||[]).join(', ')}</td>
       <td><span class="badge ${u.active?'badge-green':'badge-red'}">${u.active?'Ativo':'Inativo'}</span></td>
-      <td>${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" style="color:var(--red);" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'🚫':'✅'}</button>`:'—'}</td>
+      <td>${u.id!==currentUser?.id?`<button class="btn-icon btn-sm" style="color:var(--red);" onclick="toggleUserActive('${u.id}',${u.active})" title="${u.active?'Desativar':'Ativar'}">${u.active?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"/></svg>'}</button>`:'—'}</td>
     </tr>`).join('');
 }
 async function toggleUserActive(id,active) {
