@@ -38,18 +38,18 @@
   --radius: 12px;
   --radius-sm: 8px;
 }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+body { font-family: 'DM Sans', sans-serif; background: radial-gradient(ellipse at 15% 20%, rgba(201,146,26,.07) 0%, transparent 50%), radial-gradient(ellipse at 85% 78%, rgba(74,144,232,.05) 0%, transparent 50%), var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
 
 /* ====== LAYOUT ====== */
 #app { display: flex; min-height: 100vh; }
-#sidebar { width: var(--sidebar-w); background: var(--sidebar-bg); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 100; overflow-y: auto; border-right: 1px solid var(--sidebar-border); }
+#sidebar { width: var(--sidebar-w); background: rgba(13,12,17,.88); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 100; overflow-y: auto; border-right: 1px solid rgba(255,255,255,.06); }
 #main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-#topbar { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; height: var(--topbar-h); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 50; box-shadow: var(--shadow-sm); }
+#topbar { background: rgba(17,16,19,.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 24px; height: var(--topbar-h); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 50; }
 #content { padding: 24px; flex: 1; }
 
 /* ====== SIDEBAR ====== */
 .sidebar-logo { padding: 22px 16px 18px; border-bottom: 1px solid var(--sidebar-border); display: flex; align-items: center; justify-content: center; }
-.sidebar-logo-svg { width: 98px; height: auto; display: block; }
+.sidebar-logo-svg { width: 98px; height: 48px; display: block; object-fit: contain; filter: brightness(1.1); }
 
 
 .sidebar-section { padding: 18px 14px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,.2); font-weight: 700; }
@@ -67,9 +67,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .logout-btn:hover { color: rgba(255,255,255,.7); }
 
 /* ====== CARDS ====== */
-.card { background: var(--card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); }
-.kpi-card { background: var(--card); border-radius: var(--radius); padding: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: all .2s; }
-.kpi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+.card { background: rgba(28,27,33,.78); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border-radius: var(--radius); padding: 20px; border: 1px solid rgba(255,255,255,.09); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.06); }
+.kpi-card { background: rgba(28,27,33,.78); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border-radius: var(--radius); padding: 18px; border: 1px solid rgba(255,255,255,.09); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.06); transition: all .2s; }
+.kpi-card:hover { box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.1); transform: translateY(-2px); border-color: rgba(201,146,26,.25); }
 .kpi-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .kpi-label { font-size: 11px; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
 .kpi-value { font-size: 24px; font-weight: 900; color: var(--text); margin: 4px 0 2px; letter-spacing: -.5px; font-family: 'DM Mono', monospace; }
@@ -120,7 +120,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== MODAL ====== */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(3px); }
-.modal { background: var(--card); border-radius: 16px; width: 100%; max-width: 680px; max-height: 92vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.modal { background: rgba(20,19,25,.88); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border-radius: 16px; width: 100%; max-width: 680px; max-height: 92vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.1); }
 .modal-sm { max-width: 500px; }
 .modal-lg { max-width: 820px; }
 .modal-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
@@ -130,7 +130,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== DRAWER ====== */
 .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 900; }
-.drawer { position: fixed; right: 0; top: 0; height: 100vh; width: 440px; background: var(--card); z-index: 901; box-shadow: -8px 0 32px rgba(0,0,0,.12); display: flex; flex-direction: column; }
+.drawer { position: fixed; right: 0; top: 0; height: 100vh; width: 440px; background: rgba(20,19,25,.88); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); z-index: 901; box-shadow: -8px 0 40px rgba(0,0,0,.4); border-left: 1px solid rgba(255,255,255,.09); display: flex; flex-direction: column; }
 .drawer-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .drawer-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
 .drawer-footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
@@ -142,7 +142,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .login-bg-glow-2 { width: 320px; height: 320px; background: radial-gradient(circle, rgba(74,144,232,.1) 0%, transparent 70%); bottom: 10%; right: 12%; }
 .login-card { background: rgba(255,255,255,.052); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid rgba(255,255,255,.11); border-radius: 28px; padding: 44px 40px 40px; width: 400px; box-shadow: 0 24px 64px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1); }
 .login-logo { text-align: center; margin-bottom: 36px; }
-.login-logo-svg { width: 136px; height: auto; display: block; margin: 0 auto 12px; }
+.login-logo-svg { width: 140px; height: 68px; display: block; margin: 0 auto 14px; object-fit: contain; }
 .login-logo-sub { font-size: 10.5px; color: rgba(255,255,255,.32); text-transform: uppercase; letter-spacing: 2.5px; font-weight: 500; }
 .login-field { position: relative; margin-bottom: 14px; }
 .login-field-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.13); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5); z-index: 1; }
@@ -164,7 +164,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .kanban-col-title { font-size: 13px; font-weight: 800; color: var(--text); }
 .kanban-col-count { background: rgba(255,255,255,.08); color: var(--text-2); font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; }
-.kanban-card { background: var(--card); border-radius: 9px; padding: 12px; margin-bottom: 7px; border: 1px solid var(--border); cursor: grab; transition: all .15s; box-shadow: var(--shadow-sm); }
+.kanban-card { background: rgba(28,27,33,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 9px; padding: 12px; margin-bottom: 7px; border: 1px solid rgba(255,255,255,.08); cursor: grab; transition: all .15s; box-shadow: var(--shadow-sm); }
 .kanban-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
 .kanban-card.dragging { opacity: .4; }
 .kanban-col.drag-over { background: rgba(201,146,26,.06); border-color: rgba(201,146,26,.4); }
@@ -196,7 +196,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== TOAST ====== */
 #toastContainer { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-.toast { background: #2a2a3e; color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: slideIn .3s ease; max-width: 320px; border: 1px solid var(--border); }
+.toast { background: rgba(30,28,36,.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: slideIn .3s ease; max-width: 320px; border: 1px solid rgba(255,255,255,.12); }
 .toast-error { background: var(--red); }
 .toast-success { background: var(--green); color: #000; }
 .toast-info { background: var(--blue); }
@@ -249,15 +249,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   <div class="login-bg-glow login-bg-glow-2"></div>
   <div class="login-card">
     <div class="login-logo">
-      <svg class="login-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260">
-        <defs><linearGradient id="gld-lg" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#6b4c08"/><stop offset="35%" stop-color="#c9921a"/>
-          <stop offset="65%" stop-color="#f5d870"/><stop offset="100%" stop-color="#c9a530"/>
-        </linearGradient></defs>
-        <text x="18" y="195" font-family="Georgia,serif" font-size="178" font-weight="700" fill="url(#gld-lg)">TG</text>
-        <path d="M10,200 C90,130 215,72 315,22" stroke="url(#gld-lg)" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <text x="162" y="248" font-family="Georgia,serif" font-size="22" font-weight="700" fill="url(#gld-lg)" text-anchor="middle" letter-spacing="10">GROUP</text>
-      </svg>
+      <img class="login-logo-svg" src="logo.svg" alt="TG GROUP">
       <div class="login-logo-sub">Sistema Integrado de Gestao</div>
     </div>
     <div class="login-field">
@@ -282,15 +274,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   <!-- SIDEBAR -->
   <div id="sidebar">
         <div class="sidebar-logo">
-      <svg class="sidebar-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260">
-        <defs><linearGradient id="gld-sb" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#6b4c08"/><stop offset="35%" stop-color="#c9921a"/>
-          <stop offset="65%" stop-color="#f5d870"/><stop offset="100%" stop-color="#c9a530"/>
-        </linearGradient></defs>
-        <text x="18" y="195" font-family="Georgia,serif" font-size="178" font-weight="700" fill="url(#gld-sb)">TG</text>
-        <path d="M10,200 C90,130 215,72 315,22" stroke="url(#gld-sb)" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <text x="162" y="248" font-family="Georgia,serif" font-size="22" font-weight="700" fill="url(#gld-sb)" text-anchor="middle" letter-spacing="10">GROUP</text>
-      </svg>
+      <img class="sidebar-logo-svg" src="logo.svg" alt="TG GROUP">
     </div><div style="flex:1;overflow-y:auto;padding-bottom:8px;">
       <div class="sidebar-section">Geral</div>
       <div class="nav-item active" onclick="navigate('dashboard')" data-perm="dashboard">
