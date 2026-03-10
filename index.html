@@ -270,7 +270,18 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.accent-glow { box-shadow: 0 0 24px rgba(124,58,237,0.35), 0 0 48px rgba(6,182,212,0.15); }</style>
+.accent-glow { box-shadow: 0 0 24px rgba(124,58,237,0.35), 0 0 48px rgba(6,182,212,0.15); }/* === CAMPO MODULE === */
+.campo-chip{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:var(--text-2);font-size:12px;cursor:pointer;transition:all 0.15s;}
+.campo-chip:hover{border-color:var(--blue);color:var(--blue);}
+.campo-chip.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.campo-activity-card{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.campo-activity-card:last-child{border-bottom:none;}
+.campo-activity-type{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(59,130,246,0.15);color:var(--blue);white-space:nowrap;}
+.campo-activity-info{flex:1;min-width:0;}
+.campo-activity-title{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.campo-activity-meta{font-size:11px;color:var(--text-3);margin-top:2px;}
+.campo-km-badge{padding:3px 8px;border-radius:10px;font-size:11px;background:rgba(16,185,129,0.15);color:var(--green);white-space:nowrap;}
+</style>
 </head>
 <body>
 
@@ -350,6 +361,10 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div class="nav-item" onclick="navigate('cotacoes')" data-perm="cotacoes">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
         Cotações
+      </div>
+      <div class="nav-item" onclick="navigate('campo')" data-perm="campo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Campo
       </div>
       <div class="sidebar-section" id="adminSection" style="display:none;">Admin</div>
       <div class="nav-item hidden" id="configNav" onclick="navigate('config')" data-perm="config">
@@ -528,6 +543,58 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <button class="btn btn-primary" onclick="openCotacaoModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Cotação</button>
         </div>
         <div class="card"><div class="table-wrap"><table class="data-table" id="cotacoesTable"><thead><tr><th>Data</th><th>Origem</th><th>Destino</th><th>Produto</th><th>Peso (ton)</th><th>Valor/Ton</th><th>Total</th><th>Cliente</th><th>Tipo</th><th>Validade</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div></div>
+      </div>
+
+      <!-- ===== CAMPO ===== -->
+      <div id="view-campo" class="hidden">
+        <div class="section-header">
+          <div><div class="section-title">Atividades de Campo</div><div class="section-sub">Registro de visitas e atividades externas</div></div>
+          <button class="btn btn-primary" onclick="switchCampoTab('registrar')"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Registrar</button>
+        </div>
+        <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn active" id="campoBtnDash" onclick="switchCampoTab('dashboard',this)">Dashboard</button><button class="tab-btn" id="campoBtnReg" onclick="switchCampoTab('registrar',this)">Registrar</button><button class="tab-btn" id="campoBtnHist" onclick="switchCampoTab('historico',this)">Historico</button><button class="tab-btn" id="campoBtnKm" onclick="switchCampoTab('km',this)">Controle KM</button><button class="tab-btn" id="campoBtnClients" onclick="switchCampoTab('clientes',this)">Por Cliente</button></div></div>
+
+        <!-- Dashboard -->
+        <div id="campo-dashboard">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+            <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Atividades este mes</div><div class="kpi-value" id="campoKpiAtividades">0</div><div class="kpi-sub">registros</div></div>
+            <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM este mes</div><div class="kpi-value" id="campoKpiKm">0</div><div class="kpi-sub">quilometros</div></div>
+            <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Clientes Visitados</div><div class="kpi-value" id="campoKpiClientes">0</div><div class="kpi-sub">unicos</div></div>
+            <div class="kpi-card" style="border-left:3px solid var(--purple);"><div class="kpi-label">Total Historico</div><div class="kpi-value" id="campoKpiTotal">0</div><div class="kpi-sub">atividades</div></div>
+          </div>
+          <div class="card"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;">Atividades Recentes</div><div id="campoRecentList"></div></div>
+        </div>
+
+        <!-- Registrar -->
+        <div id="campo-registrar" class="hidden">
+          <div class="card" style="max-width:600px;">
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:16px;">Nova Atividade</div>
+            <div style="margin-bottom:14px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:8px;">Tipo de Atividade *</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><button class="campo-chip" onclick="selectCampoType('visita',this)">Visita</button><button class="campo-chip" onclick="selectCampoType('reuniao',this)">Reuniao</button><button class="campo-chip" onclick="selectCampoType('entrega',this)">Entrega</button><button class="campo-chip" onclick="selectCampoType('coleta',this)">Coleta</button><button class="campo-chip" onclick="selectCampoType('outros',this)">Outros</button></div><input type="hidden" id="campoActivityType"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Data *</div><input class="form-input" type="date" id="campoActivityDate"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Cliente</div><select class="form-input" id="campoActivityCustomer"><option value="">- Sem cliente -</option></select></div></div>
+            <div style="margin-bottom:12px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Descricao</div><input class="form-input" type="text" id="campoActivityDesc" placeholder="Resumo da atividade..."></div>
+            <div style="margin-bottom:12px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Local</div><input class="form-input" type="text" id="campoActivityLocation" placeholder="Cidade, endereco..."></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Inicial</div><input class="form-input" type="number" id="campoKmStart" placeholder="0"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Final</div><input class="form-input" type="number" id="campoKmEnd" placeholder="0"></div></div>
+            <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Observacoes</div><textarea class="form-input" id="campoActivityNotes" rows="3" placeholder="Notas adicionais..."></textarea></div>
+            <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Fotos (opcional)</div><input type="file" id="campoPhotoInput" accept="image/*" multiple style="font-size:12px;color:var(--text-2);"></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="saveCampoActivity()">Salvar Atividade</button>
+          </div>
+        </div>
+
+        <!-- Historico -->
+        <div id="campo-historico" class="hidden">
+          <div style="display:flex;gap:10px;margin-bottom:12px;"><select class="form-input" id="campoHistFiltro" style="width:160px;" onchange="renderCampoHistorico()"><option value="all">Todos os tipos</option><option value="visita">Visitas</option><option value="reuniao">Reunioes</option><option value="entrega">Entregas</option><option value="coleta">Coletas</option><option value="outros">Outros</option></select></div>
+          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Tipo</th><th>Cliente</th><th>Descricao</th><th>Local</th><th>KM</th><th></th></tr></thead><tbody id="campoHistoricoBody"></tbody></table></div></div>
+        </div>
+
+        <!-- KM -->
+        <div id="campo-km" class="hidden">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;"><div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">KM Este Mes</div><div class="kpi-value" id="campoKmMes">0 km</div><div class="kpi-sub">percorridos</div></div><div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM Total Historico</div><div class="kpi-value" id="campoKmTotal">0 km</div><div class="kpi-sub">acumulado</div></div></div>
+          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Cliente</th><th>KM Inicial</th><th>KM Final</th><th>Percorrido</th><th>Local</th></tr></thead><tbody id="campoKmBody"></tbody></table></div></div>
+        </div>
+
+        <!-- Por Cliente -->
+        <div id="campo-clientes" class="hidden">
+          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Cliente</th><th>Visitas</th><th>Ultima Visita</th></tr></thead><tbody id="campoClientesBody"></tbody></table></div></div>
+        </div>
       </div>
 
       <!-- ===== CONFIG ===== -->
@@ -740,6 +807,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_florestal"> Florestal</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_cotacoes"> Cotações</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_config"> Usuários</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="up_campo" checked> Campo</label>
       </div>
     </div>
     <div class="modal-footer"><button class="btn btn-secondary" onclick="closeUserModal()">Cancelar</button><button class="btn btn-primary" onclick="saveUser()">Criar Usuário</button></div>
@@ -768,6 +836,7 @@ let pipelineStagesCache = {}, pipelineLeadsCache = [], pipelineHistoryCache = []
 let fretesCache = [], veiculosCache = [], sinistrosCache = [];
 let areasCache = [], vendasFloCache = [], operacoesCache = [];
 let cotacoesCache = [], profilesCache = [];
+let fieldActivitiesCache = [];
 
 const DEFAULT_STAGES = {
   insumos:    [{title:'Prospecção'},{title:'Contato'},{title:'Proposta'},{title:'Negociação'},{title:'Fechamento'}],
@@ -862,6 +931,7 @@ function applyPermissions() {
     qs('configNav').classList.remove('hidden');
     qs('adminSection').style.display='';
     qs('btnStages') && qs('btnStages').classList.remove('hidden');
+    document.querySelectorAll('[data-perm="campo"]').forEach(function(el){el.classList.remove('hidden');});
   } else {
     qs('btnStages') && qs('btnStages').classList.add('hidden');
   }
@@ -878,7 +948,7 @@ async function navigate(view) {
   document.querySelectorAll('.nav-item').forEach(el=>{
     if(el.getAttribute('onclick')?.includes(`'${view}'`)) el.classList.add('active');
   });
-  const titles = {dashboard:'Dashboard',vendas:'Vendas & Faturas',estoque:'Inventário',carteira:'Clientes',pipeline:'Pipeline CRM',transporte:'Transporte & Logística',florestal:'Florestal — Biomassa',cotacoes:'Cotações de Frete',config:'Usuários'};
+  const titles = {dashboard:'Dashboard',vendas:'Vendas & Faturas',estoque:'Inventário',carteira:'Clientes',pipeline:'Pipeline CRM',transporte:'Transporte & Logística',florestal:'Florestal — Biomassa',cotacoes:'Cotações de Frete',config:'Usuários',campo:'Atividades de Campo'};
   qs('topbarTitle').textContent = titles[view]||view;
   if (view==='dashboard')    await updateDashboard();
   else if (view==='vendas')   renderSalesTable();
@@ -889,6 +959,7 @@ async function navigate(view) {
   else if (view==='florestal') renderFlorestal();
   else if (view==='cotacoes') renderCotacoesTable();
   else if (view==='config')   await renderUsersTable();
+  else if (view==='campo') await initCampoModule();
 }
 function onPeriodChange() {
   qs('customDateRange').classList.toggle('visible', qs('periodFilter').value==='custom');
@@ -1820,7 +1891,7 @@ async function saveUser() {
   const pass=qs('newUserPass').value;
   const role=qs('newUserRole').value;
   if(!name||!email||!pass){toast('Preencha todos os campos','error');return;}
-  const permKeys=['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config'];
+  const permKeys=['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config','campo'];
   const permissions=permKeys.filter(p=>qs(`up_${p}`)?.checked);
   loading(true);
   try {
@@ -1940,7 +2011,7 @@ function openEditUserModal(id) {
   currentEditUserId = id;
   qs('editUserName').value = u.name || '';
   qs('editUserRole').value = u.role || 'vendedor';
-  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config'];
+  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config','campo'];
   const perms = u.permissions || [];
   permKeys.forEach(p => { const el = qs('eup_' + p); if (el) el.checked = perms.includes(p); });
   qs('editUserModal').classList.remove('hidden');
@@ -1950,7 +2021,7 @@ async function saveEditUser() {
   const name = qs('editUserName').value.trim();
   const role = qs('editUserRole').value;
   if (!name) { toast('Informe o nome', 'error'); return; }
-  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config'];
+  const permKeys = ['dashboard','vendas','estoque','carteira','pipeline','transporte','florestal','cotacoes','config','campo'];
   const permissions = permKeys.filter(p => qs('eup_' + p)?.checked);
   loading(true);
   const { error } = await sb.from('profiles').update({ name, role, permissions, updated_at: new Date().toISOString() }).eq('id', currentEditUserId);
@@ -1973,6 +2044,175 @@ async function deleteUserProfile(id) {
     toast('UsuÃ¡rio excluÃ­do!'); await renderUsersTable();
   } catch(err) { toast(err.message, 'error'); }
   loading(false);
+}
+
+// =====================================================================
+//  CAMPO - ATIVIDADES DE CAMPO
+// =====================================================================
+async function initCampoModule() {
+  await fetchFieldActivities();
+  populateCampoCustomerSelect();
+  var d = qs('campoActivityDate');
+  if (d && !d.value) d.value = new Date().toISOString().split('T')[0];
+  switchCampoTab('dashboard', qs('campoBtnDash'));
+}
+
+async function fetchFieldActivities() {
+  var res = await sb.from('field_activities').select('*, customers(cliente)').order('activity_date', { ascending: false });
+  fieldActivitiesCache = res.data || [];
+}
+
+function switchCampoTab(tab, btn) {
+  var tabs = ['dashboard','registrar','historico','km','clientes'];
+  for (var i=0;i<tabs.length;i++) { var el=qs('campo-'+tabs[i]); if(el) el.classList.add('hidden'); }
+  var show = qs('campo-' + tab);
+  if (show) show.classList.remove('hidden');
+  document.querySelectorAll('#view-campo .tab-btn').forEach(function(b){b.classList.remove('active');});
+  if (btn) { btn.classList.add('active'); }
+  else {
+    var idxMap = {dashboard:0,registrar:1,historico:2,km:3,clientes:4};
+    var btns = document.querySelectorAll('#view-campo .tab-btn');
+    if (btns[idxMap[tab]]) btns[idxMap[tab]].classList.add('active');
+  }
+  if (tab==='dashboard') renderCampoDashboard();
+  else if (tab==='registrar') { populateCampoCustomerSelect(); var d=qs('campoActivityDate'); if(d&&!d.value) d.value=new Date().toISOString().split('T')[0]; }
+  else if (tab==='historico') renderCampoHistorico();
+  else if (tab==='km') renderCampoKM();
+  else if (tab==='clientes') renderCampoClientes();
+}
+
+function campoTypeLabel(type) {
+  var m={visita:'Visita',reuniao:'Reuniao',entrega:'Entrega',coleta:'Coleta',outros:'Outros'};
+  return m[type]||type;
+}
+
+function renderCampoDashboard() {
+  var now = new Date();
+  var thisMonth = fieldActivitiesCache.filter(function(a){
+    var d=new Date(a.activity_date+'T00:00:00');
+    return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+  });
+  var kmMonth = thisMonth.reduce(function(s,a){return s+(a.km_end&&a.km_start&&a.km_end>a.km_start?a.km_end-a.km_start:0);},0);
+  var uniqueClients = new Set(fieldActivitiesCache.map(function(a){return a.customer_id;}).filter(Boolean)).size;
+  var el1=qs('campoKpiAtividades'); if(el1) el1.textContent=thisMonth.length;
+  var el2=qs('campoKpiKm'); if(el2) el2.textContent=kmMonth.toFixed(0);
+  var el3=qs('campoKpiClientes'); if(el3) el3.textContent=uniqueClients;
+  var el4=qs('campoKpiTotal'); if(el4) el4.textContent=fieldActivitiesCache.length;
+  var list=qs('campoRecentList'); if(!list) return;
+  var recent=fieldActivitiesCache.slice(0,8);
+  list.innerHTML=recent.map(function(a){
+    var km=(a.km_end&&a.km_start&&a.km_end>a.km_start)?'<div class="campo-km-badge">'+(a.km_end-a.km_start).toFixed(0)+' km</div>':'';
+    var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
+    var cname=(a.customers&&a.customers.cliente)||'';
+    return '<div class="campo-activity-card"><div class="campo-activity-type">'+campoTypeLabel(a.activity_type)+'</div><div class="campo-activity-info"><div class="campo-activity-title">'+(cname?cname+' - ':'')+(a.description||'')+'</div><div class="campo-activity-meta">'+dateStr+(a.location?' - '+a.location:'')+'</div></div>'+km+'</div>';
+  }).join('')||'<div style="text-align:center;padding:24px;color:var(--text-3);">Nenhuma atividade registrada</div>';
+}
+
+function populateCampoCustomerSelect() {
+  var sel=qs('campoActivityCustomer'); if(!sel) return;
+  var cur=sel.value;
+  sel.innerHTML='<option value="">- Sem cliente -</option>'+(customersCache||[]).map(function(c){return '<option value="'+c.id+'">'+c.cliente+'</option>';}).join('');
+  if(cur) sel.value=cur;
+}
+
+function selectCampoType(type, el) {
+  document.querySelectorAll('.campo-chip').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  var inp=qs('campoActivityType'); if(inp) inp.value=type;
+}
+
+async function saveCampoActivity() {
+  var typeEl=qs('campoActivityType'); var type=typeEl&&typeEl.value;
+  var dateEl=qs('campoActivityDate'); var date=dateEl&&dateEl.value;
+  if(!type){toast('Selecione o tipo de atividade','error');return;}
+  if(!date){toast('Informe a data','error');return;}
+  var cidEl=qs('campoActivityCustomer'); var customerId=(cidEl&&cidEl.value)||null;
+  var descEl=qs('campoActivityDesc'); var description=(descEl&&descEl.value.trim())||null;
+  var locEl=qs('campoActivityLocation'); var location=(locEl&&locEl.value.trim())||null;
+  var ksEl=qs('campoKmStart'); var kmStart=(ksEl&&ksEl.value)?parseFloat(ksEl.value):null;
+  var keEl=qs('campoKmEnd'); var kmEnd=(keEl&&keEl.value)?parseFloat(keEl.value):null;
+  var notEl=qs('campoActivityNotes'); var notes=(notEl&&notEl.value.trim())||null;
+  var payload={user_id:currentUser.id,activity_type:type,activity_date:date,customer_id:customerId,description:description,location:location,km_start:kmStart,km_end:kmEnd,notes:notes,status:'realizado'};
+  var res=await sb.from('field_activities').insert(payload).select('*, customers(cliente)').single();
+  if(res.error){toast('Erro ao salvar: '+res.error.message,'error');return;}
+  var fileInput=qs('campoPhotoInput');
+  if(fileInput&&fileInput.files.length>0&&res.data){
+    for(var fi=0;fi<fileInput.files.length;fi++){
+      var file=fileInput.files[fi];
+      var fileName=currentUser.id+'/'+res.data.id+'/'+Date.now()+'_'+file.name;
+      var upRes=await sb.storage.from('field-photos').upload(fileName,file);
+      if(!upRes.error) await sb.from('field_activity_photos').insert({activity_id:res.data.id,storage_path:fileName});
+    }
+  }
+  toast('Atividade registrada!');
+  fieldActivitiesCache.unshift(res.data);
+  if(typeEl) typeEl.value='';
+  if(dateEl) dateEl.value='';
+  if(descEl) descEl.value='';
+  if(locEl) locEl.value='';
+  if(ksEl) ksEl.value='';
+  if(keEl) keEl.value='';
+  if(notEl) notEl.value='';
+  if(cidEl) cidEl.value='';
+  if(fileInput) fileInput.value='';
+  document.querySelectorAll('.campo-chip').forEach(function(c){c.classList.remove('active');});
+  switchCampoTab('historico');
+}
+
+function renderCampoHistorico() {
+  var tbody=qs('campoHistoricoBody'); if(!tbody) return;
+  var filtEl=qs('campoHistFiltro'); var filter=(filtEl&&filtEl.value)||'all';
+  var acts=filter==='all'?fieldActivitiesCache:fieldActivitiesCache.filter(function(a){return a.activity_type===filter;});
+  tbody.innerHTML=acts.map(function(a){
+    var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
+    var km=(a.km_end&&a.km_start&&a.km_end>a.km_start)?(a.km_end-a.km_start).toFixed(0)+' km':'--';
+    var isOwner=a.user_id===currentUser.id;
+    var isAdmin=currentProfile&&currentProfile.role==='admin';
+    var aId=a.id;
+    var delBtn=(isOwner||isAdmin)?'<button class="icon-btn" title="Excluir" onclick="deleteCampoActivity(\''+aId+'\')"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>':'';
+    return '<tr><td>'+dateStr+'</td><td>'+campoTypeLabel(a.activity_type)+'</td><td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.description||'--')+'</td><td>'+(a.location||'--')+'</td><td>'+km+'</td><td>'+delBtn+'</td></tr>';
+  }).join('')||'<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-3);">Nenhuma atividade encontrada</td></tr>';
+}
+
+async function deleteCampoActivity(id) {
+  if(!confirm('Excluir esta atividade?')) return;
+  var res=await sb.from('field_activities').delete().eq('id',id);
+  if(res.error){toast('Erro ao excluir','error');return;}
+  fieldActivitiesCache=fieldActivitiesCache.filter(function(a){return a.id!==id;});
+  renderCampoHistorico();
+  toast('Atividade excluida');
+}
+
+function renderCampoKM() {
+  var acts=fieldActivitiesCache.filter(function(a){return a.km_start!=null&&a.km_end!=null&&a.km_end>a.km_start;});
+  var now=new Date();
+  var monthActs=acts.filter(function(a){var d=new Date(a.activity_date+'T00:00:00');return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+  var totalKm=acts.reduce(function(s,a){return s+(a.km_end-a.km_start);},0);
+  var monthKm=monthActs.reduce(function(s,a){return s+(a.km_end-a.km_start);},0);
+  var el1=qs('campoKmTotal'); if(el1) el1.textContent=totalKm.toFixed(0)+' km';
+  var el2=qs('campoKmMes'); if(el2) el2.textContent=monthKm.toFixed(0)+' km';
+  var tbody=qs('campoKmBody'); if(!tbody) return;
+  tbody.innerHTML=acts.slice(0,30).map(function(a){
+    var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
+    return '<tr><td>'+dateStr+'</td><td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.km_start?a.km_start.toFixed(0):'--')+'</td><td>'+(a.km_end?a.km_end.toFixed(0):'--')+'</td><td>'+(a.km_end-a.km_start).toFixed(0)+' km</td><td>'+(a.location||'--')+'</td></tr>';
+  }).join('')||'<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-3);">Nenhum registro com KM</td></tr>';
+}
+
+function renderCampoClientes() {
+  var byClient={};
+  fieldActivitiesCache.forEach(function(a){
+    var cid=a.customer_id||'__none__';
+    var cname=(a.customers&&a.customers.cliente)||'Sem cliente';
+    if(!byClient[cid]) byClient[cid]={name:cname,count:0,last:null};
+    byClient[cid].count++;
+    if(!byClient[cid].last||a.activity_date>byClient[cid].last) byClient[cid].last=a.activity_date;
+  });
+  var rows=Object.values(byClient).sort(function(a,b){return b.count-a.count;});
+  var tbody=qs('campoClientesBody'); if(!tbody) return;
+  tbody.innerHTML=rows.map(function(c){
+    var lastStr=c.last?new Date(c.last+'T00:00:00').toLocaleDateString('pt-BR'):'--';
+    return '<tr><td>'+c.name+'</td><td>'+c.count+'</td><td>'+lastStr+'</td></tr>';
+  }).join('')||'<tr><td colspan="3" style="text-align:center;padding:20px;color:var(--text-3);">Nenhuma visita registrada</td></tr>';
 }
 </script>
 <div id="editUserModal" class="modal-overlay hidden">
@@ -1997,6 +2237,7 @@ async function deleteUserProfile(id) {
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_florestal"> Florestal</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_cotacoes"> CotaÃ§Ãµes</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_config"> Config</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" id="eup_campo"> Campo</label>
       </div>
     </div>
     <div class="modal-footer">
