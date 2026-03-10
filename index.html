@@ -551,7 +551,13 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <div><div class="section-title">Atividades de Campo</div><div class="section-sub">Registro de visitas e atividades externas</div></div>
           <button class="btn btn-primary" onclick="switchCampoTab('registrar')"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Registrar</button>
         </div>
-        <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn active" id="campoBtnDash" onclick="switchCampoTab('dashboard',this)">Dashboard</button><button class="tab-btn" id="campoBtnReg" onclick="switchCampoTab('registrar',this)">Registrar</button><button class="tab-btn" id="campoBtnHist" onclick="switchCampoTab('historico',this)">Historico</button><button class="tab-btn" id="campoBtnKm" onclick="switchCampoTab('km',this)">Controle KM</button><button class="tab-btn" id="campoBtnClients" onclick="switchCampoTab('clientes',this)">Por Cliente</button></div></div>
+        <div style="margin-bottom:14px;"><div class="tab-bar"><button class="tab-btn hidden" id="campoBtnDash" onclick="switchCampoTab('dashboard',this)">Dashboard</button><button class="tab-btn active" id="campoBtnReg" onclick="switchCampoTab('registrar',this)">Registrar</button><button class="tab-btn" id="campoBtnHist" onclick="switchCampoTab('historico',this)">Historico</button><button class="tab-btn" id="campoBtnKm" onclick="switchCampoTab('km',this)">Controle KM</button><button class="tab-btn" id="campoBtnClients" onclick="switchCampoTab('clientes',this)">Por Cliente</button></div></div>
+        <!-- Admin-only filter bar -->
+        <div id="campoAdminBar" class="hidden" style="display:flex;gap:10px;align-items:center;margin-bottom:14px;padding:10px 14px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:10px;">
+          <svg width="14" height="14" fill="none" stroke="var(--blue)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span style="font-size:12px;color:var(--text-3);white-space:nowrap;">Filtrar por usuário:</span>
+          <select class="form-input" id="campoUserFilter" style="width:200px;margin:0;" onchange="onCampoUserChange()"><option value="">Todos os usuários</option></select>
+        </div>
 
         <!-- Dashboard -->
         <div id="campo-dashboard">
@@ -574,21 +580,23 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
             <div style="margin-bottom:12px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Local</div><input class="form-input" type="text" id="campoActivityLocation" placeholder="Cidade, endereco..."></div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Inicial</div><input class="form-input" type="number" id="campoKmStart" placeholder="0"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Final</div><input class="form-input" type="number" id="campoKmEnd" placeholder="0"></div></div>
             <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Observacoes</div><textarea class="form-input" id="campoActivityNotes" rows="3" placeholder="Notas adicionais..."></textarea></div>
-            <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Fotos (opcional)</div><input type="file" id="campoPhotoInput" accept="image/*" multiple style="font-size:12px;color:var(--text-2);"></div>
+            <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Fotos / PDF (opcional)</div><input type="file" id="campoPhotoInput" accept="image/*,.pdf" multiple style="font-size:12px;color:var(--text-2);"></div>
             <button class="btn btn-primary" style="width:100%;" onclick="saveCampoActivity()">Salvar Atividade</button>
           </div>
         </div>
 
         <!-- Historico -->
         <div id="campo-historico" class="hidden">
-          <div style="display:flex;gap:10px;margin-bottom:12px;"><select class="form-input" id="campoHistFiltro" style="width:160px;" onchange="renderCampoHistorico()"><option value="all">Todos os tipos</option><option value="visita">Visitas</option><option value="reuniao">Reunioes</option><option value="entrega">Entregas</option><option value="coleta">Coletas</option><option value="outros">Outros</option></select></div>
-          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Tipo</th><th>Cliente</th><th>Descricao</th><th>Local</th><th>KM</th><th></th></tr></thead><tbody id="campoHistoricoBody"></tbody></table></div></div>
+          <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+            <select class="form-input" id="campoHistFiltro" style="width:160px;" onchange="renderCampoHistorico()"><option value="all">Todos os tipos</option><option value="visita">Visitas</option><option value="reuniao">Reunioes</option><option value="entrega">Entregas</option><option value="coleta">Coletas</option><option value="outros">Outros</option></select>
+          </div>
+          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Tipo</th><th id="campoThUser" class="hidden">Usuário</th><th>Cliente</th><th>Descricao</th><th>Local</th><th>KM</th><th>Anexos</th><th></th></tr></thead><tbody id="campoHistoricoBody"></tbody></table></div></div>
         </div>
 
         <!-- KM -->
         <div id="campo-km" class="hidden">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;"><div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">KM Este Mes</div><div class="kpi-value" id="campoKmMes">0 km</div><div class="kpi-sub">percorridos</div></div><div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM Total Historico</div><div class="kpi-value" id="campoKmTotal">0 km</div><div class="kpi-sub">acumulado</div></div></div>
-          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Cliente</th><th>KM Inicial</th><th>KM Final</th><th>Percorrido</th><th>Local</th></tr></thead><tbody id="campoKmBody"></tbody></table></div></div>
+          <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th id="campoKmThUser" class="hidden">Usuário</th><th>Cliente</th><th>KM Inicial</th><th>KM Final</th><th>Percorrido</th><th>Local</th></tr></thead><tbody id="campoKmBody"></tbody></table></div></div>
         </div>
 
         <!-- Por Cliente -->
@@ -1020,10 +1028,10 @@ async function fetchCotacoes() { const {data}=await sb.from('cotacoes').select('
 // =====================================================================
 function getDateRange() {
   const f=qs('periodFilter').value, now=new Date(), y=now.getFullYear(), m=now.getMonth();
-  if(f==='month')      return {from:new Date(y,m,1),to:new Date(y,m+1,0)};
-  if(f==='last_month') return {from:new Date(y,m-1,1),to:new Date(y,m,0)};
-  if(f==='year')       return {from:new Date(y,0,1),to:new Date(y,11,31)};
-  if(f==='custom')     return {from:qs('dateFrom').value?new Date(qs('dateFrom').value):null, to:qs('dateTo').value?new Date(qs('dateTo').value):null};
+  if(f==='month')      return {from:new Date(y,m,1),to:new Date(y,m+1,0,23,59,59)};
+  if(f==='last_month') return {from:new Date(y,m-1,1),to:new Date(y,m,0,23,59,59)};
+  if(f==='year')       return {from:new Date(y,0,1),to:new Date(y,11,31,23,59,59)};
+  if(f==='custom')     return {from:qs('dateFrom').value?new Date(qs('dateFrom').value+'T00:00:00'):null, to:qs('dateTo').value?new Date(qs('dateTo').value+'T23:59:59'):null};
   return {from:null,to:null};
 }
 function filterSales() {
@@ -1032,8 +1040,8 @@ function filterSales() {
   const moeda=qs('moedaFilter').value;
   const vendedor=qs('vendedorFilter').value;
   return salesCache.filter(s=>{
-    if(from&&new Date(s.fecha)<from) return false;
-    if(to&&new Date(s.fecha)>to)     return false;
+    if(from&&new Date(s.fecha+'T00:00:00')<from) return false;
+    if(to&&new Date(s.fecha+'T00:00:00')>to)     return false;
     if(moeda&&moeda!=='all'&&s.moeda!==moeda) return false;
     if(vendedor&&s.vendedor!==vendedor) return false;
     if(search&&!`${s.cliente||''}${s.producto||''}${s.factura_no||''}${s.vendedor||''}`.toLowerCase().includes(search)) return false;
@@ -2050,15 +2058,67 @@ async function deleteUserProfile(id) {
 //  CAMPO - ATIVIDADES DE CAMPO
 // =====================================================================
 async function initCampoModule() {
+  var isAdmin = currentProfile && currentProfile.role === 'admin';
+  // Show/hide dashboard tab for admin only
+  var btnDash = qs('campoBtnDash');
+  if (btnDash) btnDash.classList.toggle('hidden', !isAdmin);
+  // Show admin filter bar
+  var adminBar = qs('campoAdminBar');
+  if (adminBar) adminBar.classList.toggle('hidden', !isAdmin);
+  if (isAdmin) populateCampoUserFilter();
+  // Show user column headers if admin
+  var thUser = qs('campoThUser');
+  if (thUser) thUser.classList.toggle('hidden', !isAdmin);
+  var thKmUser = qs('campoKmThUser');
+  if (thKmUser) thKmUser.classList.toggle('hidden', !isAdmin);
   await fetchFieldActivities();
   populateCampoCustomerSelect();
   var d = qs('campoActivityDate');
   if (d && !d.value) d.value = new Date().toISOString().split('T')[0];
-  switchCampoTab('dashboard', qs('campoBtnDash'));
+  // Admin starts at dashboard, others at registrar
+  if (isAdmin) {
+    switchCampoTab('dashboard', qs('campoBtnDash'));
+  } else {
+    switchCampoTab('registrar', qs('campoBtnReg'));
+  }
+}
+
+function populateCampoUserFilter() {
+  var sel = qs('campoUserFilter'); if (!sel) return;
+  var cur = sel.value;
+  var users = (profilesCache || []).filter(function(u){ return u.active !== false; });
+  sel.innerHTML = '<option value="">Todos os usuários</option>' + users.map(function(u){
+    return '<option value="' + u.id + '">' + (u.name||u.id) + '</option>';
+  }).join('');
+  if (cur) sel.value = cur;
+}
+
+function getCampoFilteredByUser() {
+  var isAdmin = currentProfile && currentProfile.role === 'admin';
+  if (!isAdmin) return fieldActivitiesCache;
+  var sel = qs('campoUserFilter');
+  var uid = sel ? sel.value : '';
+  if (!uid) return fieldActivitiesCache;
+  return fieldActivitiesCache.filter(function(a){ return a.user_id === uid; });
+}
+
+function onCampoUserChange() {
+  // Re-render whichever tab is currently visible
+  var tabs = ['dashboard','registrar','historico','km','clientes'];
+  for (var i = 0; i < tabs.length; i++) {
+    var el = qs('campo-' + tabs[i]);
+    if (el && !el.classList.contains('hidden')) {
+      if (tabs[i]==='dashboard') renderCampoDashboard();
+      else if (tabs[i]==='historico') renderCampoHistorico();
+      else if (tabs[i]==='km') renderCampoKM();
+      else if (tabs[i]==='clientes') renderCampoClientes();
+      break;
+    }
+  }
 }
 
 async function fetchFieldActivities() {
-  var res = await sb.from('field_activities').select('*, customers(cliente)').order('activity_date', { ascending: false });
+  var res = await sb.from('field_activities').select('*, customers(cliente), field_activity_photos(id,storage_path)').order('activity_date', { ascending: false });
   fieldActivitiesCache = res.data || [];
 }
 
@@ -2087,24 +2147,31 @@ function campoTypeLabel(type) {
 }
 
 function renderCampoDashboard() {
+  var isAdmin = currentProfile && currentProfile.role === 'admin';
+  if (!isAdmin) { switchCampoTab('registrar', qs('campoBtnReg')); return; }
+  var acts = getCampoFilteredByUser();
   var now = new Date();
-  var thisMonth = fieldActivitiesCache.filter(function(a){
+  var thisMonth = acts.filter(function(a){
     var d=new Date(a.activity_date+'T00:00:00');
     return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
   });
   var kmMonth = thisMonth.reduce(function(s,a){return s+(a.km_end&&a.km_start&&a.km_end>a.km_start?a.km_end-a.km_start:0);},0);
-  var uniqueClients = new Set(fieldActivitiesCache.map(function(a){return a.customer_id;}).filter(Boolean)).size;
+  var uniqueClients = new Set(acts.map(function(a){return a.customer_id;}).filter(Boolean)).size;
   var el1=qs('campoKpiAtividades'); if(el1) el1.textContent=thisMonth.length;
   var el2=qs('campoKpiKm'); if(el2) el2.textContent=kmMonth.toFixed(0);
   var el3=qs('campoKpiClientes'); if(el3) el3.textContent=uniqueClients;
-  var el4=qs('campoKpiTotal'); if(el4) el4.textContent=fieldActivitiesCache.length;
+  var el4=qs('campoKpiTotal'); if(el4) el4.textContent=acts.length;
   var list=qs('campoRecentList'); if(!list) return;
-  var recent=fieldActivitiesCache.slice(0,8);
+  var recent=acts.slice(0,8);
+  // Get user name map for display
+  var userMap = {};
+  (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
   list.innerHTML=recent.map(function(a){
     var km=(a.km_end&&a.km_start&&a.km_end>a.km_start)?'<div class="campo-km-badge">'+(a.km_end-a.km_start).toFixed(0)+' km</div>':'';
     var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
     var cname=(a.customers&&a.customers.cliente)||'';
-    return '<div class="campo-activity-card"><div class="campo-activity-type">'+campoTypeLabel(a.activity_type)+'</div><div class="campo-activity-info"><div class="campo-activity-title">'+(cname?cname+' - ':'')+(a.description||'')+'</div><div class="campo-activity-meta">'+dateStr+(a.location?' - '+a.location:'')+'</div></div>'+km+'</div>';
+    var uname=userMap[a.user_id]||'';
+    return '<div class="campo-activity-card"><div class="campo-activity-type">'+campoTypeLabel(a.activity_type)+'</div><div class="campo-activity-info"><div class="campo-activity-title">'+(cname?cname+' — ':'')+(a.description||'Sem descrição')+'</div><div class="campo-activity-meta">'+dateStr+(a.location?' — '+a.location:'')+(uname?' <span style="color:var(--blue);font-size:10px;background:rgba(59,130,246,0.1);border-radius:8px;padding:1px 6px;">'+uname+'</span>':'')+'</div></div>'+km+'</div>';
   }).join('')||'<div style="text-align:center;padding:24px;color:var(--text-3);">Nenhuma atividade registrada</div>';
 }
 
@@ -2161,17 +2228,25 @@ async function saveCampoActivity() {
 
 function renderCampoHistorico() {
   var tbody=qs('campoHistoricoBody'); if(!tbody) return;
+  var isAdmin=currentProfile&&currentProfile.role==='admin';
   var filtEl=qs('campoHistFiltro'); var filter=(filtEl&&filtEl.value)||'all';
-  var acts=filter==='all'?fieldActivitiesCache:fieldActivitiesCache.filter(function(a){return a.activity_type===filter;});
+  var base=getCampoFilteredByUser();
+  var acts=filter==='all'?base:base.filter(function(a){return a.activity_type===filter;});
+  // User name map for admin view
+  var userMap={}; (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
+  // Total colspan = 7 base + 1 Anexos + (1 User if admin)
+  var colspan = isAdmin ? 9 : 8;
   tbody.innerHTML=acts.map(function(a){
     var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
     var km=(a.km_end&&a.km_start&&a.km_end>a.km_start)?(a.km_end-a.km_start).toFixed(0)+' km':'--';
     var isOwner=a.user_id===currentUser.id;
-    var isAdmin=currentProfile&&currentProfile.role==='admin';
     var aId=a.id;
     var delBtn=(isOwner||isAdmin)?'<button class="icon-btn" title="Excluir" onclick="deleteCampoActivity(\''+aId+'\')"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>':'';
-    return '<tr><td>'+dateStr+'</td><td>'+campoTypeLabel(a.activity_type)+'</td><td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.description||'--')+'</td><td>'+(a.location||'--')+'</td><td>'+km+'</td><td>'+delBtn+'</td></tr>';
-  }).join('')||'<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-3);">Nenhuma atividade encontrada</td></tr>';
+    var photos=a.field_activity_photos||[];
+    var filesBtn=photos.length>0?'<button class="btn btn-secondary" style="padding:3px 10px;font-size:11px;gap:4px;" onclick="viewCampoFiles(\''+aId+'\')"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>'+photos.length+'</button>':'<span style="color:var(--text-3);font-size:11px;">—</span>';
+    var userTd=isAdmin?'<td style="font-size:11px;color:var(--text-3);">'+(userMap[a.user_id]||'—')+'</td>':'';
+    return '<tr><td>'+dateStr+'</td><td>'+campoTypeLabel(a.activity_type)+'</td>'+userTd+'<td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.description||'--')+'</td><td>'+(a.location||'--')+'</td><td>'+km+'</td><td>'+filesBtn+'</td><td>'+delBtn+'</td></tr>';
+  }).join('')||'<tr><td colspan="'+colspan+'" style="text-align:center;padding:20px;color:var(--text-3);">Nenhuma atividade encontrada</td></tr>';
 }
 
 async function deleteCampoActivity(id) {
@@ -2183,8 +2258,45 @@ async function deleteCampoActivity(id) {
   toast('Atividade excluida');
 }
 
+async function viewCampoFiles(actId) {
+  var act=fieldActivitiesCache.find(function(a){return a.id===actId;});
+  if(!act){toast('Atividade não encontrada','error');return;}
+  var photos=act.field_activity_photos||[];
+  if(!photos.length){toast('Nenhum anexo nesta atividade','error');return;}
+  var modal=qs('campoFilesModal'); var body=qs('campoFilesModalBody');
+  if(!modal||!body) return;
+  body.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-3);">Carregando anexos...</div>';
+  modal.classList.remove('hidden');
+  var html='<div style="display:flex;flex-direction:column;gap:16px;">';
+  for(var i=0;i<photos.length;i++){
+    var photo=photos[i];
+    var urlRes=await sb.storage.from('field-photos').createSignedUrl(photo.storage_path,3600);
+    if(urlRes.error){html+='<div style="color:var(--red);font-size:12px;">Erro ao carregar arquivo '+i+'</div>';continue;}
+    var url=urlRes.data.signedUrl;
+    var fname=photo.storage_path.split('/').pop()||('arquivo-'+(i+1));
+    var isPdf=fname.toLowerCase().endsWith('.pdf');
+    if(isPdf){
+      html+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid var(--border);">'+
+        '<svg width="28" height="28" fill="none" stroke="var(--red)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>'+
+        '<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+fname+'</div><div style="font-size:11px;color:var(--text-3);">PDF</div></div>'+
+        '<a href="'+url+'" target="_blank" class="btn btn-secondary" style="padding:4px 12px;font-size:12px;">Abrir</a>'+
+        '</div>';
+    } else {
+      html+='<div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);">'+
+        '<img src="'+url+'" alt="'+fname+'" style="width:100%;max-height:500px;object-fit:contain;background:#000;display:block;" loading="lazy">'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.03);">'+
+        '<span style="font-size:11px;color:var(--text-3);">'+fname+'</span>'+
+        '<a href="'+url+'" target="_blank" class="btn btn-secondary" style="padding:3px 10px;font-size:11px;">Download</a>'+
+        '</div></div>';
+    }
+  }
+  html+='</div>';
+  body.innerHTML=html;
+}
+
 function renderCampoKM() {
-  var acts=fieldActivitiesCache.filter(function(a){return a.km_start!=null&&a.km_end!=null&&a.km_end>a.km_start;});
+  var base=getCampoFilteredByUser();
+  var acts=base.filter(function(a){return a.km_start!=null&&a.km_end!=null&&a.km_end>a.km_start;});
   var now=new Date();
   var monthActs=acts.filter(function(a){var d=new Date(a.activity_date+'T00:00:00');return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
   var totalKm=acts.reduce(function(s,a){return s+(a.km_end-a.km_start);},0);
@@ -2192,15 +2304,19 @@ function renderCampoKM() {
   var el1=qs('campoKmTotal'); if(el1) el1.textContent=totalKm.toFixed(0)+' km';
   var el2=qs('campoKmMes'); if(el2) el2.textContent=monthKm.toFixed(0)+' km';
   var tbody=qs('campoKmBody'); if(!tbody) return;
-  tbody.innerHTML=acts.slice(0,30).map(function(a){
+  var isAdmin=currentProfile&&currentProfile.role==='admin';
+  var userMap={}; (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
+  tbody.innerHTML=acts.slice(0,50).map(function(a){
     var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
-    return '<tr><td>'+dateStr+'</td><td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.km_start?a.km_start.toFixed(0):'--')+'</td><td>'+(a.km_end?a.km_end.toFixed(0):'--')+'</td><td>'+(a.km_end-a.km_start).toFixed(0)+' km</td><td>'+(a.location||'--')+'</td></tr>';
-  }).join('')||'<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-3);">Nenhum registro com KM</td></tr>';
+    var userTd=isAdmin?'<td style="font-size:11px;color:var(--text-3);">'+(userMap[a.user_id]||'—')+'</td>':'';
+    return '<tr><td>'+dateStr+'</td>'+userTd+'<td>'+((a.customers&&a.customers.cliente)||'--')+'</td><td>'+(a.km_start?a.km_start.toFixed(0):'--')+'</td><td>'+(a.km_end?a.km_end.toFixed(0):'--')+'</td><td>'+(a.km_end-a.km_start).toFixed(0)+' km</td><td>'+(a.location||'--')+'</td></tr>';
+  }).join('')||'<tr><td colspan="'+(isAdmin?7:6)+'" style="text-align:center;padding:20px;color:var(--text-3);">Nenhum registro com KM</td></tr>';
 }
 
 function renderCampoClientes() {
+  var acts=getCampoFilteredByUser();
   var byClient={};
-  fieldActivitiesCache.forEach(function(a){
+  acts.forEach(function(a){
     var cid=a.customer_id||'__none__';
     var cname=(a.customers&&a.customers.cliente)||'Sem cliente';
     if(!byClient[cid]) byClient[cid]={name:cname,count:0,last:null};
@@ -2243,6 +2359,18 @@ function renderCampoClientes() {
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeEditUserModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveEditUser()">Salvar</button>
+    </div>
+  </div>
+</div>
+<!-- CAMPO FILES MODAL -->
+<div id="campoFilesModal" class="modal-overlay hidden">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">Anexos da Atividade</div>
+      <button onclick="qs('campoFilesModal').classList.add('hidden')" class="btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="campoFilesModalBody" style="max-height:70vh;overflow-y:auto;">
+      <div style="text-align:center;color:var(--text-3);padding:20px;">Carregando...</div>
     </div>
   </div>
 </div>
