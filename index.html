@@ -282,109 +282,339 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .campo-activity-meta{font-size:11px;color:var(--text-3);margin-top:2px;}
 .campo-km-badge{padding:3px 8px;border-radius:10px;font-size:11px;background:rgba(16,185,129,0.15);color:var(--green);white-space:nowrap;}
 
-/* ====== MOBILE RESPONSIVE ====== */
-/* Elements hidden on desktop, shown on mobile */
-#sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+/* ====== MOBILE RESPONSIVE — HARDENING v2 ====== */
+/* Non-media: base setup for mobile-specific elements */
+#sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
 #sidebarToggle,#filterToggle{display:none;}
-/* Topbar filter wrapper — desktop: invisible box (children flow inline) */
+/* display:contents makes #topbarFilters children flow as direct topbar children on desktop */
 #topbarFilters{display:contents;}
-
-/* Responsive helper classes for inline-style grids */
+/* Responsive grid helper classes (override inline grid-template-columns via !important on mobile) */
 .kpi-grid-5{display:grid;gap:10px;}
 .kpi-grid-4{display:grid;gap:10px;}
 .kpi-grid-2{display:grid;gap:10px;}
 .chart-grid-2-1{display:grid;gap:14px;}
 .chart-grid-2{display:grid;gap:14px;}
 
-@media(max-width:768px){
-  /* ─ Sidebar drawer ─ */
-  #sidebarOverlay{display:block;opacity:0;pointer-events:none;transition:opacity .25s;}
-  #sidebarOverlay.active{opacity:1;pointer-events:all;}
-  #sidebar{transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200;}
-  #sidebar.open{transform:translateX(0);}
+/* ── Section action area classes (for targeted mobile layout) ── */
+/* Used on section-header action divs to allow !important overrides */
+.section-actions{}
+.section-actions-row{}
+.pipeline-actions{}
 
-  /* ─ Main content full width ─ */
+@media(max-width:768px){
+  /* ══ 1. GLOBAL ══ */
+  *{-webkit-tap-highlight-color:transparent;}
+  html,body{overflow-x:hidden;}
+
+  /* ══ 2. SIDEBAR DRAWER ══ */
+  #sidebarOverlay{display:block;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+  #sidebarOverlay.active{opacity:1;pointer-events:all;}
+  #sidebar{
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    z-index:200;
+    width:min(280px, 86vw);
+  }
+  #sidebar.open{transform:translateX(0);}
+  .nav-item{min-height:48px;padding:11px 14px;}
+  .sidebar-user{padding:14px 16px;}
+  .sidebar-logo{padding:18px 16px 14px;}
+
+  /* ══ 3. MAIN LAYOUT ══ */
   #main{margin-left:0;}
 
-  /* ─ Topbar ─ */
-  #topbar{padding:0 12px;height:auto;min-height:var(--topbar-h);flex-wrap:wrap;gap:6px;padding-top:10px;padding-bottom:10px;}
-  #topbarTitle{font-size:15px!important;min-width:0;flex:1;}
-  #sidebarToggle{display:flex;align-items:center;justify-content:center;background:none;border:none;color:var(--text);cursor:pointer;padding:6px;border-radius:6px;flex-shrink:0;}
-  #filterToggle{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:none;color:var(--text-2);cursor:pointer;padding:7px 10px;border-radius:var(--radius-sm);font-size:12px;font-family:inherit;white-space:nowrap;flex-shrink:0;}
-  #topbarFilters{display:none;width:100%;flex-direction:column;gap:8px;padding-bottom:4px;}
+  /* ══ 4. TOPBAR ══ */
+  #topbar{
+    padding:8px 14px;
+    height:auto;
+    min-height:56px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  #topbarTitle{
+    font-size:16px!important;
+    font-weight:800!important;
+    flex:1;
+    min-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #sidebarToggle{
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.07);
+    border:1.5px solid rgba(255,255,255,.10);
+    border-radius:10px;
+    color:var(--text);
+    cursor:pointer;
+    width:40px;height:40px;
+    flex-shrink:0;
+    transition:background .15s;
+  }
+  #sidebarToggle:active{background:rgba(255,255,255,.14);}
+  #filterToggle{
+    display:flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.07);
+    border:1.5px solid rgba(255,255,255,.10);
+    border-radius:10px;
+    color:var(--text-2);
+    cursor:pointer;
+    padding:8px 12px;
+    font-size:13px;font-family:inherit;font-weight:600;
+    white-space:nowrap;
+    flex-shrink:0;
+    min-height:40px;
+    transition:all .15s;
+  }
+  #filterToggle.active{
+    background:rgba(201,146,26,.12);
+    color:var(--primary);
+    border-color:rgba(201,146,26,.35);
+  }
+  #topbarFilters{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    gap:8px;
+    padding:8px 0 4px;
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:2px;
+  }
   #topbarFilters.open{display:flex;}
-  #topbarFilters .filter-input{width:100%!important;}
-  #customDateRange{flex-direction:column!important;gap:6px;}
+  #topbarFilters .filter-input{width:100%!important;max-width:100%!important;font-size:16px!important;}
+  #customDateRange{flex-direction:column!important;gap:6px;display:none;}
+  #customDateRange.visible{display:flex!important;}
   #customDateRange input.filter-input{width:100%!important;}
   #customDateRange span{display:none;}
 
-  /* ─ Content padding ─ */
-  #content{padding:12px;}
+  /* ══ 5. CONTENT AREA ══ */
+  #content{padding:12px;padding-bottom:32px;}
 
-  /* ─ KPI grid breakpoints ─ */
+  /* ══ 6. SECTION HEADERS ══ */
+  .section-header{flex-direction:column;align-items:flex-start;gap:10px;}
+  .section-header>*:last-child{width:100%;}
+  /* "Total + CTA" pattern (vendas, estoque, carteira) */
+  .section-actions{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:8px!important;
+    width:100%;
+  }
+  .section-actions>div{text-align:left!important;}
+  .section-actions .btn,.section-actions>button{width:100%;justify-content:center;}
+  /* "Multi-button" pattern (transporte, florestal) */
+  .section-actions-row{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:wrap;
+    gap:8px!important;
+    width:100%;
+  }
+  .section-actions-row .btn{flex:1;min-width:120px;justify-content:center;}
+  /* Pipeline search+filter+actions */
+  .pipeline-actions{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:8px!important;
+    width:100%;
+  }
+  .pipeline-actions .filter-input{width:100%!important;}
+  .pipeline-actions-btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .pipeline-actions-btns .btn{flex:1;min-width:100px;justify-content:center;}
+  /* Standalone button in section header */
+  .section-header>.btn{width:100%;justify-content:center;}
+
+  /* ══ 7. KPI GRIDS ══ */
   .kpi-grid-5{grid-template-columns:repeat(2,1fr)!important;}
   .kpi-grid-4{grid-template-columns:repeat(2,1fr)!important;}
   .kpi-grid-2{grid-template-columns:1fr 1fr!important;}
-  .chart-grid-2-1{grid-template-columns:1fr!important;}
-  .chart-grid-2{grid-template-columns:1fr!important;}
+  .chart-grid-2-1,.chart-grid-2{grid-template-columns:1fr!important;}
+  .kpi-card{padding:14px 12px;}
+  .kpi-icon{width:36px;height:36px;border-radius:9px;margin-bottom:8px;}
+  .kpi-value{font-size:20px!important;letter-spacing:-.3px;}
+  .kpi-label{font-size:10px;letter-spacing:.3px;}
+  .kpi-sub{font-size:11px;}
 
-  /* ─ Section header stacks vertically ─ */
-  .section-header{flex-direction:column;align-items:flex-start;gap:10px;}
-  .section-header>div:last-child,.section-header>button{width:100%;}
+  /* ══ 8. CHARTS ══ */
+  .chart-wrap{height:165px;}
 
-  /* ─ Form grids ─ */
+  /* ══ 9. FORMS & INPUTS ══ */
   .form-grid-2,.form-grid-3{grid-template-columns:1fr;}
   .form-grid-4{grid-template-columns:1fr 1fr;}
-
-  /* ─ Login card ─ */
-  .login-card{width:calc(100% - 32px);max-width:400px;padding:32px 22px 28px;}
-
-  /* ─ Modals snap to bottom on mobile ─ */
-  .modal-overlay{padding:0;align-items:flex-end;}
-  .modal{max-width:100%!important;border-radius:20px 20px 0 0;max-height:94vh;}
-  .modal-sm,.modal-lg{max-width:100%!important;}
-  .modal-header{padding:16px 16px 12px;}
-  .modal-body{padding:14px 16px;}
-  .modal-footer{padding:12px 16px;flex-wrap:wrap;}
-  .modal-footer .btn{flex:1;justify-content:center;}
-  .drawer{width:100%;}
-
-  /* ─ Kanban ─ */
-  .kanban-col{min-width:200px;width:200px;}
-
-  /* ─ Tab bar horizontal scroll ─ */
-  .tab-bar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-ms-overflow-style:none;}
-  .tab-bar::-webkit-scrollbar{display:none;}
-  .tab-btn{white-space:nowrap;flex-shrink:0;padding:7px 12px;}
-
-  /* ─ KPI value font size ─ */
-  .kpi-value{font-size:20px;}
-
-  /* ─ Detail expand grid ─ */
-  .detail-grid{grid-template-columns:repeat(2,1fr);}
-
-  /* ─ Campo admin filter bar ─ */
+  /* 16px prevents iOS Safari auto-zoom on focus */
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select, textarea{font-size:16px!important;}
+  .form-input,.form-select{padding:10px 12px;}
+  .form-label{margin-bottom:6px;font-size:12px;}
+  .campo-reg-grid{grid-template-columns:1fr!important;}
+  #campo-registrar .card{max-width:100%;}
+  #campoHistFiltro{width:100%!important;}
   #campoAdminBar{flex-direction:column!important;align-items:stretch!important;}
   #campoUserFilter{width:100%!important;}
+  #campoPhotoInput{
+    width:100%;
+    padding:10px;
+    background:rgba(255,255,255,.04);
+    border:1.5px solid rgba(255,255,255,.08);
+    border-radius:8px;
+    color:var(--text-2);
+  }
+  /* Filter inputs with hardcoded widths */
+  #globalSearch{width:100%!important;}
 
-  /* ─ Campo registrar inline grids ─ */
-  .campo-reg-grid{grid-template-columns:1fr!important;}
+  /* ══ 10. TABLES — column hiding + scroll UX ══ */
+  .table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:0 0 var(--radius) var(--radius);
+  }
+  .table-wrap::-webkit-scrollbar{height:3px;}
+  .table-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px;}
+  .data-table{font-size:12px;}
+  .data-table th{padding:9px 8px;font-size:10px;letter-spacing:.3px;}
+  .data-table td{padding:10px 8px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .data-table td:last-child{max-width:none;white-space:nowrap;overflow:visible;}
+  /* Sales: hide Fatura, Pedido, Cond., Unit. */
+  #salesTable th:nth-child(3),#salesTable td:nth-child(3),
+  #salesTable th:nth-child(4),#salesTable td:nth-child(4),
+  #salesTable th:nth-child(5),#salesTable td:nth-child(5),
+  #salesTable th:nth-child(10),#salesTable td:nth-child(10){display:none!important;}
+  /* Estoque: hide Subcategoria, Marca, Local, Moeda */
+  #estoqueTable th:nth-child(2),#estoqueTable td:nth-child(2),
+  #estoqueTable th:nth-child(3),#estoqueTable td:nth-child(3),
+  #estoqueTable th:nth-child(5),#estoqueTable td:nth-child(5),
+  #estoqueTable th:nth-child(9),#estoqueTable td:nth-child(9){display:none!important;}
+  /* Carteira: hide RUC/CI, Cidade, Linhas de crédito */
+  #carteiraTable th:nth-child(2),#carteiraTable td:nth-child(2),
+  #carteiraTable th:nth-child(4),#carteiraTable td:nth-child(4),
+  #carteiraTable th:nth-child(6),#carteiraTable td:nth-child(6),
+  #carteiraTable th:nth-child(7),#carteiraTable td:nth-child(7){display:none!important;}
+  /* Fretes: hide Produto, Placa, Custo, Margem */
+  #fretesTable th:nth-child(4),#fretesTable td:nth-child(4),
+  #fretesTable th:nth-child(7),#fretesTable td:nth-child(7),
+  #fretesTable th:nth-child(9),#fretesTable td:nth-child(9),
+  #fretesTable th:nth-child(10),#fretesTable td:nth-child(10){display:none!important;}
+  /* Frota: hide Modelo, Próx.Manutenção, Consumo */
+  #frotaTable th:nth-child(3),#frotaTable td:nth-child(3),
+  #frotaTable th:nth-child(7),#frotaTable td:nth-child(7),
+  #frotaTable th:nth-child(8),#frotaTable td:nth-child(8){display:none!important;}
+  /* Áreas: hide Negociação, Est.Ton., Custo Op., Espécie */
+  #areasTable th:nth-child(4),#areasTable td:nth-child(4),
+  #areasTable th:nth-child(6),#areasTable td:nth-child(6),
+  #areasTable th:nth-child(8),#areasTable td:nth-child(8),
+  #areasTable th:nth-child(9),#areasTable td:nth-child(9){display:none!important;}
+  /* Cotações: hide Peso, Total, Tipo, Validade */
+  #cotacoesTable th:nth-child(5),#cotacoesTable td:nth-child(5),
+  #cotacoesTable th:nth-child(7),#cotacoesTable td:nth-child(7),
+  #cotacoesTable th:nth-child(9),#cotacoesTable td:nth-child(9),
+  #cotacoesTable th:nth-child(10),#cotacoesTable td:nth-child(10){display:none!important;}
+  /* Sinistros: hide Seguro, Recuperado */
+  #sinistrosTable th:nth-child(5),#sinistrosTable td:nth-child(5),
+  #sinistrosTable th:nth-child(6),#sinistrosTable td:nth-child(6){display:none!important;}
+  /* Vendas Florestal: hide Frete, Margem */
+  #vendasFloTable th:nth-child(7),#vendasFloTable td:nth-child(7),
+  #vendasFloTable th:nth-child(8),#vendasFloTable td:nth-child(8){display:none!important;}
+  /* Operações: hide Descrição, Responsável */
+  #operacoesTable th:nth-child(4),#operacoesTable td:nth-child(4),
+  #operacoesTable th:nth-child(6),#operacoesTable td:nth-child(6){display:none!important;}
+  /* Users: hide E-mail, Permissões */
+  #usersTable th:nth-child(2),#usersTable td:nth-child(2),
+  #usersTable th:nth-child(4),#usersTable td:nth-child(4){display:none!important;}
+  /* Top clients: hide Faturado */
+  #topClientsTable th:nth-child(2),#topClientsTable td:nth-child(2){display:none!important;}
 
-  /* ─ Toast ─ */
-  #toastContainer{right:12px;left:12px;bottom:16px;}
-  .toast{max-width:100%;}
+  /* ══ 11. LOGIN ══ */
+  .login-card{width:calc(100% - 32px);max-width:400px;padding:32px 22px 28px;}
+  .login-logo-svg{width:110px;height:54px;}
+  .login-logo{margin-bottom:28px;}
 
-  /* ─ Buttons in section headers ─ */
-  .section-header .btn{justify-content:center;}
-  .section-header>div[style*="flex"]{width:100%;flex-wrap:wrap;}
+  /* ══ 12. MODALS — BOTTOM SHEET ══ */
+  .modal-overlay{padding:0;align-items:flex-end;background:rgba(0,0,0,.6);}
+  .modal,.modal-sm,.modal-lg{
+    max-width:100%!important;
+    width:100%;
+    border-radius:22px 22px 0 0;
+    max-height:92vh;
+    animation:slideUp .25s cubic-bezier(.4,0,.2,1);
+  }
+  /* Drag handle */
+  .modal::before{
+    content:'';
+    display:block;
+    width:40px;height:4px;
+    background:rgba(255,255,255,.18);
+    border-radius:2px;
+    margin:10px auto -6px;
+    flex-shrink:0;
+  }
+  .modal-header{padding:18px 18px 14px;}
+  .modal-title{font-size:15px;}
+  .modal-body{padding:14px 18px;}
+  .modal-footer{padding:14px 18px 24px;flex-wrap:wrap;gap:8px;}
+  .modal-footer .btn{flex:1;min-width:0;justify-content:center;}
+  /* Drawers → also become bottom sheets on mobile */
+  .drawer{
+    width:100%!important;
+    border-left:none;
+    border-top:1px solid rgba(255,255,255,.08);
+    border-radius:22px 22px 0 0;
+    top:auto;bottom:0;
+    height:92vh;
+    right:0;
+    animation:slideUp .25s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+  /* ══ 13. TABS ══ */
+  .tab-bar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-ms-overflow-style:none;gap:2px;}
+  .tab-bar::-webkit-scrollbar{display:none;}
+  .tab-btn{white-space:nowrap;flex-shrink:0;padding:8px 14px;font-size:12px;min-height:38px;}
+
+  /* ══ 14. KANBAN ══ */
+  .kanban-board{padding-bottom:20px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+  .kanban-col{min-width:220px;width:220px;scroll-snap-align:start;}
+  .kanban-card{padding:10px;}
+
+  /* ══ 15. DETAIL EXPAND ══ */
+  .detail-grid{grid-template-columns:repeat(2,1fr);}
+  .expanded-row td{padding:10px 8px;}
+
+  /* ══ 16. MISC COMPONENTS ══ */
+  .badge{font-size:10px;padding:2px 7px;}
+  .section-title{font-size:18px;}
+  .section-sub{font-size:12px;}
+  .card{padding:14px 16px;}
+  .stage-item{padding:10px 11px;}
+  #toastContainer{right:12px;left:12px;bottom:20px;}
+  .toast{max-width:100%;font-size:12px;padding:10px 14px;}
+
+  /* ══ 17. TOUCH TARGETS ══ */
+  .btn{min-height:44px;padding:10px 16px;}
+  .btn-sm{min-height:40px;padding:8px 12px;}
+  .btn-icon{min-height:38px;min-width:38px;}
+  .nav-item{min-height:48px;}
+  .form-input,.form-select,.filter-input{min-height:44px;}
+  .tab-btn{min-height:38px;}
+  .campo-chip{min-height:40px;padding:8px 16px;}
 }
 
 @media(max-width:430px){
-  .kpi-value{font-size:18px;}
+  #topbar{padding:8px 12px;gap:6px;}
+  #topbarTitle{font-size:15px!important;}
+  #content{padding:10px;padding-bottom:28px;}
+  .kpi-value{font-size:18px!important;}
+  .kpi-card{padding:12px 10px;}
   .form-grid-4{grid-template-columns:1fr;}
-  .kpi-grid-5{grid-template-columns:repeat(2,1fr)!important;}
-  .kpi-grid-4{grid-template-columns:repeat(2,1fr)!important;}
-  .modal{max-height:97vh;}
+  .kpi-grid-5,.kpi-grid-4{grid-template-columns:repeat(2,1fr)!important;}
+  .modal,.modal-sm,.modal-lg{max-height:95vh;}
+  .chart-wrap{height:145px;}
+  /* Sales: also hide Vendedor on tiny screens */
+  #salesTable th:nth-child(6),#salesTable td:nth-child(6){display:none!important;}
+  /* Carteira: also hide Telefone */
+  #carteiraTable th:nth-child(3),#carteiraTable td:nth-child(3){display:none!important;}
+  /* Fretes: also hide Motorista */
+  #fretesTable th:nth-child(6),#fretesTable td:nth-child(6){display:none!important;}
 }
 </style>
 </head>
@@ -567,7 +797,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-vendas" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Vendas & Faturas</div><div class="section-sub">Insumos Agrícolas</div></div>
-          <div style="display:flex;align-items:center;gap:12px;">
+          <div class="section-actions" style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Total Faturado</div><div style="font-size:18px;font-weight:900;" id="totalFaturado">$0</div></div>
             <button class="btn btn-primary" onclick="openSaleModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Venda</button>
           </div>
@@ -579,7 +809,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-estoque" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Inventário</div><div class="section-sub">Controle de estoque</div></div>
-          <div style="display:flex;align-items:center;gap:12px;">
+          <div class="section-actions" style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Valor em Estoque</div><div style="font-size:18px;font-weight:900;" id="estoqueTotal">$0</div></div>
             <button class="btn btn-primary" onclick="openEstoqueModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Adicionar</button>
           </div>
@@ -591,7 +821,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-carteira" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Carteira de Crédito</div><div class="section-sub">Clientes e linhas de crédito</div></div>
-          <div style="display:flex;align-items:center;gap:12px;">
+          <div class="section-actions" style="display:flex;align-items:center;gap:12px;">
             <div style="text-align:right;"><div style="font-size:11px;color:var(--text-2);font-weight:700;text-transform:uppercase;">Total Carteira</div><div style="font-size:18px;font-weight:900;" id="carteiraTotal">$0</div></div>
             <button class="btn btn-primary" onclick="openCarteiraModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Novo Cliente</button>
           </div>
@@ -603,11 +833,13 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-pipeline" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Pipeline CRM</div><div class="section-sub">Gestão de leads e oportunidades</div></div>
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div class="pipeline-actions" style="display:flex;align-items:center;gap:8px;">
             <input type="text" class="filter-input" placeholder="Buscar leads..." id="leadSearch" oninput="renderPipeline()">
             <select class="filter-input" id="leadOwnerFilter" onchange="renderPipeline()"><option value="">Todos</option></select>
-            <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.66a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Colunas</button>
-            <button class="btn btn-primary btn-sm" onclick="openLeadModal()">+ Lead</button>
+            <div class="pipeline-actions-btns">
+              <button class="btn btn-secondary btn-sm" id="btnStages" onclick="openManageStages()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.66a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Colunas</button>
+              <button class="btn btn-primary btn-sm" onclick="openLeadModal()">+ Lead</button>
+            </div>
           </div>
         </div>
         <div style="margin-bottom:14px;"><div class="tab-bar" id="pipelineTabs"><button class="tab-btn active" onclick="switchPipeline('insumos',this)">Insumos</button><button class="tab-btn" onclick="switchPipeline('transporte',this)">Transporte</button><button class="tab-btn" onclick="switchPipeline('florestal',this)">Florestal</button></div></div>
@@ -618,7 +850,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-transporte" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Transporte & Logística</div><div class="section-sub">Fretes, frota e sinistros</div></div>
-          <div style="display:flex;gap:8px;">
+          <div class="section-actions-row" style="display:flex;gap:8px;">
             <button class="btn btn-primary" onclick="openFreteModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Novo Frete</button>
             <button class="btn btn-secondary" onclick="openVeiculoModal()">+ Veículo</button>
           </div>
@@ -639,7 +871,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
       <div id="view-florestal" class="hidden">
         <div class="section-header">
           <div><div class="section-title">Florestal — Biomassa</div><div class="section-sub">Compra de áreas, operação e venda de biomassa</div></div>
-          <div style="display:flex;gap:8px;">
+          <div class="section-actions-row" style="display:flex;gap:8px;">
             <button class="btn btn-primary" onclick="openAreaModal()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Nova Área</button>
             <button class="btn btn-secondary" onclick="openVendaFloModal()">+ Venda Biomassa</button>
           </div>
@@ -984,7 +1216,12 @@ function closeSidebar() {
   qs('sidebarOverlay').classList.remove('active');
 }
 function toggleTopbarFilters() {
-  qs('topbarFilters').classList.toggle('open');
+  var open = qs('topbarFilters').classList.toggle('open');
+  qs('filterToggle').classList.toggle('active', open);
+}
+function closeTopbarFilters() {
+  qs('topbarFilters').classList.remove('open');
+  qs('filterToggle').classList.remove('active');
 }
 
 // Close sidebar on nav item click (mobile)
@@ -1094,7 +1331,7 @@ function applyPermissions() {
 // =====================================================================
 async function navigate(view) {
   currentView = view;
-  if (window.innerWidth <= 768) closeSidebar();
+  if (window.innerWidth <= 768) { closeSidebar(); closeTopbarFilters(); }
   document.querySelectorAll('[id^="view-"]').forEach(el=>el.classList.add('hidden'));
   qs('view-'+view)?.classList.remove('hidden');
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
