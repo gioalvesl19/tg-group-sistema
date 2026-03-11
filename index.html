@@ -2057,30 +2057,31 @@ async function deleteUserProfile(id) {
 // =====================================================================
 //  CAMPO - ATIVIDADES DE CAMPO
 // =====================================================================
+// --- Campo helpers (single source of truth) ---
+function campoIsAdmin() { return !!(currentProfile && currentProfile.role === 'admin'); }
+function buildCampoUserMap() {
+  var m={}; (profilesCache||[]).forEach(function(u){ m[u.id]=u.name||u.id; }); return m;
+}
+function renderCampoTabContent(tab) {
+  if (tab==='dashboard') renderCampoDashboard();
+  else if (tab==='registrar') { populateCampoCustomerSelect(); var d=qs('campoActivityDate'); if(d&&!d.value) d.value=new Date().toISOString().split('T')[0]; }
+  else if (tab==='historico') renderCampoHistorico();
+  else if (tab==='km') renderCampoKM();
+  else if (tab==='clientes') renderCampoClientes();
+}
+
 async function initCampoModule() {
-  var isAdmin = currentProfile && currentProfile.role === 'admin';
-  // Show/hide dashboard tab for admin only
-  var btnDash = qs('campoBtnDash');
-  if (btnDash) btnDash.classList.toggle('hidden', !isAdmin);
-  // Show admin filter bar
-  var adminBar = qs('campoAdminBar');
-  if (adminBar) adminBar.classList.toggle('hidden', !isAdmin);
+  var isAdmin = campoIsAdmin();
+  var btnDash = qs('campoBtnDash'); if (btnDash) btnDash.classList.toggle('hidden', !isAdmin);
+  var adminBar = qs('campoAdminBar'); if (adminBar) adminBar.classList.toggle('hidden', !isAdmin);
+  var thUser = qs('campoThUser'); if (thUser) thUser.classList.toggle('hidden', !isAdmin);
+  var thKmUser = qs('campoKmThUser'); if (thKmUser) thKmUser.classList.toggle('hidden', !isAdmin);
+  // Synchronous DOM populates run before the network call
   if (isAdmin) populateCampoUserFilter();
-  // Show user column headers if admin
-  var thUser = qs('campoThUser');
-  if (thUser) thUser.classList.toggle('hidden', !isAdmin);
-  var thKmUser = qs('campoKmThUser');
-  if (thKmUser) thKmUser.classList.toggle('hidden', !isAdmin);
-  await fetchFieldActivities();
   populateCampoCustomerSelect();
-  var d = qs('campoActivityDate');
-  if (d && !d.value) d.value = new Date().toISOString().split('T')[0];
-  // Admin starts at dashboard, others at registrar
-  if (isAdmin) {
-    switchCampoTab('dashboard', qs('campoBtnDash'));
-  } else {
-    switchCampoTab('registrar', qs('campoBtnReg'));
-  }
+  var d = qs('campoActivityDate'); if (d && !d.value) d.value = new Date().toISOString().split('T')[0];
+  await fetchFieldActivities();
+  switchCampoTab(isAdmin ? 'dashboard' : 'registrar', isAdmin ? qs('campoBtnDash') : qs('campoBtnReg'));
 }
 
 function populateCampoUserFilter() {
@@ -2094,26 +2095,17 @@ function populateCampoUserFilter() {
 }
 
 function getCampoFilteredByUser() {
-  var isAdmin = currentProfile && currentProfile.role === 'admin';
-  if (!isAdmin) return fieldActivitiesCache;
-  var sel = qs('campoUserFilter');
-  var uid = sel ? sel.value : '';
+  if (!campoIsAdmin()) return fieldActivitiesCache;
+  var uid = (qs('campoUserFilter')||{}).value || '';
   if (!uid) return fieldActivitiesCache;
   return fieldActivitiesCache.filter(function(a){ return a.user_id === uid; });
 }
 
 function onCampoUserChange() {
-  // Re-render whichever tab is currently visible
   var tabs = ['dashboard','registrar','historico','km','clientes'];
   for (var i = 0; i < tabs.length; i++) {
     var el = qs('campo-' + tabs[i]);
-    if (el && !el.classList.contains('hidden')) {
-      if (tabs[i]==='dashboard') renderCampoDashboard();
-      else if (tabs[i]==='historico') renderCampoHistorico();
-      else if (tabs[i]==='km') renderCampoKM();
-      else if (tabs[i]==='clientes') renderCampoClientes();
-      break;
-    }
+    if (el && !el.classList.contains('hidden')) { renderCampoTabContent(tabs[i]); break; }
   }
 }
 
@@ -2134,11 +2126,7 @@ function switchCampoTab(tab, btn) {
     var btns = document.querySelectorAll('#view-campo .tab-btn');
     if (btns[idxMap[tab]]) btns[idxMap[tab]].classList.add('active');
   }
-  if (tab==='dashboard') renderCampoDashboard();
-  else if (tab==='registrar') { populateCampoCustomerSelect(); var d=qs('campoActivityDate'); if(d&&!d.value) d.value=new Date().toISOString().split('T')[0]; }
-  else if (tab==='historico') renderCampoHistorico();
-  else if (tab==='km') renderCampoKM();
-  else if (tab==='clientes') renderCampoClientes();
+  renderCampoTabContent(tab);
 }
 
 function campoTypeLabel(type) {
@@ -2147,8 +2135,7 @@ function campoTypeLabel(type) {
 }
 
 function renderCampoDashboard() {
-  var isAdmin = currentProfile && currentProfile.role === 'admin';
-  if (!isAdmin) { switchCampoTab('registrar', qs('campoBtnReg')); return; }
+  if (!campoIsAdmin()) { switchCampoTab('registrar', qs('campoBtnReg')); return; }
   var acts = getCampoFilteredByUser();
   var now = new Date();
   var thisMonth = acts.filter(function(a){
@@ -2163,9 +2150,7 @@ function renderCampoDashboard() {
   var el4=qs('campoKpiTotal'); if(el4) el4.textContent=acts.length;
   var list=qs('campoRecentList'); if(!list) return;
   var recent=acts.slice(0,8);
-  // Get user name map for display
-  var userMap = {};
-  (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
+  var userMap = buildCampoUserMap();
   list.innerHTML=recent.map(function(a){
     var km=(a.km_end&&a.km_start&&a.km_end>a.km_start)?'<div class="campo-km-badge">'+(a.km_end-a.km_start).toFixed(0)+' km</div>':'';
     var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
@@ -2203,16 +2188,22 @@ async function saveCampoActivity() {
   var res=await sb.from('field_activities').insert(payload).select('*, customers(cliente)').single();
   if(res.error){toast('Erro ao salvar: '+res.error.message,'error');return;}
   var fileInput=qs('campoPhotoInput');
-  if(fileInput&&fileInput.files.length>0&&res.data){
-    for(var fi=0;fi<fileInput.files.length;fi++){
-      var file=fileInput.files[fi];
-      var fileName=currentUser.id+'/'+res.data.id+'/'+Date.now()+'_'+file.name;
-      var upRes=await sb.storage.from('field-photos').upload(fileName,file);
-      if(!upRes.error) await sb.from('field_activity_photos').insert({activity_id:res.data.id,storage_path:fileName});
-    }
+  var newActivity=res.data; newActivity.field_activity_photos=[];
+  if(fileInput&&fileInput.files.length>0){
+    var actId=newActivity.id; var uid=currentUser.id; var ts=Date.now();
+    var uploadPromises=Array.from(fileInput.files).map(function(file,fi){
+      var fileName=uid+'/'+actId+'/'+ts+'_'+fi+'_'+file.name;
+      return sb.storage.from('field-photos').upload(fileName,file).then(function(upRes){
+        if(upRes.error) return null;
+        return sb.from('field_activity_photos').insert({activity_id:actId,storage_path:fileName}).select('id,storage_path').single().then(function(pr){
+          if(!pr.error) newActivity.field_activity_photos.push(pr.data);
+        });
+      });
+    });
+    await Promise.all(uploadPromises);
   }
   toast('Atividade registrada!');
-  fieldActivitiesCache.unshift(res.data);
+  fieldActivitiesCache.unshift(newActivity);
   if(typeEl) typeEl.value='';
   if(dateEl) dateEl.value='';
   if(descEl) descEl.value='';
@@ -2228,12 +2219,11 @@ async function saveCampoActivity() {
 
 function renderCampoHistorico() {
   var tbody=qs('campoHistoricoBody'); if(!tbody) return;
-  var isAdmin=currentProfile&&currentProfile.role==='admin';
+  var isAdmin=campoIsAdmin();
   var filtEl=qs('campoHistFiltro'); var filter=(filtEl&&filtEl.value)||'all';
   var base=getCampoFilteredByUser();
   var acts=filter==='all'?base:base.filter(function(a){return a.activity_type===filter;});
-  // User name map for admin view
-  var userMap={}; (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
+  var userMap=buildCampoUserMap();
   // Total colspan = 7 base + 1 Anexos + (1 User if admin)
   var colspan = isAdmin ? 9 : 8;
   tbody.innerHTML=acts.map(function(a){
@@ -2267,13 +2257,13 @@ async function viewCampoFiles(actId) {
   if(!modal||!body) return;
   body.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-3);">Carregando anexos...</div>';
   modal.classList.remove('hidden');
+  // Fetch all signed URLs in parallel
+  var urlResults=await Promise.all(photos.map(function(p){ return sb.storage.from('field-photos').createSignedUrl(p.storage_path,3600); }));
   var html='<div style="display:flex;flex-direction:column;gap:16px;">';
-  for(var i=0;i<photos.length;i++){
-    var photo=photos[i];
-    var urlRes=await sb.storage.from('field-photos').createSignedUrl(photo.storage_path,3600);
-    if(urlRes.error){html+='<div style="color:var(--red);font-size:12px;">Erro ao carregar arquivo '+i+'</div>';continue;}
+  urlResults.forEach(function(urlRes,i){
+    if(urlRes.error){html+='<div style="color:var(--red);font-size:12px;">Erro ao carregar arquivo '+(i+1)+'</div>';return;}
     var url=urlRes.data.signedUrl;
-    var fname=photo.storage_path.split('/').pop()||('arquivo-'+(i+1));
+    var fname=photos[i].storage_path.split('/').pop()||('arquivo-'+(i+1));
     var isPdf=fname.toLowerCase().endsWith('.pdf');
     if(isPdf){
       html+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid var(--border);">'+
@@ -2289,7 +2279,7 @@ async function viewCampoFiles(actId) {
         '<a href="'+url+'" target="_blank" class="btn btn-secondary" style="padding:3px 10px;font-size:11px;">Download</a>'+
         '</div></div>';
     }
-  }
+  });
   html+='</div>';
   body.innerHTML=html;
 }
@@ -2304,8 +2294,8 @@ function renderCampoKM() {
   var el1=qs('campoKmTotal'); if(el1) el1.textContent=totalKm.toFixed(0)+' km';
   var el2=qs('campoKmMes'); if(el2) el2.textContent=monthKm.toFixed(0)+' km';
   var tbody=qs('campoKmBody'); if(!tbody) return;
-  var isAdmin=currentProfile&&currentProfile.role==='admin';
-  var userMap={}; (profilesCache||[]).forEach(function(u){ userMap[u.id]=u.name||u.id; });
+  var isAdmin=campoIsAdmin();
+  var userMap=buildCampoUserMap();
   tbody.innerHTML=acts.slice(0,50).map(function(a){
     var dateStr=new Date(a.activity_date+'T00:00:00').toLocaleDateString('pt-BR');
     var userTd=isAdmin?'<td style="font-size:11px;color:var(--text-3);">'+(userMap[a.user_id]||'—')+'</td>':'';
