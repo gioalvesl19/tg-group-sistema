@@ -281,6 +281,111 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 .campo-activity-title{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .campo-activity-meta{font-size:11px;color:var(--text-3);margin-top:2px;}
 .campo-km-badge{padding:3px 8px;border-radius:10px;font-size:11px;background:rgba(16,185,129,0.15);color:var(--green);white-space:nowrap;}
+
+/* ====== MOBILE RESPONSIVE ====== */
+/* Elements hidden on desktop, shown on mobile */
+#sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+#sidebarToggle,#filterToggle{display:none;}
+/* Topbar filter wrapper — desktop: invisible box (children flow inline) */
+#topbarFilters{display:contents;}
+
+/* Responsive helper classes for inline-style grids */
+.kpi-grid-5{display:grid;gap:10px;}
+.kpi-grid-4{display:grid;gap:10px;}
+.kpi-grid-2{display:grid;gap:10px;}
+.chart-grid-2-1{display:grid;gap:14px;}
+.chart-grid-2{display:grid;gap:14px;}
+
+@media(max-width:768px){
+  /* ─ Sidebar drawer ─ */
+  #sidebarOverlay{display:block;opacity:0;pointer-events:none;transition:opacity .25s;}
+  #sidebarOverlay.active{opacity:1;pointer-events:all;}
+  #sidebar{transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200;}
+  #sidebar.open{transform:translateX(0);}
+
+  /* ─ Main content full width ─ */
+  #main{margin-left:0;}
+
+  /* ─ Topbar ─ */
+  #topbar{padding:0 12px;height:auto;min-height:var(--topbar-h);flex-wrap:wrap;gap:6px;padding-top:10px;padding-bottom:10px;}
+  #topbarTitle{font-size:15px!important;min-width:0;flex:1;}
+  #sidebarToggle{display:flex;align-items:center;justify-content:center;background:none;border:none;color:var(--text);cursor:pointer;padding:6px;border-radius:6px;flex-shrink:0;}
+  #filterToggle{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:none;color:var(--text-2);cursor:pointer;padding:7px 10px;border-radius:var(--radius-sm);font-size:12px;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+  #topbarFilters{display:none;width:100%;flex-direction:column;gap:8px;padding-bottom:4px;}
+  #topbarFilters.open{display:flex;}
+  #topbarFilters .filter-input{width:100%!important;}
+  #customDateRange{flex-direction:column!important;gap:6px;}
+  #customDateRange input.filter-input{width:100%!important;}
+  #customDateRange span{display:none;}
+
+  /* ─ Content padding ─ */
+  #content{padding:12px;}
+
+  /* ─ KPI grid breakpoints ─ */
+  .kpi-grid-5{grid-template-columns:repeat(2,1fr)!important;}
+  .kpi-grid-4{grid-template-columns:repeat(2,1fr)!important;}
+  .kpi-grid-2{grid-template-columns:1fr 1fr!important;}
+  .chart-grid-2-1{grid-template-columns:1fr!important;}
+  .chart-grid-2{grid-template-columns:1fr!important;}
+
+  /* ─ Section header stacks vertically ─ */
+  .section-header{flex-direction:column;align-items:flex-start;gap:10px;}
+  .section-header>div:last-child,.section-header>button{width:100%;}
+
+  /* ─ Form grids ─ */
+  .form-grid-2,.form-grid-3{grid-template-columns:1fr;}
+  .form-grid-4{grid-template-columns:1fr 1fr;}
+
+  /* ─ Login card ─ */
+  .login-card{width:calc(100% - 32px);max-width:400px;padding:32px 22px 28px;}
+
+  /* ─ Modals snap to bottom on mobile ─ */
+  .modal-overlay{padding:0;align-items:flex-end;}
+  .modal{max-width:100%!important;border-radius:20px 20px 0 0;max-height:94vh;}
+  .modal-sm,.modal-lg{max-width:100%!important;}
+  .modal-header{padding:16px 16px 12px;}
+  .modal-body{padding:14px 16px;}
+  .modal-footer{padding:12px 16px;flex-wrap:wrap;}
+  .modal-footer .btn{flex:1;justify-content:center;}
+  .drawer{width:100%;}
+
+  /* ─ Kanban ─ */
+  .kanban-col{min-width:200px;width:200px;}
+
+  /* ─ Tab bar horizontal scroll ─ */
+  .tab-bar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-ms-overflow-style:none;}
+  .tab-bar::-webkit-scrollbar{display:none;}
+  .tab-btn{white-space:nowrap;flex-shrink:0;padding:7px 12px;}
+
+  /* ─ KPI value font size ─ */
+  .kpi-value{font-size:20px;}
+
+  /* ─ Detail expand grid ─ */
+  .detail-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* ─ Campo admin filter bar ─ */
+  #campoAdminBar{flex-direction:column!important;align-items:stretch!important;}
+  #campoUserFilter{width:100%!important;}
+
+  /* ─ Campo registrar inline grids ─ */
+  .campo-reg-grid{grid-template-columns:1fr!important;}
+
+  /* ─ Toast ─ */
+  #toastContainer{right:12px;left:12px;bottom:16px;}
+  .toast{max-width:100%;}
+
+  /* ─ Buttons in section headers ─ */
+  .section-header .btn{justify-content:center;}
+  .section-header>div[style*="flex"]{width:100%;flex-wrap:wrap;}
+}
+
+@media(max-width:430px){
+  .kpi-value{font-size:18px;}
+  .form-grid-4{grid-template-columns:1fr;}
+  .kpi-grid-5{grid-template-columns:repeat(2,1fr)!important;}
+  .kpi-grid-4{grid-template-columns:repeat(2,1fr)!important;}
+  .modal{max-height:97vh;}
+}
 </style>
 </head>
 <body>
@@ -320,6 +425,9 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 </div>
 <!-- ========== MAIN APP ========== -->
 <div id="app" class="hidden">
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div id="sidebarOverlay" onclick="closeSidebar()"></div>
 
   <!-- SIDEBAR -->
   <div id="sidebar">
@@ -388,26 +496,38 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
   <div id="main">
     <!-- TOPBAR -->
     <div id="topbar">
-      <div style="flex:1;font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.3px;" id="topbarTitle">Dashboard</div>
-      <input type="text" class="filter-input" style="width:190px;" placeholder="Buscar..." id="globalSearch" autocomplete="off" oninput="onSearchChange()">
-      <select class="filter-input" id="periodFilter" onchange="onPeriodChange()">
-        <option value="all">Todos os períodos</option>
-        <option value="month" selected>Este mês</option>
-        <option value="last_month">Mês passado</option>
-        <option value="year">Este ano</option>
-        <option value="custom">Personalizado</option>
-      </select>
-      <div id="customDateRange">
-        <input type="date" class="filter-input" id="dateFrom" onchange="onFilterChange()">
-        <span style="color:var(--text-3);font-size:12px;">até</span>
-        <input type="date" class="filter-input" id="dateTo" onchange="onFilterChange()">
+      <!-- Hamburger (mobile only) -->
+      <button id="sidebarToggle" onclick="toggleSidebar()" aria-label="Menu">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.3px;" id="topbarTitle">Dashboard</div>
+      <!-- Filter toggle (mobile only) -->
+      <button id="filterToggle" onclick="toggleTopbarFilters()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Filtros
+      </button>
+      <!-- Filters (visible inline on desktop, collapsible on mobile) -->
+      <div id="topbarFilters">
+        <input type="text" class="filter-input" style="width:190px;" placeholder="Buscar..." id="globalSearch" autocomplete="off" oninput="onSearchChange()">
+        <select class="filter-input" id="periodFilter" onchange="onPeriodChange()">
+          <option value="all">Todos os períodos</option>
+          <option value="month" selected>Este mês</option>
+          <option value="last_month">Mês passado</option>
+          <option value="year">Este ano</option>
+          <option value="custom">Personalizado</option>
+        </select>
+        <div id="customDateRange">
+          <input type="date" class="filter-input" id="dateFrom" onchange="onFilterChange()">
+          <span style="color:var(--text-3);font-size:12px;">até</span>
+          <input type="date" class="filter-input" id="dateTo" onchange="onFilterChange()">
+        </div>
+        <select class="filter-input" id="moedaFilter" onchange="onFilterChange()">
+          <option value="all">USD + Gs</option>
+          <option value="USD">USD</option>
+          <option value="Gs">Guaranis</option>
+        </select>
+        <select class="filter-input" id="vendedorFilter" onchange="onFilterChange()"><option value="">Todos vendedores</option></select>
       </div>
-      <select class="filter-input" id="moedaFilter" onchange="onFilterChange()">
-        <option value="all">USD + Gs</option>
-        <option value="USD">USD</option>
-        <option value="Gs">Guaranis</option>
-      </select>
-      <select class="filter-input" id="vendedorFilter" onchange="onFilterChange()"><option value="">Todos vendedores</option></select>
     </div>
 
     <!-- CONTENT -->
@@ -418,25 +538,25 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
         <div class="section-header">
           <div><div class="section-title">Visão Geral</div><div class="section-sub">Painel financeiro consolidado</div></div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px;">
+        <div class="kpi-grid-5" style="grid-template-columns:repeat(5,1fr);margin-bottom:12px;">
           <div class="kpi-card"><div class="kpi-icon" style="background:#dbeafe;"><svg width="18" height="18" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">Receita</div><div class="kpi-value" id="kpiReceita">$0</div><div class="kpi-sub" id="kpiReceitaSub">—</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#d1fae5;"><svg width="18" height="18" fill="none" stroke="#059669" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">Lucro</div><div class="kpi-value" id="kpiLucro">$0</div><div class="kpi-sub" id="kpiMargem">Margem: 0%</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#fef3c7;"><svg width="18" height="18" fill="none" stroke="#d97706" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="kpi-label">A Receber</div><div class="kpi-value" id="kpiReceber">$0</div><div class="kpi-sub" id="kpiReceberSub">—</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#fee2e2;"><svg width="18" height="18" fill="none" stroke="#dc2626" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div><div class="kpi-label">Inadimplência</div><div class="kpi-value" id="kpiInadim">$0</div><div class="kpi-sub" id="kpiInadimRate">0%</div></div>
           <div class="kpi-card"><div class="kpi-icon" style="background:#f3e8ff;"><svg width="18" height="18" fill="none" stroke="#7c3aed" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg></div><div class="kpi-label">Clientes Ativos</div><div class="kpi-value" id="kpiClientes">0</div><div class="kpi-sub">Ticket: <span id="kpiTicket">$0</span></div></div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;">
+        <div class="kpi-grid-5" style="grid-template-columns:repeat(5,1fr);margin-bottom:18px;">
           <div class="kpi-card"><div class="kpi-label">Ticket Médio</div><div class="kpi-value" id="kpiTicketM">$0</div></div>
           <div class="kpi-card"><div class="kpi-label">LTV Est.</div><div class="kpi-value" id="kpiLtv">$0</div><div class="kpi-sub">×2.5 ticket</div></div>
           <div class="kpi-card"><div class="kpi-label">LTV / CAC</div><div class="kpi-value" id="kpiLtvCac">0×</div><div class="kpi-sub">CAC: $500</div></div>
           <div class="kpi-card"><div class="kpi-label">Fretes (Mês)</div><div class="kpi-value" id="kpiFretes">0</div><div class="kpi-sub" id="kpiFretesVal">$0</div></div>
           <div class="kpi-card"><div class="kpi-label">Biomassa (ton)</div><div class="kpi-value" id="kpiFloTon">0</div><div class="kpi-sub" id="kpiFloVal">$0</div></div>
         </div>
-        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="chart-grid-2-1" style="grid-template-columns:2fr 1fr;margin-bottom:14px;">
           <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Receita por Mês</div><div class="chart-wrap"><canvas id="chartRevenue"></canvas></div></div>
           <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Status Financeiro</div><div class="chart-wrap"><canvas id="chartStatus"></canvas></div></div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="chart-grid-2" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
           <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Top Produtos</div><div class="chart-wrap"><canvas id="chartProducts"></canvas></div></div>
           <div class="card"><div style="font-size:13px;font-weight:800;margin-bottom:12px;">Receita por Vendedor</div><div class="chart-wrap"><canvas id="chartVendedor"></canvas></div></div>
         </div>
@@ -503,7 +623,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
             <button class="btn btn-secondary" onclick="openVeiculoModal()">+ Veículo</button>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+        <div class="kpi-grid-4" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">
           <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Fretes Ativos</div><div class="kpi-value" id="tpAtivos">0</div><div class="kpi-sub">em andamento</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">Receita Frete</div><div class="kpi-value" id="tpReceita">$0</div><div class="kpi-sub" id="tpMargem">Margem: 0%</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Frota Própria</div><div class="kpi-value" id="tpFrota">0</div><div class="kpi-sub">veículos</div></div>
@@ -524,7 +644,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
             <button class="btn btn-secondary" onclick="openVendaFloModal()">+ Venda Biomassa</button>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+        <div class="kpi-grid-4" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">
           <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">Áreas Ativas</div><div class="kpi-value" id="floAreas">0</div><div class="kpi-sub" id="floHa">0 ha</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Ton. Disponível</div><div class="kpi-value" id="floTonDisp">0</div><div class="kpi-sub">toneladas</div></div>
           <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Receita Biomassa</div><div class="kpi-value" id="floReceita">$0</div><div class="kpi-sub" id="floMargem">Margem: 0%</div></div>
@@ -561,7 +681,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
         <!-- Dashboard -->
         <div id="campo-dashboard">
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+          <div class="kpi-grid-4" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">
             <div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">Atividades este mes</div><div class="kpi-value" id="campoKpiAtividades">0</div><div class="kpi-sub">registros</div></div>
             <div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM este mes</div><div class="kpi-value" id="campoKpiKm">0</div><div class="kpi-sub">quilometros</div></div>
             <div class="kpi-card" style="border-left:3px solid var(--amber);"><div class="kpi-label">Clientes Visitados</div><div class="kpi-value" id="campoKpiClientes">0</div><div class="kpi-sub">unicos</div></div>
@@ -575,10 +695,10 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
           <div class="card" style="max-width:600px;">
             <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:16px;">Nova Atividade</div>
             <div style="margin-bottom:14px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:8px;">Tipo de Atividade *</div><div style="display:flex;flex-wrap:wrap;gap:8px;"><button class="campo-chip" onclick="selectCampoType('visita',this)">Visita</button><button class="campo-chip" onclick="selectCampoType('reuniao',this)">Reuniao</button><button class="campo-chip" onclick="selectCampoType('entrega',this)">Entrega</button><button class="campo-chip" onclick="selectCampoType('coleta',this)">Coleta</button><button class="campo-chip" onclick="selectCampoType('outros',this)">Outros</button></div><input type="hidden" id="campoActivityType"></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Data *</div><input class="form-input" type="date" id="campoActivityDate"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Cliente</div><select class="form-input" id="campoActivityCustomer"><option value="">- Sem cliente -</option></select></div></div>
+            <div class="campo-reg-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Data *</div><input class="form-input" type="date" id="campoActivityDate"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Cliente</div><select class="form-input" id="campoActivityCustomer"><option value="">- Sem cliente -</option></select></div></div>
             <div style="margin-bottom:12px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Descricao</div><input class="form-input" type="text" id="campoActivityDesc" placeholder="Resumo da atividade..."></div>
             <div style="margin-bottom:12px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Local</div><input class="form-input" type="text" id="campoActivityLocation" placeholder="Cidade, endereco..."></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Inicial</div><input class="form-input" type="number" id="campoKmStart" placeholder="0"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Final</div><input class="form-input" type="number" id="campoKmEnd" placeholder="0"></div></div>
+            <div class="campo-reg-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;"><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Inicial</div><input class="form-input" type="number" id="campoKmStart" placeholder="0"></div><div><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">KM Final</div><input class="form-input" type="number" id="campoKmEnd" placeholder="0"></div></div>
             <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Observacoes</div><textarea class="form-input" id="campoActivityNotes" rows="3" placeholder="Notas adicionais..."></textarea></div>
             <div style="margin-bottom:16px;"><div style="font-size:12px;color:var(--text-3);margin-bottom:4px;">Fotos / PDF (opcional)</div><input type="file" id="campoPhotoInput" accept="image/*,.pdf" multiple style="font-size:12px;color:var(--text-2);"></div>
             <button class="btn btn-primary" style="width:100%;" onclick="saveCampoActivity()">Salvar Atividade</button>
@@ -595,7 +715,7 @@ body { font-family: 'Inter', 'DM Sans', sans-serif; background: radial-gradient(
 
         <!-- KM -->
         <div id="campo-km" class="hidden">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;"><div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">KM Este Mes</div><div class="kpi-value" id="campoKmMes">0 km</div><div class="kpi-sub">percorridos</div></div><div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM Total Historico</div><div class="kpi-value" id="campoKmTotal">0 km</div><div class="kpi-sub">acumulado</div></div></div>
+          <div class="kpi-grid-2" style="grid-template-columns:1fr 1fr;margin-bottom:18px;"><div class="kpi-card" style="border-left:3px solid var(--blue);"><div class="kpi-label">KM Este Mes</div><div class="kpi-value" id="campoKmMes">0 km</div><div class="kpi-sub">percorridos</div></div><div class="kpi-card" style="border-left:3px solid var(--green);"><div class="kpi-label">KM Total Historico</div><div class="kpi-value" id="campoKmTotal">0 km</div><div class="kpi-sub">acumulado</div></div></div>
           <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th id="campoKmThUser" class="hidden">Usuário</th><th>Cliente</th><th>KM Inicial</th><th>KM Final</th><th>Percorrido</th><th>Local</th></tr></thead><tbody id="campoKmBody"></tbody></table></div></div>
         </div>
 
@@ -853,6 +973,30 @@ const DEFAULT_STAGES = {
 };
 
 // =====================================================================
+//  MOBILE SIDEBAR & FILTER TOGGLE
+// =====================================================================
+function toggleSidebar() {
+  qs('sidebar').classList.toggle('open');
+  qs('sidebarOverlay').classList.toggle('active');
+}
+function closeSidebar() {
+  qs('sidebar').classList.remove('open');
+  qs('sidebarOverlay').classList.remove('active');
+}
+function toggleTopbarFilters() {
+  qs('topbarFilters').classList.toggle('open');
+}
+
+// Close sidebar on nav item click (mobile)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
+});
+
+// =====================================================================
 //  UTILS
 // =====================================================================
 const GS_RATE = 7500;
@@ -950,6 +1094,7 @@ function applyPermissions() {
 // =====================================================================
 async function navigate(view) {
   currentView = view;
+  if (window.innerWidth <= 768) closeSidebar();
   document.querySelectorAll('[id^="view-"]').forEach(el=>el.classList.add('hidden'));
   qs('view-'+view)?.classList.remove('hidden');
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
